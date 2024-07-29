@@ -1,4 +1,4 @@
-import CardListLayout from "../../../widgets/Layout/CardListLayout";
+import CardListLayout from "../../../widgets/CardListLayout";
 import Button from "../../../shared/UI/Button";
 import Navigation from "../../../shared/UI/Navigation";
 import 'swiper/css';
@@ -8,11 +8,11 @@ import { useRef } from "react";
 import { Swiper } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import { SwiperSlide } from "swiper/react";
-import ProductCardLayout from "../../../entities/Product/UI/ProductCardLayout";
+import MainProductLayout from "../../../entities/Product/UI/MainProductLayout";
 import { useGetProductsQuery } from "../../../shared/redux/query/productsApi";
 import Loader from "../../../shared/UI/Loader";
 const FreshSales = () => {
-	const swiperProductsRef = useRef();
+	const swiperProductsRef = useRef(null);
 	const {data, isLoading} = useGetProductsQuery({})
 	if(isLoading){
 		return <Loader />
@@ -29,7 +29,7 @@ const FreshSales = () => {
 				loop
 				slidesPerGroup={2}
 				spaceBetween={30}
-				slidesPerView={5}
+				slidesPerView={4}
 				onBeforeInit={(swiper) => {
 					swiperProductsRef.current = swiper;
 				}}
@@ -38,14 +38,11 @@ const FreshSales = () => {
 					delay:4000
 				}}
 				>
-				{data?.products?.map((item)=>{
-				return <SwiperSlide key={item.id}>
-					<ProductCardLayout
-						data={item}
-					/>
+				{data?.products?.map((item)=>
+				<SwiperSlide key={item.id}>
+					<MainProductLayout data={item}/>
 				</SwiperSlide>
-				})}
-
+				)}
 			</Swiper>
 	</CardListLayout>
   )

@@ -19,7 +19,7 @@ const useProductPageHook = () => {
 		handleDecreaseValue,
 		handleIncreaseValue,
 		value,
-	} = useNumberInputHook("1", product?.maxQuantity);
+	} = useNumberInputHook(1, product?.maxQuantity);
 
 	const favouriteProducts = useSelector(
 		(state) => state.favourite.favouriteProducts

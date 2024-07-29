@@ -17,14 +17,11 @@ export const cartSlice = createSlice({
 		addProductToCart(state, action) {
 			state.cartProducts.push({
 				id: action.payload.id,
-				price: (
-					action.payload.price -
-					(action.payload.price * action.payload.discount) / 100
-				).toFixed(1),
+				price: action.payload.currentPrice,
 				title: action.payload.title,
 				maxQuantity: action.payload.maxQuantity,
-				quantity: "1",
-				subtotal: action.payload.price,
+				quantity: 1,
+				subtotal: action.payload.currentPrice,
 			});
 		},
 
@@ -33,7 +30,9 @@ export const cartSlice = createSlice({
 				(product) => product.id === action.payload.id
 			);
 			product.quantity = action.payload.value;
-			product.subtotal = product.quantity * product.price;
+			product.subtotal = parseFloat(
+				(product.quantity * product.price).toFixed(1)
+			);
 		},
 		removeProductFromCart(state, action) {
 			state.cartProducts = state.cartProducts.filter(
@@ -56,7 +55,7 @@ export const cartSlice = createSlice({
 						acc.push({
 							...value,
 							quantity: 1,
-							subtotal: value.price,
+							subtotal: value.currentPrice,
 						});
 					} else {
 						acc.push(value);

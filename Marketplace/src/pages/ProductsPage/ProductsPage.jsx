@@ -1,16 +1,18 @@
 import Filters from "../../assets/filters-1-svgrepo-com.svg?react"
-import { useGetProductsQuery } from "../../shared/redux/query/productsApi"
-import ProductCardLayout from "../../entities/Product/UI/ProductCardLayout"
+import { useLazyGetProductsQuery } from "../../shared/redux/query/productsApi"
+import MainProductLayout from "../../entities/Product/UI/MainProductLayout"
 import useQueryParams from "./useQueryParams"
-import CategorySelector from "../../features/Filters/CategorySelector"
-import PriceSelector from "../../features/Filters/PriceSelector"
+import CategorySelector from "../../features/Filters/CategorySelector/CategorySelector"
+import PriceSelector from "../../features/Filters/PriceSelector/PriceSelector"
 import SortSelector from "../../features/Sort/SortSelector"
 import Loader from "../../shared/UI/Loader"
-import { useState } from "react"
-
+import { useEffect, useState } from "react"
+import Button from "../../shared/UI/Button"
+import { useSearchParams } from "react-router-dom"
 const ProductsPage = () => {
+	const [searchParams, setSearchParams] = useSearchParams();
+	const pageParam = searchParams.get("page") || 1;
 	const {
-		pageParam,
 		limitParam,
 		searchParam,
 		sortParam,
@@ -19,30 +21,77 @@ const ProductsPage = () => {
 		minPrice,
 		maxPrice,
 		handleSearchQuery,
-		handleChangePage,
 		handleSortSelect,
 		handleFilterByCategory,
 		handleFilterByPrice,
 	} = useQueryParams()
-	const {data, isLoading } = useGetProductsQuery({
-		pageParam,
-		limitParam,
-		searchParam,
-		sortParam,
-		sortMethod,
-		categoryParam,
-		minPrice,
-		maxPrice
-	})
+	const [trigger, result] = useLazyGetProductsQuery({selectFromResult: (result)=>({
+		pages: result?.data?.pages,
+		diapason: result?.data?.diapason,
+		isLoading: result.isLoading,
+	})})
+	const [products, setProducts] = useState([])
+	const getProductsByQuery=async()=>{
+		const {products} = await trigger({
+			pageParam: 1,
+			limitParam,
+			searchParam,
+			sortParam,
+			sortMethod,
+			categoryParam,
+			minPrice,
+			maxPrice}, true).unwrap()
+		setProducts(products)
+	}
+	const addMoreProducts = async()=>{
+		setSearchParams({
+			...Object.fromEntries(searchParams),
+			page: Number(pageParam)+1,
+		});
+		const {products} = await trigger({
+			pageParam: Number(pageParam)+1,
+			limitParam,
+			searchParam,
+			sortParam,
+			sortMethod,
+			categoryParam,
+			minPrice,
+			maxPrice}, true).unwrap()
+		setProducts((prev)=>[...prev, ...products])
+	}
+	const handleChangePage = async({ target }) => {
+		window.scrollTo(0, 0);
+		setSearchParams({
+			...Object.fromEntries(searchParams),
+			page: target.innerHTML,
+		});
+		const {products} = await trigger({
+			pageParam: target.innerHTML,
+			limitParam,
+			searchParam,
+			sortParam,
+			sortMethod,
+			categoryParam,
+			minPrice,
+			maxPrice}, true).unwrap()
+		setProducts(products)
+	};
 	const [isOpen, setIsOpen] = useState(false)
-	if(isLoading){
+	const handleToggleFilters = ()=>{
+		setIsOpen(!isOpen)
+	}
+	useEffect(()=>{
+		getProductsByQuery()
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	},[searchParam,sortParam,sortMethod,categoryParam,minPrice,maxPrice])
+	if(result.isLoading){
 		return <Loader />
 	}
-	const {products, pages, diapason} = data
+	const {pages, diapason} = result
   return (
 		<div className="container my-11 flex flex-col gap-4">
 			<div className="flex items-center gap-4">
-				<div onClick={()=>setIsOpen(!isOpen)}>
+				<div onClick={handleToggleFilters}>
 					<Filters className="size-8" />
 				</div>
 				<form className="w-full flex" onSubmit={handleSearchQuery}>
@@ -61,12 +110,14 @@ const ProductsPage = () => {
 				: null
 			}
 				{
-				data.products.length ? <>
-					<div className="grid grid-cols-[repeat(auto-fill,_minmax(250px,_1fr))] gap-y-14 gap-x-7">
-						{products?.map((item)=>
-							<ProductCardLayout key={item.id} data={item} />
+				products.length ?
+				<>
+					<div className="grid grid-cols-[repeat(auto-fill,_minmax(250px,_1fr))] justify-items-center gap-y-14 gap-x-7">
+						{products.map((item)=>
+							<MainProductLayout key={item.id} data={item} />
 						)}
 					</div>
+					{!(pages?.length<=pageParam) && <Button onClick={addMoreProducts}>Show More</Button>}
 					<div className="flex justify-center gap-4">
 					{
 						pages?.map((item)=>{

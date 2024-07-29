@@ -1,4 +1,4 @@
-import CardListLayout from "../../../widgets/Layout/CardListLayout"
+import CardListLayout from "../../../widgets/CardListLayout"
 import { NavLink } from "react-router-dom"
 import PlayStation5 from "../../../assets/ps5-slim-goedkope-playstation_large 1.png"
 import Woman from "../../../assets/attractive-woman-wearing-hat-posing-black-background 1-Photoroom.png"

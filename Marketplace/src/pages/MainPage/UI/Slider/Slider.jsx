@@ -3,10 +3,9 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import SliderSlide from './SliderSlide';
 const Slider = () => {
   return (
-		<div className="w-full bg-black">
+		<div className="bg-black flex h-[50vh]">
 			<Swiper
 				modules={[Pagination, EffectFade, Autoplay]}
-				className="m-0 pt-10 h-full"
 				slidesPerView={1}
 				loop
 				autoplay={{

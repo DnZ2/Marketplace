@@ -11,7 +11,9 @@ export const favouriteSlice = createSlice({
 			state.favouriteProducts.push({
 				id: action.payload.id,
 				price: action.payload.price,
+				currentPrice: action.payload.currentPrice,
 				title: action.payload.title,
+				discount: action.payload.discount,
 				maxQuantity: action.payload.maxQuantity,
 			});
 		},

@@ -57,10 +57,10 @@ export const useAdminCardControlls = (data) => {
 		setTitle(target.value);
 	};
 	const handleInputDiscount = ({ target }) => {
-		setDiscount(Number(target.value));
+		setDiscount(parseInt(target.value));
 	};
 	const handleInputMaxQuantity = ({ target }) => {
-		setMaxQuantity(Number(target.value));
+		setMaxQuantity(parseInt(target.value));
 	};
 	return {
 		handleOpenEditField,

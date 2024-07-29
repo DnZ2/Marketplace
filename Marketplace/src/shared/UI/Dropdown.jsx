@@ -8,13 +8,13 @@ const Dropdown = ({children}) => {
 	}
 
 	const [isOpen, setIsOpen] = useState(false)
-	const [titleComponent, hiddenComponent] = Children.toArray(children);
+	const [trigger, content] = Children.toArray(children);
   return (
 	<div onMouseEnter={()=>{setIsOpen(true)}} onMouseLeave={()=>setIsOpen(false)} className="relative">
-		{titleComponent}
+		{trigger}
 		{isOpen &&
-		<div className='absolute right-0 top-full w-fit'>
-			{hiddenComponent}
+		<div className='absolute right-0 top-full'>
+			{content}
 		</div>}
 	</div>
   )

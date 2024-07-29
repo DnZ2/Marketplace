@@ -16,7 +16,7 @@ const SliderSlide = () => {
 			<ArrowRight className="[&>path]:stroke-white rotate-90"/>
 			</NavLink>
 		</article>
-		<img className="w-[50%] absolute right-0 bottom-0 h-full object-contain opac" src={iPhone} alt="phone" />
+		<img className="w-[50%] absolute right-0 top-10 h-full object-contain opac" src={iPhone} alt="phone" />
 	</div>
   )
 }

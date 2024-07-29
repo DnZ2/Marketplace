@@ -1,5 +1,4 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { setUser, setInitial } from "../slices/userSlice";
 
 const baseQuery = fetchBaseQuery({
 	baseUrl: "http://localhost:5000/api",
@@ -21,10 +20,10 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 			extraOptions
 		);
 		if (response?.data) {
-			api.dispatch(setUser(response.data));
+			localStorage.setItem("token", response.data.accessToken);
 			result = await baseQuery(args, api, extraOptions);
 		} else {
-			api.dispatch(setInitial());
+			localStorage.removeItem("token");
 			result = await baseQuery(
 				{ url: "/logout", credentials: "include", method: "POST" },
 				api,
@@ -32,12 +31,7 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 			);
 		}
 	}
-	if (
-		result.meta.request.url === "http://localhost:5000/api/logout" ||
-		result.meta.request.url === "http://localhost:5000/api/registration"
-	) {
-		window.location.replace("/login");
-	}
+
 	return result;
 };
 
@@ -65,12 +59,17 @@ export const api = createApi({
 				method: "POST",
 			}),
 		}),
+		refresh: builder.query({
+			query: () => ({
+				url: `refresh`,
+			}),
+		}),
 	}),
 });
 
 export const {
-	useUsersQuery,
 	useLoginMutation,
 	useLogoutMutation,
 	useRegistrationMutation,
+	useLazyRefreshQuery,
 } = api;

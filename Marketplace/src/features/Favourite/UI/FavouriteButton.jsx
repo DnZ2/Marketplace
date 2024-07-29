@@ -12,16 +12,10 @@ const FavouriteButton = ({type, onClick, data}) => {
 
   return (
 	<button className={isFavourite
-	? `${type==="secondary" ? "bg-inherit" : "bg-white"}
-	 ${type==="secondary" ? "h-full aspect-square" : "size-8"}
-	  cursor-pointer flex items-center justify-center
-	  ${type==="secondary" ? "rounded-md border border-[#7D8184] hover:border-none" : "rounded-full"}
-	   [&>svg]:fill-[#db4444] hover:bg-[#db4444] [&>svg]:hover:fill-white`
-	: `${type==="secondary" ? "bg-inherit" : "bg-white"}
-	 ${type==="secondary" ? "h-full aspect-square" : "size-8"}
-	  cursor-pointer flex items-center justify-center
-	  ${type==="secondary" ? "rounded-md border border-[#7D8184] hover:border-none" : "rounded-full"}
-	   hover:bg-[#db4444] [&>svg]:hover:stroke-white [&>svg]:hover:fill-[#db4444]`
+	? `${type==="secondary" ? "rounded-md border border-[#7D8184] hover:border-none bg-inherit size-14" : "rounded-full bg-white size-8"}
+	 	cursor-pointer flex items-center justify-center [&>svg]:fill-[#db4444] hover:bg-[#db4444] [&>svg]:hover:fill-white`
+	: `${type==="secondary" ? "rounded-md border border-[#7D8184] hover:border-none bg-inherit size-14" : "rounded-full bg-white size-8"}
+		cursor-pointer flex items-center justify-center hover:bg-[#db4444] [&>svg]:hover:stroke-white [&>svg]:hover:fill-[#db4444]`
 	} onClick={onClick}>
 		<AddToFavourite className={`${type==="secondary"? "size-7" : "size-5"}`}/>
 	</button>

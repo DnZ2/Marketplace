@@ -19,7 +19,7 @@ const createUserReview = (review) => {
     productId: {
       id: review.productId._id,
       title: review.productId.title,
-      price: review.productId.price,
+      price: parseFloat(review.productId.price.toFixed(1)),
       category: review.productId.category,
     },
     text: review.text,

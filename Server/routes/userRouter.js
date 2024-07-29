@@ -14,9 +14,17 @@ userRouter.post("/login", usersController.login);
 userRouter.post("/logout", usersController.logout);
 userRouter.get("/activate/:link", usersController.activation);
 userRouter.get("/refresh", usersController.refresh);
-userRouter.get("/user/:id", usersController.getUser);
-userRouter.post("/buyProducts", usersController.buyProducts);
+userRouter.get("/user/:id", authMiddleware(["USER"]), usersController.getUser);
+userRouter.post(
+  "/buyProducts",
+  authMiddleware(["USER"]),
+  usersController.buyProducts
+);
 userRouter.get("/return/:link", usersController.returnProduct);
-userRouter.get("/orders/:id", usersController.getOrders);
+userRouter.get(
+  "/orders/:id",
+  authMiddleware(["USER"]),
+  usersController.getOrders
+);
 
 module.exports = userRouter;

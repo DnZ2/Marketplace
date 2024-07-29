@@ -9,6 +9,7 @@ const Order = new Schema({
         required: true,
         ref: "Product",
       },
+      title: { type: String, required: true },
       quantity: { type: Number, required: true },
       price: { type: Number, required: true },
     },

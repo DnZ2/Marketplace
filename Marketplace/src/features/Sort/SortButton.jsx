@@ -4,8 +4,6 @@ import PropTypes from 'prop-types';
 
 const SortButton = memo(function SortButton({sortMethod, onClick, children, id, sortQuery}) {
 
-	console.log("render sort")
-
   return (
 	<button onClick={onClick} id={id} className="flex items-center gap-2">
 		<span>{children}</span>

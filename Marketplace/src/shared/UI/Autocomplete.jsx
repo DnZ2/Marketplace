@@ -30,20 +30,16 @@ const Autocomplete = ({options}) => {
 			</span>
 		</span>
 
-		{isOpen ?
+		{isOpen &&
 		<div className='absolute top-full left-0 w-full flex flex-col divide-y divide-gray-300 divide-solid bg-gray-200 rounded-b-md z-[1]'>
 			{
-			filteredOptions.length === 0 ?
-			<span className='p-2'>No options</span>
-			:
-			filteredOptions?.map((item)=>{
-				return <span className='p-2 hover:bg-gray-400 ' onClick={handlePickOption} key={item}>{item===queryParam ? <span className='flex items-center justify-between'>{item} <Checked /></span> : item}</span>
-			})
+			filteredOptions?.map((item)=>
+				<button className='p-2 hover:bg-gray-400 flex items-center justify-between' onClick={handlePickOption} key={item}>
+					{item} {item===queryParam &&<Checked />}
+				</button>
+			)
 			}
-		</div>
-		:
-		null}
-
+		</div>}
 	</div>
 
   )

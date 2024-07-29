@@ -3,7 +3,7 @@ import Headphones from "../../../assets/Icon-Customer service.svg?react"
 import Shield from "../../../assets/shield-tick.svg?react"
 const Agitation = () => {
   return (
-	<section className="flex items-center justify-center gap-20 mb-36">
+	<section className="flex items-center justify-center gap-20 mb-[70px]">
 		<div className="flex flex-col items-center">
 			<div className="bg-black size-20 rounded-full border-[11px] border-[#7D8184] flex justify-center items-center mb-6">
 				<Delivery className="[&>g>path]:stroke-white"/>

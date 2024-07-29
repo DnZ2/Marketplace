@@ -5,9 +5,11 @@ import { useState } from "react"
 import { useBuyProductsMutation } from "../../shared/redux/query/usersApi"
 import { clearCart } from "../../shared/redux/slices/cartSlice"
 import { useNavigate } from "react-router-dom"
+import TotalPaymentInfo from "../../widgets/TotalPaymentInfo"
 const PaymentPage = () => {
 	const cartTotal = useSelector(state=>state.cart.cartTotal)
 	const cartProducts = useSelector(state=>state.cart.cartProducts)
+	const userId = useSelector(state=>state.user.id)
 	const dispatch = useDispatch()
 	const navigate = useNavigate()
 	const [buyProducts] = useBuyProductsMutation()
@@ -41,12 +43,13 @@ const PaymentPage = () => {
 					productId: item.id,
 					quantity: Number(item.quantity),
 					price: Number(item.price),
+					title: item.title,
 				}})
 				const order = {
-					userId: localStorage.getItem("userId"),
+					userId,
 					paymentAmount: cartTotal.total.toFixed(1),
 					products,
-					address: city+street+house,
+					address: [city, street, house].join(", "),
 				}
 				await buyProducts(order).unwrap()
 				dispatch(clearCart())
@@ -74,17 +77,13 @@ const PaymentPage = () => {
 				<p className="text-2xl">Only cash on delivery</p>
 			</div>
 			<div className="self-center self justify-self-center ">
-				<div className="size-96 flex flex-col divide-y [&>p]:p-3 divide-gray-400 divide-solid">
-					<p className="flex justify-between">Subtotal: <span>${cartTotal.total.toFixed(1)}</span></p>
-					<p className="flex justify-between">Delivery: <span>Free</span></p>
-					<p className="flex justify-between">Total: <span>${cartTotal.total.toFixed(1)}</span></p>
+				<div className="size-96 flex flex-col">
+					<TotalPaymentInfo/>
 					<div className="flex pt-8">
 						<Button type="submit">Place Order</Button>
 					</div>
 				</div>
 			</div>
-
-
 		</form>
 	</div>
   )
