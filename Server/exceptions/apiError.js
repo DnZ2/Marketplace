@@ -11,13 +11,13 @@ module.exports = class ApiError extends Error {
   static UnauthorizedError() {
     return new ApiError(401, "User unauthorized");
   }
-  static BadRequest() {
-    return new ApiError(400, "Bad request", errors);
+  static BadRequest(message, errors = []) {
+    return new ApiError(400, message, errors);
   }
   static AlreadyCreatedProduct() {
     return new ApiError(409, "Already created title");
   }
-  static NotFound() {
+  static NotFound(message, errors = []) {
     return new ApiError(404, message, errors);
   }
 };

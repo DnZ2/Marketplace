@@ -5,18 +5,18 @@ export const useNumberInputHook = (savedValue, maxQuantity) => {
 	const maxWidthInput =
 		String(value).length > 2 ? String(value).length * 10 : 20;
 
-	function handleChangeValue(e) {
-		setValue(e.target.value);
-		if (e.target.value === "" || e.target.value === "0") {
-			setValue("1");
+	function handleChangeValue({ target }) {
+		setValue(parseInt(target.value));
+		if (target.value === "" || target.value === "0") {
+			setValue(1);
 		}
-		if (e.target.value > maxQuantity) {
-			setValue(String(maxQuantity));
+		if (Number(target.value) > maxQuantity) {
+			setValue(parseInt(maxQuantity));
 		}
 	}
 	function handleIncreaseValue() {
 		if (value >= 1 && value < maxQuantity) {
-			setValue((value) => Number(value) + 1);
+			setValue((value) => value + 1);
 		}
 	}
 	function handleDecreaseValue() {

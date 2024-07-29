@@ -1,4 +1,4 @@
-import CardListLayout from "../../../widgets/Layout/CardListLayout";
+import CardListLayout from "../../../widgets/CardListLayout";
 import Navigation from "../../../shared/UI/Navigation";
 import { SwiperSlide, Swiper } from "swiper/react";
 import Phones from "../../../assets/Category-CellPhone.svg?react"

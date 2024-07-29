@@ -1,10 +1,9 @@
-import DeliveryCar from "../assets/icon-delivery.svg?react"
-import DeliveryArrowUp from "../assets/arrow-delivery-up.svg?react"
-import DeliveryArrowDown from "../assets/arrow-delivery-down.svg?react"
-
+import DeliveryCar from "../../../assets/icon-delivery.svg?react"
+import DeliveryArrowUp from "../../../assets/arrow-delivery-up.svg?react"
+import DeliveryArrowDown from "../../../assets/arrow-delivery-down.svg?react"
 const DeliveryLayout = () => {
   return (
-	<div className="flex flex-col gap-4 border-[1px] border-[#7D8184] rounded-md py-6 mt-10">
+	<div className="flex flex-col gap-4 border-[1px] border-[#7D8184] rounded-md py-6">
 		<div className="flex gap-4 items-center pl-4">
 			<DeliveryCar />
 			<div>

@@ -25,13 +25,13 @@ const useSortSelect = (pickOption) => {
 			sortMethod: -1,
 		},
 		{
-			value: "By quantity, ⭡",
-			sortBy: "quantity",
+			value: "By discount, ⭡",
+			sortBy: "discount",
 			sortMethod: 1,
 		},
 		{
-			value: "By quantity, ⭣",
-			sortBy: "quantity",
+			value: "By discount, ⭣",
+			sortBy: "discount",
 			sortMethod: -1,
 		},
 	];

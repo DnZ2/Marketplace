@@ -1,8 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
-	token: localStorage.getItem("token") || "",
-	roles: localStorage.getItem("roles") || [],
-	userId: localStorage.getItem("userId") || "",
+	email: "",
+	id: "",
+	isActivated: "",
+	roles: [],
 };
 
 export const userSlice = createSlice({
@@ -11,14 +12,12 @@ export const userSlice = createSlice({
 	reducers: {
 		setUser(state, action) {
 			localStorage.setItem("token", action.payload.accessToken);
-			localStorage.setItem("roles", action.payload.user.roles);
-			localStorage.setItem("userId", action.payload.user.id);
+			state = action.payload.user;
 			return state;
 		},
 		setInitial() {
 			localStorage.removeItem("token");
-			localStorage.removeItem("roles");
-			localStorage.removeItem("userId");
+			return initialState;
 		},
 	},
 });

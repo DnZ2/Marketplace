@@ -5,6 +5,7 @@ const Product = new Schema({
   description: { type: String },
   discount: { type: Number },
   price: { type: Number, required: true },
+  stockPrice: { type: Number, required: true },
   maxQuantity: { type: Number, required: true },
   category: { type: String, required: true, ref: "Category" },
   rating: {

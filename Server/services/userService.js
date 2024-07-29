@@ -10,6 +10,8 @@ const OrderDto = require("../dtos/orderDto");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const ApiError = require("../exceptions/apiError");
+const Product = require("../models/Product");
+const { updateQuantity } = require("../dtos/productDto");
 
 const registration = async (email, password) => {
   const candidate = await User.findOne({ email });
@@ -107,6 +109,7 @@ const buyProducts = async (body) => {
       address: body.address,
       returnLink,
     });
+    await Product.bulkWrite(updateQuantity(body.products));
   } catch (e) {
     console.log(e);
   }
@@ -117,6 +120,10 @@ const returnItems = async (returnLink) => {
     if (!order) {
       throw ApiError.BadRequest("Wrong activation link");
     }
+    if (order.isReturned) {
+      return;
+    }
+    await Product.bulkWrite(updateQuantity(order.products, "inc"));
     order.isReturned = true;
     await order.save();
   } catch (e) {
@@ -128,6 +135,10 @@ const getOrders = async (userId) => {
   const ordersDto = orders.map((item) => OrderDto.create(item));
   return ordersDto;
 };
+const patchUser = async (userId) =>{
+  const user = await User.findById(userId)
+  
+}
 
 module.exports = {
   registration,

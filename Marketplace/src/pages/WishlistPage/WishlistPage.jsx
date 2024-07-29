@@ -1,6 +1,5 @@
-import ProductCardLayout from "../../entities/Product/UI/ProductCardLayout"
-import CardListLayout from "../../widgets/Layout/CardListLayout"
-import { RedBlock } from "../../widgets/Layout/CardListLayout"
+import MainProductLayout from "../../entities/Product/UI/MainProductLayout"
+import CardListLayout from "../../widgets/CardListLayout"
 import Button from "../../shared/UI/Button"
 import { useDispatch, useSelector } from "react-redux"
 import { addFavouritesToCart } from "../../shared/redux/slices/cartSlice"
@@ -24,16 +23,14 @@ const WishlistPage = () => {
 		{favouriteProducts.length
 		?
 		<CardListLayout
-			titleBlock={null}
-			subtitleBlock={null}
-			subtitle={`Wishlist (${favouriteProducts.length})`}
-			subtitleStyle="text-xl"
-			controls={<Button disabled={!favouriteProducts.length} onClick={handleAddAllFavouritesToCart}>Move All To Bag</Button>}
+			title={`Wishlist (${favouriteProducts.length})`}
+			titleStyle=" text-xl text-black"
+			controls={<Button center="" disabled={!favouriteProducts.length} onClick={handleAddAllFavouritesToCart}>Move All To Bag</Button>}
 			showMore={<Button>Show more</Button>}
 		>
 			<div className="grid grid-cols-[repeat(auto-fill,_minmax(250px,_1fr))] gap-y-14 gap-x-7">
 			{favouriteProducts.map((item)=>{
-				return <ProductCardLayout
+				return <MainProductLayout
 				key={item.id}
 				data={item}
 				controls="delete"
@@ -49,17 +46,15 @@ const WishlistPage = () => {
 		</figure>
 		}
 		{
-			!data.products.length ? null :
+			data.products.length &&
 			<CardListLayout
-			titleBlock={null}
-			subtitleBlock={RedBlock}
-			subtitle="Just For You"
-			subtitleStyle="text-xl"
-			controls={<Button>See All</Button>}>
+			title="Just For You"
+			titleStyle=" text-xl text-black"
+			>
 				<div className="grid grid-cols-[repeat(auto-fill,_minmax(250px,_1fr))] gap-y-14 gap-x-7">
 				{data?.products?.map((item)=>{
 					if(item)
-					return <ProductCardLayout
+					return <MainProductLayout
 					data={item}
 					key={item.id}
 				/>

@@ -16,8 +16,10 @@ const sendActivationMail = async (to, link) => {
     text: "",
     html: `
       <div>
-          <h1>Activation link</h1>
-          <a href="${link}">${link}</a>
+          <h1 style="margin-top: 16px; margin-bottom: 16px;">Activate your account</h1>
+          <a style="display: block; padding: 16px 48px 16px 48px; border-radius: 8px; background-color: #40AD6C; text-decoration: none; font-size: 20px;  color: black;" href="${link}">
+          Activation
+          </a>
       </div>  
     `,
   });
@@ -30,12 +32,17 @@ const sendPaymentInfoMail = async (to, link) => {
   await transporter.sendMail({
     from: process.env.SMTP_USER,
     to,
-    subject: "You buy our products on" + process.env.CLIENT_URL,
+    subject: "You buy our products on " + process.env.CLIENT_URL,
     text: "",
     html: `
       <div>
           <h1>You can return your item within 14 days</h1>
-          <a href="${link}">Cancelation</a>
+          <div style="display: flex; gap: 8px; margin-top: 16px;">
+              <a style="display: block; padding: 16px 48px 16px 48px; background-color: #DB4444; border-radius: 8px;  text-decoration: none;  color: white; font-size: 20px;" href="${link}">Cancelation</a>
+              <a style="display: block; padding: 16px 48px 16px 48px; border-radius: 8px; background-color: #E7E9EB; text-decoration: none; font-size: 20px;  color: black;" href="${
+                process.env.CLIENT_URL + "/profile"
+              }">Post Review</a>
+          </div>
       </div>  
     `,
   });

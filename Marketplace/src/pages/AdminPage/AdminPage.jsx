@@ -1,12 +1,13 @@
 import Button from "../../shared/UI/Button"
 import { useGetProductsQuery } from "../../shared/redux/query/productsApi"
-import AdminCardProduct from '../../entities/Product/UI/AdminCardProduct'
+import AdminCardProduct from '../../entities/Product/UI/AdminProductLayout'
 import { useAdminPageForm } from "./useAdminPageForm"
 import SortButton from "../../features/Sort/SortButton"
-import CategorySelector from "../../features/Filters/CategorySelector"
-import PriceSelector from "../../features/Filters/PriceSelector"
+import CategorySelector from "../../features/Filters/CategorySelector/CategorySelector"
+import PriceSelector from "../../features/Filters/PriceSelector/PriceSelector"
 import useQueryParams from "../ProductsPage/useQueryParams"
 import Loader from "../../shared/UI/Loader"
+import ScrollButton from "../../features/ScrollButton"
 
 function AdminPage() {
 	const {
@@ -42,10 +43,14 @@ function AdminPage() {
 		handleInputMaxQuantity,
 		handleInputPrice,
 		handleInputTitle,
+		handleInputDescription,
+		handleInputDiscount,
 		handleSubmit,
 		maxQuantity,
 		price,
-		title
+		title,
+		discount,
+		description,
 	} = useAdminPageForm()
 	if(isLoading){
 		return <Loader />
@@ -53,12 +58,14 @@ function AdminPage() {
 	const {products, pages, diapason} = data
   return (
     <div className='relative my-11'>
-		<div className='container relative flex items-start'>
-			<form className='sticky top-20 w-[20%]' action="submit" onSubmit={handleSubmit}>
-				<input type="text" placeholder='title' value={title} onChange={handleInputTitle}/>
-				<input type="number" placeholder='price' value={price} onChange={handleInputPrice}/>
-				<input type="number" placeholder='maxQuantity' value={maxQuantity} onChange={handleInputMaxQuantity}/>
-				<input type="text" placeholder='category' value={category} onChange={handleInputCategory}/>
+		<div className='container relative flex items-start gap-6'>
+			<form className='sticky top-20 w-[20%] flex flex-col [&>input]:p-4 gap-3' action="submit" onSubmit={handleSubmit}>
+				<input type="text" placeholder='Title' value={title} onChange={handleInputTitle}/>
+				<input type="number" placeholder='Price' value={price} onChange={handleInputPrice}/>
+				<input type="number" placeholder='Max Quantity' value={maxQuantity} onChange={handleInputMaxQuantity}/>
+				<input type="text" placeholder='Category' value={category} onChange={handleInputCategory}/>
+				<input type="number" placeholder='Discount' min={0} max={90} value={discount} onChange={handleInputDiscount}/>
+				<textarea className="p-4 resize-none h-40" placeholder='Description...' value={description} maxLength={1000} onChange={handleInputDescription}/>
 				{
 					errorMessage &&<p className="text-red-700 bg-red-200">{errorMessage}</p>
 				}
@@ -94,6 +101,7 @@ function AdminPage() {
 				</div>
 			</div>
 		</div>
+		<ScrollButton />
 	</div>
   )
 }

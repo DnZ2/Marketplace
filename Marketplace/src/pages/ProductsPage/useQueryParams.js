@@ -3,9 +3,8 @@ import { useCallback, useState } from "react";
 const useQueryParams = () => {
 	const [searchParams, setSearchParams] = useSearchParams({
 		page: 1,
-		limit: 10,
+		limit: 8,
 	});
-	const pageParam = searchParams.get("page") || 1;
 	const limitParam = searchParams.get("limit") || 10;
 	const searchParam = searchParams.get("search") || "";
 	const sortParam = searchParams.get("sort") || "price";
@@ -14,13 +13,7 @@ const useQueryParams = () => {
 	const minPrice = searchParams.get("from") || "";
 	const maxPrice = searchParams.get("to") || "";
 	const [sortQuery, setSortQuery] = useState("");
-	const handleChangePage = ({ target }) => {
-		window.scrollTo(0, 0);
-		setSearchParams({
-			...Object.fromEntries(searchParams),
-			page: target.innerHTML,
-		});
-	};
+
 	const handleSearchQuery = (e) => {
 		e.preventDefault();
 		if (e.target.search.value) {
@@ -55,8 +48,8 @@ const useQueryParams = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[sortMethod, sortQuery]
 	);
-	const handleFilterByCategory = (value) => {
-		if (value === "All Products") {
+	const handleFilterByCategory = (value, defaultValue) => {
+		if (value === defaultValue) {
 			searchParams.delete("category");
 			setSearchParams({ ...Object.fromEntries(searchParams), page: 1 });
 		} else {
@@ -105,7 +98,6 @@ const useQueryParams = () => {
 	};
 
 	return {
-		pageParam,
 		limitParam,
 		searchParam,
 		sortParam,
@@ -115,7 +107,6 @@ const useQueryParams = () => {
 		maxPrice,
 		sortQuery,
 		handleSearchQuery,
-		handleChangePage,
 		handleSort,
 		handleFilterByCategory,
 		handleFilterByPrice,

@@ -63,7 +63,8 @@ const postProducts = async (
 
   const product = await Product.create({
     title,
-    price,
+    price: parseFloat((price - (price * discount) / 100).toFixed(1)),
+    stockPrice: price,
     maxQuantity,
     category,
     description,
@@ -94,7 +95,8 @@ const patchProducts = async (
       throw ApiError.NotFound();
     }
     product.title = title;
-    product.price = price;
+    product.stockPrice = price;
+    product.price = parseFloat((price - (price * discount) / 100).toFixed(1));
     product.maxQuantity = maxQuantity;
     product.category = category;
     product.discount = discount;

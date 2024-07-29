@@ -27,7 +27,7 @@ function CartProductLayout({src=image, data}) {
 			</div>
 			<p>${data.price}</p>
 			<NumberInput handleChangeValue={handleChangeValue} handleDecreaseValue={handleDecreaseValue} handleIncreaseValue={handleIncreaseValue} maxWidthInput={maxWidthInput} value={value}/>
-			<p>${data.subtotal.toFixed(1)}</p>
+			<p>${data.subtotal}</p>
 			<DeleteButton onClick={()=>dispatch(removeProductFromCart(data))} type="secondary"/>
 		</div>
   )

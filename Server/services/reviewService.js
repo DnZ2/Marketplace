@@ -9,7 +9,6 @@ const getProductReviews = async (productId) => {
     if (!productReviews.length) {
       return [];
     }
-
     const reviewDto = productReviews.map((item) =>
       ReviewDTO.createProductReview(item)
     );
@@ -39,7 +38,7 @@ const postReview = async (userId, productId, text, ratingValue) => {
     if (!user || !product) {
       throw ApiError.BadRequest();
     }
-    const review = await Review.create({
+    await Review.create({
       userId,
       productId,
       text,

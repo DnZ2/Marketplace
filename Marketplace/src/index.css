@@ -27,6 +27,9 @@ input[type="search"]::-webkit-search-results-decoration {
 li {
 	list-style: none;
 }
+textarea {
+	resize: none;
+}
 body,
 html {
 	height: 100%;
@@ -41,7 +44,7 @@ html {
 }
 @layer components {
 	.container {
-		max-width: 1440px;
+		max-width: 1170px;
 		margin: 0 auto;
 	}
 	.darkside {
