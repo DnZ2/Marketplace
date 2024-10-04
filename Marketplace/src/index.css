@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+img {
+	display: block;
+}
+input {
+	display: block;
+	outline: none;
+	border: none;
+}
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+	display: none;
+}
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+	appearance: none;
+}
+li {
+	list-style: none;
+}
+textarea {
+	resize: none;
+}
+body,
+html {
+	height: 100%;
+	background-color: #f7f7fc;
+	color: #000000;
+	font-family: "Poppins", sans-serif;
+	font-weight: 400;
+	font-style: normal;
+	position: relative;
+}
+#root {
+	height: 100%;
+}
+@layer components {
+	.container {
+		max-width: 1170px;
+		margin: 0 auto;
+	}
+	.darkside {
+		background-color: black;
+		color: white;
+	}
+}
