@@ -1,6 +1,4 @@
 const User = require("../models/User");
-const Role = require("../models/Role");
-const Token = require("../models/Token");
 const Order = require("../models/Order");
 const uuid = require("uuid");
 const mailService = require("./mailService");
@@ -8,62 +6,16 @@ const tokenService = require("./tokenService");
 const UserDto = require("../dtos/userDto");
 const OrderDto = require("../dtos/orderDto");
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
 const ApiError = require("../exceptions/apiError");
 const Product = require("../models/Product");
 const { updateQuantity } = require("../dtos/productDto");
 
-const registration = async (email, password) => {
-  const candidate = await User.findOne({ email });
-  if (candidate) {
-    throw ApiError.BadRequest(
-      `User with adress mail ${email} already registered`
-    );
-  }
-  const hashPassword = bcrypt.hashSync(password, 7);
-  const activationLink = uuid.v4();
-  const userRole = await Role.findOne({ value: "USER" });
-  const user = await User.create({
-    email,
-    password: hashPassword,
-    activationLink,
-    roles: [userRole.value],
-  });
-  await mailService.sendActivationMail(
-    email,
-    `${process.env.API_URL}/api/activate/${activationLink}`
-  );
-  const userDto = UserDto.createUserDto(user);
-  const tokens = tokenService.generateTokens({ ...userDto });
-  await tokenService.saveToken(userDto.id, tokens.refreshToken);
-  return { ...tokens, user: userDto };
-};
-const login = async (email, password) => {
-  const user = await User.findOne({ email });
-  if (!user) {
-    throw ApiError.BadRequest("User not found");
-  }
-  const isPassEqual = await bcrypt.compare(password, user.password);
-  if (!isPassEqual) {
-    throw ApiError.BadRequest("Wrong password");
-  }
-  const userDto = UserDto.createUserDto(user);
-  const tokens = tokenService.generateTokens({ ...userDto });
-  await tokenService.saveToken(userDto.id, tokens.refreshToken);
-  return { ...tokens, user: userDto };
-};
-const getUser = async (id) => {
-  const user = await User.findById(id);
+const getUser = async (token) => {
+  const tokenData = tokenService.validateAccessToken(token);
+  const user = await User.findById(tokenData.id);
   return UserDto.createUserDto(user);
 };
-const logout = async (refreshToken) => {
-  try {
-    const token = await Token.deleteOne({ refreshToken });
-    return token;
-  } catch (e) {
-    console.log(e);
-  }
-};
+
 const activation = async (activationLink) => {
   try {
     const user = await User.findOne({ activationLink });
@@ -76,21 +28,7 @@ const activation = async (activationLink) => {
     console.log(e);
   }
 };
-const refresh = async (refreshToken) => {
-  if (!refreshToken) {
-    throw ApiError.UnauthorizedError();
-  }
-  const userData = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET);
-  const tokenData = await Token.findOne({ refreshToken });
-  if (!userData || !tokenData) {
-    throw ApiError.UnauthorizedError();
-  }
-  const user = await User.findById(userData.id);
-  const userDto = UserDto.createUserDto(user);
-  const tokens = tokenService.generateTokens({ ...userDto });
-  await tokenService.saveToken(userDto.id, tokens.refreshToken);
-  return { ...tokens, user: userDto };
-};
+
 const buyProducts = async (body) => {
   try {
     const user = await User.findById(body.userId);
@@ -114,6 +52,7 @@ const buyProducts = async (body) => {
     console.log(e);
   }
 };
+
 const returnItems = async (returnLink) => {
   try {
     const order = await Order.findOne({ returnLink });
@@ -130,13 +69,15 @@ const returnItems = async (returnLink) => {
     console.log(e);
   }
 };
+
 const getOrders = async (userId) => {
   const orders = await Order.find({ userId });
   const ordersDto = orders.map((order) => OrderDto.create(order));
   return ordersDto;
 };
-const patchUser = async (userId, userData) => {
-  const user = await User.findById(userId);
+
+const editUser = async (userData) => {
+  const user = await User.findOne({ email: userData.email });
   const isPassEqual = await bcrypt.compare(
     userData.currentPassword,
     user.password
@@ -144,17 +85,19 @@ const patchUser = async (userId, userData) => {
   if (!isPassEqual) {
     throw ApiError.BadRequest("Wrong password");
   }
+  const hashPassword = bcrypt.hashSync(userData.password, 7);
+  user.username = userData.username;
+  user.address = userData.address;
+  user.email = userData.email;
+  user.password = hashPassword;
   await user.save();
+  return UserDto.createUserDto({ ...user, ...userData });
 };
 
 module.exports = {
-  registration,
-  login,
   getUser,
-  patchUser,
-  logout,
+  editUser,
   activation,
-  refresh,
   buyProducts,
   returnItems,
   getOrders,

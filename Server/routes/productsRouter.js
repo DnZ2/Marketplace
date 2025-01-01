@@ -6,7 +6,6 @@ const authMiddleware = require("../middlewares/authMiddleware");
 
 productsRouter.get("/products", productsController.getProducts);
 productsRouter.get("/products/:id", productsController.getProduct);
-productsRouter.get("/categories", productsController.getCategories);
 productsRouter.post(
   "/products",
   body("title").isString(),

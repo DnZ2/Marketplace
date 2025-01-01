@@ -9,7 +9,7 @@ const create = (product) => {
     discount: product.discount,
     rating: product.rating,
     category: product.category,
-    settings: product.settings,
+    createdAt: product.createdAt,
   };
 };
 const updateQuantity = (array, type) => {
@@ -23,7 +23,16 @@ const updateQuantity = (array, type) => {
   }));
   return updates;
 };
+const updateCategories = (array, value) => {
+  const updates = array.map(() => ({
+    updateMany: {
+      update: { value },
+    },
+  }));
+  return updates;
+};
 module.exports = {
   create,
   updateQuantity,
+  updateCategories,
 };

@@ -13,8 +13,8 @@ const getProductReviews = async (req, res, next) => {
 };
 const getUserReviews = async (req, res, next) => {
   try {
-    const id = req.params.id;
-    const reviews = await reviewService.getUserReviews(id);
+    const token = req.headers.authorization.split(" ")[1];
+    const reviews = await reviewService.getUserReviews(token);
     return res.json(reviews);
   } catch (e) {
     next(e);
@@ -48,7 +48,6 @@ const patchReview = async (req, res, next) => {
     const { userId, text = "", rating } = req.body;
     const review = await reviewService.patchReview(
       userId,
-      productId,
       reviewId,
       text,
       rating

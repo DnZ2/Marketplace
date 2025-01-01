@@ -31,15 +31,10 @@ const getProducts = async (
       category: { $regex: category },
       price: { $gte: Number(minPrice), $lte: Number(maxPrice) },
     });
-    const pages = [];
-    let count = 1;
+
     const countPages = Math.ceil(countProducts / limit);
-    while (count <= countPages) {
-      pages.push(count);
-      count++;
-    }
     const products = allProducts.map((item) => ProductDto.create(item));
-    return { products, pages };
+    return { products, pages: countPages };
   } catch (e) {
     console.log(e);
   }
@@ -70,8 +65,6 @@ const postProducts = async (
     description,
     discount,
   });
-  const productDto = ProductDto.create(product);
-  return productDto;
 };
 const patchProducts = async (
   id,
@@ -121,11 +114,6 @@ const getProduct = async (id) => {
   const productDto = ProductDto.create(product);
   return productDto;
 };
-const getCategories = async () => {
-  const categories = await Category.find();
-  const categoriesDto = categories.map((item) => item.value);
-  return categoriesDto;
-};
 
 module.exports = {
   getProducts,
@@ -133,5 +121,4 @@ module.exports = {
   patchProducts,
   deleteProducts,
   getProduct,
-  getCategories,
 };

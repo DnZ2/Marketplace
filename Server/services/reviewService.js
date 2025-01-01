@@ -4,6 +4,7 @@ const ReviewDTO = require("../dtos/reviewDto");
 const Product = require("../models/Product");
 const User = require("../models/User");
 const Order = require("../models/Order");
+const tokenService = require("../services/tokenService");
 const getProductReviews = async (productId) => {
   try {
     const productReviews = await Review.find({ productId }).populate("userId");
@@ -18,8 +19,9 @@ const getProductReviews = async (productId) => {
     console.log(e);
   }
 };
-const getUserReviews = async (userId) => {
+const getUserReviews = async (token) => {
   try {
+    const userId = tokenService.validateAccessToken(token).id;
     const userReviews = await Review.find({ userId }).populate("productId");
     if (!userReviews.length) {
       return [];

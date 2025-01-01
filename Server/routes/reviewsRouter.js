@@ -6,7 +6,7 @@ const authMiddleware = require("../middlewares/authMiddleware");
 
 reviewsRouter.get("/review/product/:id", reviewsController.getProductReviews);
 reviewsRouter.get(
-  "/review/user/:id",
+  "/review/user",
   authMiddleware(["USER"]),
   reviewsController.getUserReviews
 );

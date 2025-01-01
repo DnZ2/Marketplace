@@ -49,7 +49,7 @@ const postProducts = async (req, res, next) => {
       description = "",
       discount = 0,
     } = req.body;
-    const product = await productService.postProducts(
+    await productService.postProducts(
       title,
       price,
       maxQuantity,
@@ -57,7 +57,6 @@ const postProducts = async (req, res, next) => {
       description,
       discount
     );
-    return res.json(product);
   } catch (e) {
     next(e);
   }
@@ -70,7 +69,7 @@ const patchProducts = async (req, res, next) => {
     }
     const id = req.params.id;
     const { title, price, maxQuantity, category, discount } = req.body;
-    const product = await productService.patchProducts(
+    await productService.patchProducts(
       id,
       title,
       price,
@@ -78,7 +77,6 @@ const patchProducts = async (req, res, next) => {
       category,
       discount
     );
-    return res.json(product);
   } catch (e) {
     next(e);
   }
@@ -86,8 +84,7 @@ const patchProducts = async (req, res, next) => {
 const deleteProducts = async (req, res, next) => {
   try {
     const id = req.params.id;
-    const result = await productService.deleteProducts(id);
-    return res.json(result);
+    await productService.deleteProducts(id);
   } catch (e) {
     next(e);
   }
@@ -101,14 +98,6 @@ const getProduct = async (req, res, next) => {
     next(e);
   }
 };
-const getCategories = async (req, res, next) => {
-  try {
-    const categories = await productService.getCategories();
-    return res.json(categories);
-  } catch (e) {
-    next(e);
-  }
-};
 
 module.exports = {
   postProducts,
@@ -116,5 +105,4 @@ module.exports = {
   getProducts,
   deleteProducts,
   getProduct,
-  getCategories,
 };
