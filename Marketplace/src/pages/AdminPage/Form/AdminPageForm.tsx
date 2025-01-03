@@ -1,4 +1,3 @@
-import AdminCategorySelect from "../Select/AdminCategorySelect"
 import PropTypes from "prop-types"
 import Button from "../../../shared/UI/Button/Button"
 import { useForm } from "react-hook-form"
@@ -21,8 +20,7 @@ const AdminPageForm = ({categories}) => {
     const onSubmit = (data, {target}) => console.log(data, target.category.value)
     return (
         <Form className='sticky top-20 flex flex-col gap-3 max-w-60' action="submit" onSubmit={handleSubmit(onSubmit)}>
-            <Input className="bg-white" errorMessage={errors.title} {...register("title")} placeholder='Title' />
-            <AdminCategorySelect className="p-3 w-full" categories={categories} />
+            <Input className="bg-white" invalid={!!errors.title} {...register("title")} placeholder='Title' />
             <AdminFormNumberInput errorMessage={errors.price} {...register("price")} placeholder='Price' />
             <AdminFormNumberInput errorMessage={errors.maxQuantity} {...register("maxQuantity")} placeholder='Max Quantity'/>
             <AdminFormNumberInput errorMessage={errors.discount} {...register("discount")} placeholder='Discount' maxValue={90}/>

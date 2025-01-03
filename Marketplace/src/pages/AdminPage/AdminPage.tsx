@@ -1,9 +1,6 @@
 import { useGetProductsQuery } from "../../shared/redux/query/endpoints/productsApi"
 import { useGetCategoriesQuery } from "../../shared/redux/query/endpoints/categoriesApi"
-import SortSelector from "../../features/Sort/SortSelector"
 import { Label } from "../../shared/UI/Form"
-import CategorySelector from "../../features/Filters/CategorySelector"
-import PriceSelector from "../../features/Filters/PriceSelector/UI/PriceSelector"
 import useQueryParams from "../../features/ProductQueryActions/useQueryParams"
 import Loader from "../../shared/UI/Loader"
 import ScrollButton from "../../features/ScrollButton/ScrollButton"
@@ -22,8 +19,6 @@ function AdminPage() {
         minPrice,
         maxPrice,
         handleSearchQuery,
-        handleFilterByCategory,
-        handleResetCategoryParam,
     } = useQueryParams()
     const {data: categories, isLoading: isCategoriesLoading} = useGetCategoriesQuery()
     const {data, isLoading: isProductsLoading} = useGetProductsQuery({
@@ -56,15 +51,12 @@ function AdminPage() {
                         <div className="w-full flex gap-4 items-center">
                             <div>
                                 <Label htmlFor={sortSelectId} className="pl-1 text-xs text-gray-400">Sorted by</Label>
-                                <SortSelector id={sortSelectId} />
                             </div>
                             <div>
                                 <Label htmlFor={categorySelectId} className="pl-1 text-xs text-gray-400">Category</Label>
-                                <CategorySelector className="p-2" id={categorySelectId} filter={handleFilterByCategory} resetFilter={handleResetCategoryParam} categories={categories} saved={categoryParam}/>
                             </div>
                             <div>
                                 <Label htmlFor={priceSelectId} className="pl-1 text-xs text-gray-400">Price selector</Label>
-                                <PriceSelector id={priceSelectId} diapason={diapason}/>
                             </div>
                         </div>
                     </div>

@@ -8,7 +8,6 @@ import PropTypes from "prop-types"
 import {useState, useRef, useEffect} from "react"
 import { ProductImg } from "../../../entities/Product/UI"
 import { useAdminProductControlls } from "./useAdminProductControlls"
-import AdminCategorySelect from "../Select/AdminCategorySelect"
 const AdminProductCard = ({data, categories, img=image}) => {
     const {
         handleFirstAction,
