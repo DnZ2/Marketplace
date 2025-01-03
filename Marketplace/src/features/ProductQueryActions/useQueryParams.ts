@@ -7,14 +7,14 @@ type SortMethod = Required<Pick<QueryParams,"sortMethod">>["sortMethod"]
 const useQueryParams = () => {
     const [searchParams, setSearchParams] = useSearchParams({
         page: "1",
-        limit: "8",
+        limit: "4",
     });
     const pageParam = Number(searchParams.get("page")) || 1;
-    const limitParam = searchParams.get("limit") || "8";
+    const limitParam = searchParams.get("limit") || "4";
     const searchParam = searchParams.get("search") || "";
     const sortParam = searchParams.get("sort") as SortParam || "price";
     const sortMethod = searchParams.get("sortMethod") as SortMethod || "1";
-    const categoryParam = searchParams.get("category") || "";
+    const categoryParam = searchParams.get("category") || "" ;
     const minPrice = searchParams.get("from") || "";
     const maxPrice = searchParams.get("to") || "";
 
@@ -44,21 +44,21 @@ const useQueryParams = () => {
             });
         }
     })
-    const handleFilterByCategory = useEvent((value: string) => {
+    const handleFilterByCategory = (value: string) => {
         setSearchParams({
             ...Object.fromEntries(searchParams),
             category: value,
             page: "1",
         });
-    })
-    const handleResetCategoryParam = useEvent(() => {
+    }
+    const handleResetCategoryParam = () => {
         searchParams.delete("category");
         setSearchParams({
             ...Object.fromEntries(searchParams),
             page: "1"
         });
-    })
-    const handleFilterByPrice = useEvent((from?:number, to?:number) => {
+    }
+    const handleFilterByPrice = (from?:number, to?:number) => {
         if (!from && !to) {
             searchParams.delete("from");
             searchParams.delete("to");
@@ -85,16 +85,16 @@ const useQueryParams = () => {
                 page: "1"
             });
         }
-    })
-    const handleSortSelect = useEvent((sortBy: "price"|"discount"|"title", sortMethod: "1"|"-1") => {
+    }
+    const handleSortSelect =(sortBy: "price"|"discount"|"title", sortMethod: "1"|"-1") => {
         setSearchParams({
             ...Object.fromEntries(searchParams),
             sort: sortBy,
             sortMethod,
             page: "1",
         });
-    })
-
+    }
+    
     return {
         pageParam,
         limitParam,

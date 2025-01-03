@@ -1,15 +1,11 @@
-import { useId } from "react"
-import { useGetProductsQuery } from "../../shared/redux/query/endpoints/productsApi"
-import { useGetCategoriesQuery } from "../../shared/redux/query/endpoints/categoriesApi"
-import useQueryParams from "../../features/ProductQueryActions/useQueryParams"
-import CategorySelector from "../../features/Filters/CategorySelector"
-import PriceSelector from "../../features/Filters/PriceSelector/UI/PriceSelector"
-import SortSelector from "../../features/Sort/SortSelector"
-import Loader from "../../shared/UI/Loader"
-import { Label } from "../../shared/UI/Form"
+import { useGetProductsQuery } from "shared/redux/query/endpoints/productsApi"
+import Loader from "shared/UI/Loader"
+import { Label } from "shared/UI/Form"
 import ProductsList from "./UI/ProductsList"
-import ProductPagination from "features/ProductQueryActions/UI/ProductPagination"
-import ShowMoreButton from "features/ProductQueryActions/UI/ShowMoreButton"
+import { ProductFilterByCategory,ProductPagination,ProductPriceSelector,ProductSearchForm,ProductSortSelector,ShowMoreButton } from "features/ProductQueryActions/UI"
+import useQueryParams from "features/ProductQueryActions/useQueryParams"
+import { useId } from "react"
+
 const ProductsPage = () => {
     const {
         pageParam,
@@ -20,11 +16,8 @@ const ProductsPage = () => {
         categoryParam,
         minPrice,
         maxPrice,
-        handleSearchQuery,
-        handleFilterByCategory,
-        handleResetCategoryParam,
     } = useQueryParams()
-    const {data, isLoading} = useGetProductsQuery({
+    const {data, isLoading: isProductsLoading} = useGetProductsQuery({
         pageParam,
         limitParam,
         searchParam,
@@ -34,33 +27,32 @@ const ProductsPage = () => {
         minPrice,
         maxPrice
     })
-    const {data: categories} = useGetCategoriesQuery()
-    const categorySelectId = useId()
-    const priceSelectId = useId()
-    const sortSelectId = useId()
 
-    if(isLoading || !data){
+    const categorySelectorId = useId()
+    const sortSelectorId = useId()
+    const priceSelectorId = useId()
+
+    if(isProductsLoading || !data){
         return <Loader />
     }
-    const {products, pages, diapason} = data
+
+    const {diapason, pages, products} = data
+
     return (
         <div className="container my-11 flex flex-col gap-8">
-            <form className="w-full flex" onSubmit={handleSearchQuery}>
-                <input className="text-2xl rounded-s-xl p-2 w-full" type="search" name="search" placeholder="Query..."/>
-                <button className="p-2 text-xl size-12 bg-gray-200 rounded-e-xl flex justify-center items-center" type="submit">S</button>
-            </form>
+            <ProductSearchForm />
             <div className="w-full flex gap-4 items-center">
                 <div>
-                    <Label htmlFor={sortSelectId} className="pl-1 text-xs text-gray-400">Sorted by</Label>
-                    <SortSelector id={sortSelectId}/>
+                    <Label htmlFor={sortSelectorId} className="pl-1 text-xs text-gray-400">Sorted by</Label>
+                    <ProductSortSelector id={sortSelectorId}/>
                 </div>
                 <div>
-                    <Label htmlFor={categorySelectId} className="pl-1 text-xs text-gray-400">Category</Label>
-                    <CategorySelector className="p-2" id={categorySelectId} filter={handleFilterByCategory} resetFilter={handleResetCategoryParam} categories={categories} saved={categoryParam}/>
+                    <Label htmlFor={categorySelectorId} className="pl-1 text-xs text-gray-400">Category</Label>
+                    <ProductFilterByCategory id={categorySelectorId}/>
                 </div>
                 <div>
-                    <Label htmlFor={priceSelectId} className="pl-1 text-xs text-gray-400">Price selector</Label>
-                    <PriceSelector id={priceSelectId} diapason={diapason} />
+                    <Label htmlFor={priceSelectorId} className="pl-1 text-xs text-gray-400">Price selector</Label>
+                    <ProductPriceSelector id={priceSelectorId} diapason={diapason}/>
                 </div>
             </div>
             <ProductsList products={products}/>

@@ -2,17 +2,17 @@ const { updateCategories } = require("../dtos/productDto");
 const ApiError = require("../exceptions/apiError");
 const Category = require("../models/Category");
 const Product = require("../models/Product");
+const categoriesDto = require("../dtos/categoriesDto");
 
 const getCategories = async () => {
   const categories = await Category.find();
-  const categoriesDto = categories.map((item) => item.value);
-  return categoriesDto;
+  return categories.map((item) => categoriesDto.create(item));
 };
 const postCategory = async (body) => {
   const isCategory = await Category.find({ value: body.value });
   if (isCategory) throw ApiError.AlreadyCreatedProduct();
   const newCategory = await Category.create({ value: body.value });
-  return newCategory.value;
+  return categoriesDto.create(newCategory);
 };
 const putCategory = async (body) => {
   const productsByCategory = Product.find({ category: body.prev });
@@ -22,7 +22,7 @@ const putCategory = async (body) => {
   category.value = body.value;
   await Product.bulkWrite(updateCategories(productsByCategory, body.value));
   await category.save();
-  return category.value;
+  return categoriesDto.create(category);
 };
 const deleteCategory = async (id) => {
   await Category.findByIdAndDelete(id);

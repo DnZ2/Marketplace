@@ -1,10 +1,10 @@
-interface Variants {
+export interface Variant {
 	value: string
 	sortBy: "price" | "title" | "discount"
 	sortMethod: "-1" | "1"
 }
 
-export const variants: Variants[] = [
+export const variants: Variant[] = [
     {
         value: "Minimal price",
         sortBy: "price",
