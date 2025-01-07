@@ -2,6 +2,7 @@ import HeaderSearchWrapper from './UI/HeaderSearchWrapper'
 import HeaderSearchTrigger from './UI/HeaderSearchTrigger'
 import HeaderSearchContent from './UI/HeaderSearchContent'
 import useSearchDebounce from './useSearchDebounce'
+import { memo } from 'react'
 const HeaderSearch = () => {
     const {requiredProducts, searchDebounceRef, isOpen, isInputOpen, props, handleOpenInput, onControls} = useSearchDebounce()
     return (
@@ -12,4 +13,4 @@ const HeaderSearch = () => {
     )
 }
 
-export default HeaderSearch
+export default memo(HeaderSearch)

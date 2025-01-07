@@ -1,4 +1,4 @@
-import { FC, MouseEventHandler } from "react"
+import {  memo, MouseEventHandler } from "react"
 import Arrow from "../../../assets/fa-angle-down.svg?react"
 
 
@@ -8,7 +8,8 @@ interface Props {
 	decrease: MouseEventHandler<HTMLButtonElement>
 }
 
-const NumberInputControlls: FC<Props> = ({increase, decrease}) => {
+const NumberInputControlls = (props: Props) => {
+    const {increase, decrease} = props
     return (
         <div className="bg-white absolute top-1/2 -translate-y-1/2 right-0 flex flex-col">
             <button type="button" className="px-2 py-[5px]" onClick={increase}>
@@ -21,4 +22,4 @@ const NumberInputControlls: FC<Props> = ({increase, decrease}) => {
     )
 }
 
-export default NumberInputControlls
+export default memo(NumberInputControlls)

@@ -3,6 +3,7 @@ import { useAppSelector } from "../../../../shared/redux/store"
 import Dropdown from "../../../../features/Dropdown"
 import { useLocation } from "react-router-dom"
 import CartDropdownTrigger from "./UI/CartDropdownTrigger"
+import { memo } from "react"
 const CartDropdown = () => {
     const cartProducts = useAppSelector(state=>state.cart.cartProducts)
     const location = useLocation()
@@ -14,4 +15,4 @@ const CartDropdown = () => {
     )
 }
 
-export default CartDropdown
+export default memo(CartDropdown)

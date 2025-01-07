@@ -1,5 +1,5 @@
 import Minus from "../../../assets/minus.svg?react"
-import { ComponentPropsWithoutRef, FC } from "react"
+import { ComponentPropsWithoutRef, FC, memo } from "react"
 
 const DecreaseButton: FC<ComponentPropsWithoutRef<"button">> = ({...props}) => {
     return (
@@ -9,4 +9,4 @@ const DecreaseButton: FC<ComponentPropsWithoutRef<"button">> = ({...props}) => {
     )
 }
 
-export default DecreaseButton
+export default memo(DecreaseButton)

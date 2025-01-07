@@ -10,10 +10,9 @@ import { FC } from "react";
 
 interface Props {
 	data: Product
-	image?: string
 }
 
-const MainProductCard: FC<Props> = ({image=NoPhoto, data}) => {
+const MainProductCard: FC<Props> = ({data}) => {
     const isProductInCart = useAppSelector(state=>state.cart.cartProducts.find((product)=>product.id===id))
     const isFavourite = useAppSelector(state=>state.favourite.favouriteProducts.find(product=>product.id===data.id))
     const dispatch = useAppDispatch()
@@ -26,7 +25,7 @@ const MainProductCard: FC<Props> = ({image=NoPhoto, data}) => {
     return (
         <ProductCard>
             <ProductMain className="[&>button]:hover:bottom-0">
-                <ProductImg className="w-[60%]" src={image}/>
+                <ProductImg className="w-[60%]" src={NoPhoto}/>
                 <TopLeftSide>
                     <ProductBadge isDiscount={discount>0}>-{discount}%</ProductBadge>
                     <ProductBadge isNew={Date.now() - createdAt > 12096000}>NEW</ProductBadge>

@@ -3,7 +3,7 @@ import { useGetOrdersQuery } from "shared/redux/query/endpoints/usersApi"
 import Loader from "shared/UI/Loader"
 import UserOrder from "./UserOrder"
 
-const UserOrdersPage = () => {
+export const UserOrdersPage = () => {
     const userId = useAppSelector(state=>state.user.id)
     const {data: orders, isOrdersLoading} = useGetOrdersQuery(userId)
 
@@ -24,4 +24,4 @@ const UserOrdersPage = () => {
     )
 }
 
-export default UserOrdersPage
+

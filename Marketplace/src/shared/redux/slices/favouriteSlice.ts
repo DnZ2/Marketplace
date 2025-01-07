@@ -1,6 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSelector, createSlice } from "@reduxjs/toolkit";
 import { Product } from "../query/endpoints/productsApi";
-import { LocalStorage } from "shared/lib/local-storage";
+import { RootState } from "../store";
 export interface FavouriteProduct extends Pick<Product, "id" | "discount" | "title" | "maxQuantity" | "price"> {
 	currentPrice: number
 }
@@ -8,7 +8,7 @@ export interface FavouriteState {
 	favouriteProducts: FavouriteProduct[]
 }
 const initialState: FavouriteState = {
-    favouriteProducts: LocalStorage.get<FavouriteProduct[]>("favourite") || []
+    favouriteProducts: []
 };
 export const favouriteSlice = createSlice({
     name: "favourite",
@@ -33,5 +33,10 @@ export const favouriteSlice = createSlice({
 });
 export const { addProductToFavourite, removeProductFromFavourite } =
 	favouriteSlice.actions;
+
+export const selectWishlistCounter = createSelector(
+    (store: RootState)=>store.favourite.favouriteProducts,
+    (wishlist)=>wishlist.length
+)
 
 export default favouriteSlice.reducer;

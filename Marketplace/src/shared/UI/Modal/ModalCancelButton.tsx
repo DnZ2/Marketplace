@@ -1,11 +1,12 @@
-import { ComponentPropsWithoutRef, FC } from "react"
+import { ComponentPropsWithoutRef, memo } from "react"
 import Button from "../Button/Button"
 
 interface Props extends ComponentPropsWithoutRef<"button">{}
 
-const ModalCancelButton: FC<Props> = ({children, ...props}) => {
+const ModalCancelButton = (props: Props) => {
+    const {children, ...otherProps} = props
     return (
-        <Button className="mx-auto" variant="secondary" size="secondary" {...props}>{children}</Button>
+        <Button className="mx-auto" variant="secondary" size="secondary" {...otherProps}>{children}</Button>
     )
 }
-export default ModalCancelButton
+export default memo(ModalCancelButton) 

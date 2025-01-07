@@ -7,7 +7,7 @@ import MainProductCard from "../../../widgets/MainProductCard"
 
 const BestSellingProducts = () => {
     const {data, isLoading} = useGetProductsQuery({})
-    if(isLoading){
+    if(isLoading || !data){
         return <Loader/>
     }
     return (

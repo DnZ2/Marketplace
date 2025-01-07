@@ -1,10 +1,11 @@
-import { ComponentPropsWithoutRef, FC } from "react"
+import { ComponentPropsWithoutRef } from "react"
 
 interface Props extends ComponentPropsWithoutRef<"div">{
 	align: "self-end" | "self-center" | "self-start"
 }
 
-const ModalControls: FC<Props> = ({children, align}) => {
+const ModalControls = (props: Props) => {
+    const {children, align} = props
     return (
         <div className={`${align} self flex gap-3`}>
             {children}

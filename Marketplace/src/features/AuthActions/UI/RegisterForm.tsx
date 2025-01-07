@@ -8,7 +8,7 @@ import { ErrorMessage, Form, FormField } from "shared/UI/Form"
 import { SerializedError } from "@reduxjs/toolkit"
 import Button from "shared/UI/Button/Button"
 
-const RegisterForm = () => {
+export const RegisterForm = () => {
     const [registration, {message: serverError}] = useRegistrationMutation<SerializedError>()
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors } } = useForm({
@@ -40,6 +40,6 @@ const RegisterForm = () => {
     )
 }
 
-export default RegisterForm
+
 
 

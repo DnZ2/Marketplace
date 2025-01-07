@@ -8,7 +8,7 @@ import { useId } from "react"
 import AdminPageForm from "./Form/AdminPageForm"
 import AdminProductsTable from "./Table/AdminProductsTable"
 import ProductPagination from "features/ProductQueryActions/UI/ProductPagination"
-function AdminPage() {
+export const AdminPage=()=> {
     const {
         pageParam,
         limitParam,
@@ -68,5 +68,3 @@ function AdminPage() {
         </div>
     )
 }
-
-export default AdminPage

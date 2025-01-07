@@ -1,5 +1,5 @@
 import Checked from "assets/checked-svgrepo-com.svg?react"
-import { ComponentPropsWithoutRef, FC } from 'react';
+import { ComponentPropsWithoutRef, memo } from 'react';
 import { Diapason } from 'shared/redux/query/endpoints/productsApi';
 import { Form } from 'shared/UI/Form';
 import { useForm } from "react-hook-form";
@@ -15,7 +15,10 @@ interface Props extends ComponentPropsWithoutRef<"form">{
 	id?: string
 }
 
-const PriceSelector: FC<Props> = ({className, diapason, id}) => {
+const PriceSelector = memo((props: Props) => {
+    
+    const {className, diapason, id} = props
+
     const {handleFilterByPrice} = useQueryParams()
 
     const {
@@ -51,6 +54,6 @@ const PriceSelector: FC<Props> = ({className, diapason, id}) => {
             </Button>
         </Form>
     )
-}
+})
 
 export default PriceSelector

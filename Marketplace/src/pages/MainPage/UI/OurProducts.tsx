@@ -5,7 +5,7 @@ import CardsWrapper from "../../../shared/UI/CardsWrapper"
 import MainProductCard from "../../../widgets/MainProductCard"
 const OurProducts = () => {
     const {data, isLoading} = useGetProductsQuery({})
-    if(isLoading){
+    if(isLoading || !data){
         return <Loader />
     }
     return (

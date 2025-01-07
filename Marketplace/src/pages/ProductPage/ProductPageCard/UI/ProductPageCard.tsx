@@ -4,9 +4,15 @@ import ReviewShowCase from "../../../../entities/Review/ReviewShowCase"
 import {ProductPrice} from "../../../../entities/Product/UI"
 import usePageProductCardActions from "../usePageProductCardActions"
 import FavouriteButton from "../../../../features/Favourite/UI/FavouriteButton"
-import PropTypes from "prop-types"
 import ProductNumberInput from "./ProductNumberInput"
-const ProductPageCard = ({product}) => {
+import { Product } from "shared/redux/query/endpoints"
+
+interface Props{
+    product: Product
+}
+
+const ProductPageCard = (props: Props) => {
+    const {product} = props
     const {title, rating, currentPrice, price, description, maxQuantity} = product
     const {
         numberInputRef,
@@ -39,9 +45,6 @@ const ProductPageCard = ({product}) => {
             <DeliveryLayout/>
         </div>
     )
-}
-ProductPageCard.propTypes = {
-    product: PropTypes.object,
 }
 
 export default ProductPageCard

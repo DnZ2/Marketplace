@@ -37,6 +37,7 @@ export type QueryParams = Partial<{
 	categoryParam: string,
 	minPrice: string,
 	maxPrice: string,
+    showMore: boolean
 }>
 export const productsApi = baseApi.enhanceEndpoints({addTagTypes: ["Product"]}).injectEndpoints({
     endpoints: (build) => ({

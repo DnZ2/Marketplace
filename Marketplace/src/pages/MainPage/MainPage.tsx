@@ -9,7 +9,8 @@ import {
     Slider
 } from "./UI"
 import ScrollButton from "../../features/ScrollButton/ScrollButton"
-const MainPage = () => {
+
+export const MainPage = () => {
     return (
         <>
             <div className="container flex flex-col gap-16 mb-16">
@@ -34,4 +35,4 @@ const MainPage = () => {
     )
 }
 
-export default MainPage
+

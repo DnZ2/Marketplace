@@ -1,7 +1,7 @@
 import { memo } from 'react'
 import useQueryParams from '../useQueryParams'
 
-const ProductSearchForm = () => {
+const ProductSearchForm = memo(() => {
     const {handleSearchQuery} = useQueryParams()
     return (
         <form className="w-full flex" onSubmit={handleSearchQuery}>
@@ -9,6 +9,6 @@ const ProductSearchForm = () => {
             <button className="p-2 text-xl size-12 bg-gray-200 rounded-e-xl flex justify-center items-center" type="submit">S</button>
         </form>
     )
-}
+})
 
-export default memo(ProductSearchForm)
+export default ProductSearchForm

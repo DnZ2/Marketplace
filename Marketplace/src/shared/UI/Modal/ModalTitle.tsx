@@ -1,8 +1,9 @@
-import { ComponentPropsWithoutRef, FC } from "react"
+import { ComponentPropsWithoutRef } from "react"
 
 interface Props extends ComponentPropsWithoutRef<"h1">{}
 
-const ModalTitle: FC<Props> = ({children}) => {
+const ModalTitle = (props: Props) => {
+    const {children} = props
     return (
         <h1 className="text-4xl">{children}</h1>
     )

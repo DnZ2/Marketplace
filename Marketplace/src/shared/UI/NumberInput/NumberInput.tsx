@@ -1,7 +1,7 @@
-import { ComponentPropsWithRef, ForwardRefRenderFunction, forwardRef } from "react"
+import { ComponentPropsWithRef, ForwardRefRenderFunction, forwardRef, memo } from "react"
 
 interface Props extends ComponentPropsWithRef<"input">{
-	maxWidthInput: string
+	maxWidthInput?: number
 }
 
 const NumberInput: ForwardRefRenderFunction<HTMLInputElement, Props> = ({maxWidthInput=80,className,...props}, ref)=> {
@@ -10,4 +10,4 @@ const NumberInput: ForwardRefRenderFunction<HTMLInputElement, Props> = ({maxWidt
     )
 }
 
-export default forwardRef(NumberInput)
+export default memo(forwardRef(NumberInput))

@@ -1,4 +1,4 @@
-import { cva } from "class-variance-authority";
+import { cva, VariantProps } from "class-variance-authority";
 const NumberInputWrapperVariants = cva("NumberInputWrapperVariants", {
     variants: {
         variant: {
@@ -11,3 +11,4 @@ const NumberInputWrapperVariants = cva("NumberInputWrapperVariants", {
     },
 });
 export default NumberInputWrapperVariants;
+export interface SpecialProps extends VariantProps<typeof NumberInputWrapperVariants>{}

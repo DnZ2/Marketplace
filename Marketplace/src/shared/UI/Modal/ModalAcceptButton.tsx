@@ -1,12 +1,13 @@
-import { ComponentPropsWithoutRef, FC } from 'react'
+import { ComponentPropsWithoutRef,  memo } from 'react'
 import Button from '../Button/Button'
 
 interface Props extends ComponentPropsWithoutRef<"button">{}
 
-const ModalAcceptButton: FC<Props> = ({children, ...props}) => {
+const ModalAcceptButton  = (props: Props) => {
+    const {children, ...otherProps} = props
     return (
-        <Button className="mx-auto" {...props}>{children}</Button>
+        <Button className="mx-auto" {...otherProps}>{children}</Button>
     )
 }
 
-export default ModalAcceptButton
+export default memo(ModalAcceptButton)

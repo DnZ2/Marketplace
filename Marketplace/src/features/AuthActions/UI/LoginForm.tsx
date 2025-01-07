@@ -8,7 +8,7 @@ import { ErrorMessage, Form, FormField } from "shared/UI/Form"
 import { SerializedError } from "@reduxjs/toolkit"
 import Button from "shared/UI/Button/Button"
 
-const LoginForm = () => {
+export const LoginForm = () => {
     const [login, {message: serverError}] = useLoginMutation<SerializedError>()
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors } } = useForm({
@@ -43,4 +43,4 @@ const LoginForm = () => {
     )
 }
 
-export default LoginForm
+
