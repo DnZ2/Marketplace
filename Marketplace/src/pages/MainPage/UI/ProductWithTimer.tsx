@@ -1,3 +1,4 @@
+import { memo } from "react"
 import JBL from "../../../assets/JBL_BOOMBOX_2_HERO_020_x1 (1) 1.png"
 
 const ProductWithTimer = () => {
@@ -21,4 +22,4 @@ const ProductWithTimer = () => {
     )
 }
 
-export default ProductWithTimer
+export default memo(ProductWithTimer)

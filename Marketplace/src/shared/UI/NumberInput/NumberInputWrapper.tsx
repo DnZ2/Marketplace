@@ -1,11 +1,12 @@
-import NumberInputWrapperVariants from "./NumberInputWrapper.styles"
-import { ComponentPropsWithoutRef, FC } from "react"
+import NumberInputWrapperVariants, { SpecialProps } from "./NumberInputWrapper.styles"
+import { ComponentPropsWithoutRef } from "react"
 
-interface Props extends ComponentPropsWithoutRef<"div">{
+interface Props extends ComponentPropsWithoutRef<"div">, SpecialProps{
 	variant: "default" | "secondary"
 }
 
-const NumberInputWrapper: FC<Props> = ({children, className, variant}) => {
+const NumberInputWrapper = (props: Props) => {
+    const {children, className, variant} = props
     return (
         <div className={NumberInputWrapperVariants({variant, className})}>
             {children}

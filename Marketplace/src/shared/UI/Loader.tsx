@@ -1,3 +1,5 @@
+import { memo } from "react"
+
 const Loader = () => {
     return (
         <div className="flex flex-grow justify-center items-center">
@@ -6,4 +8,4 @@ const Loader = () => {
     )
 }
 
-export default Loader
+export default memo(Loader)

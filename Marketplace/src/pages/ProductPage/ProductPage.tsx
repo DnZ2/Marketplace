@@ -6,7 +6,7 @@ import Loader from "../../shared/UI/Loader"
 import { Navigate, useParams } from "react-router-dom"
 import { useGetProductQuery } from "../../shared/redux/query/endpoints/productsApi"
 import PageProductCard from "./ProductPageCard/UI/ProductPageCard"
-const ProductPage = () => {
+export const ProductPage = () => {
     const { id } = useParams();
     const { data: product, isLoading } = useGetProductQuery(id!, { skip: !id });
     if(!id){
@@ -30,4 +30,4 @@ const ProductPage = () => {
     )
 }
 
-export default ProductPage
+

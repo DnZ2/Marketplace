@@ -6,11 +6,12 @@ import Cross from "assets/cancel-svgrepo-com.svg?react"
 import Arrow from "assets/fa-angle-down.svg?react"
 import useEvent from "react-use-event-hook"
 import { Props as InputProps } from "shared/UI/Input/Input"
-import { FC } from "react"
+import { memo } from "react"
 
 interface Props extends InputProps{}
 
-const ProductFilterByCategory: FC<Props> = ({className, ...props}) => {
+const ProductFilterByCategory = memo((props: Props) => {
+    const {className, ...otherProps} = props
     const {categoryParam, handleFilterByCategory, handleResetCategoryParam} = useQueryParams()
     const {data, isLoading} = useGetCategoriesQuery()
     const {triggerRef, searchRef, isActive, selectedOption, handleChangeValue, handleFocusSelect, handlePickOption, handleResetValue, handleToggleSelect} = useSelect(categoryParam)
@@ -31,7 +32,7 @@ const ProductFilterByCategory: FC<Props> = ({className, ...props}) => {
     return (
         <Select ref={triggerRef} className="bg-white w-[220px] rounded-md">
             <SelectTrigger>
-                <SelectValue ref={searchRef} className={className} {...props} value={selectedOption} onChange={handleChangeValue} onFocus={handleFocusSelect}/>
+                <SelectValue ref={searchRef} className={className} {...otherProps} value={selectedOption} onChange={handleChangeValue} onFocus={handleFocusSelect}/>
                 {categoryParam &&<Cross className="absolute cursor-pointer right-8 top-1/2 -translate-y-1/2 hover:bg-gray-200 size-7 p-1 rounded-full" onClick={onReset}/>}
                 <Arrow onClick={handleToggleSelect} className={`absolute cursor-pointer right-2 top-1/2 -translate-y-1/2 fill-black stroke-black hover:bg-gray-200 size-6 p-[5px] rounded-full ${isActive ? "rotate-180 transition-all" : "transition-all"}`}/>
             </SelectTrigger>
@@ -52,6 +53,6 @@ const ProductFilterByCategory: FC<Props> = ({className, ...props}) => {
             </SelectOptions>
         </Select>
     )
-}
+})
 
 export default ProductFilterByCategory

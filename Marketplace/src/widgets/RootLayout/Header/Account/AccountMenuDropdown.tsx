@@ -1,4 +1,4 @@
-import { useCallback } from "react"
+import { memo, useCallback } from "react"
 import Dropdown from "../../../../features/Dropdown"
 import { useLogoutMutation } from "../../../../shared/redux/query/endpoints/authApi"
 import AccountDropdownContent from "./UI/AccountDropdownContent"
@@ -18,4 +18,4 @@ const AccountMenuDropdown = () => {
     )
 }
 
-export default AccountMenuDropdown
+export default memo(AccountMenuDropdown)

@@ -1,4 +1,4 @@
-import { SyntheticEvent } from "react";
+import { SyntheticEvent, } from "react";
 import { useSearchParams } from "react-router-dom";
 import { QueryParams } from "../../shared/redux/query/endpoints/productsApi";
 import useEvent from "react-use-event-hook";
@@ -20,79 +20,80 @@ const useQueryParams = () => {
 
     const handleChangeQueryPage = useEvent((page: number) => {
         window.scrollTo(0, 0);
-        setSearchParams({
-            ...Object.fromEntries(searchParams),
+        setSearchParams(prev=>({
+            ...Object.fromEntries(prev),
             page: page.toString(),
-        });
+        }));
     })
+
     const handleSearchQuery = useEvent((e: SyntheticEvent) => {
         e.preventDefault();
         const target = e.target as EventTarget & {
 			search: { value: string };
 		  };
         if (target.search.value) {
-            setSearchParams({
-                ...Object.fromEntries(searchParams),
+            setSearchParams(prev=>({
+                ...Object.fromEntries(prev),
                 search: target.search.value,
                 page: "1",
-            });
+            }));
         } else {
             searchParams.delete("search");
-            setSearchParams({
-                ...Object.fromEntries(searchParams),
+            setSearchParams(prev=>({
+                ...Object.fromEntries(prev),
                 page: "1"
-            });
+            }));
         }
     })
     const handleFilterByCategory = (value: string) => {
-        setSearchParams({
-            ...Object.fromEntries(searchParams),
+        setSearchParams(prev=>({
+            ...Object.fromEntries(prev),
             category: value,
             page: "1",
-        });
+        }));
     }
     const handleResetCategoryParam = () => {
         searchParams.delete("category");
-        setSearchParams({
-            ...Object.fromEntries(searchParams),
+        setSearchParams(prev=>({
+            ...Object.fromEntries(prev),
             page: "1"
-        });
+        }));
     }
     const handleFilterByPrice = (from?:number, to?:number) => {
         if (!from && !to) {
             searchParams.delete("from");
             searchParams.delete("to");
-            setSearchParams({ ...Object.fromEntries(searchParams) });
+            setSearchParams(prev=>({ ...Object.fromEntries(prev) }));
         } else if (!from && to) {
             searchParams.delete("from");
-            setSearchParams({
-                ...Object.fromEntries(searchParams),
+            setSearchParams(prev=>({
+                ...Object.fromEntries(prev),
                 to: to.toString(),
                 page: "1"
-            });
+            }));
         } else if (!to && from) {
             searchParams.delete("to");
-            setSearchParams({
-                ...Object.fromEntries(searchParams),
+            setSearchParams(prev=>({
+                ...Object.fromEntries(prev),
                 from: from.toString(),
                 page: "1"
-            });
+            }));
         } else if(from && to) {
-            setSearchParams({
-                ...Object.fromEntries(searchParams),
+            setSearchParams(prev=>({
+                ...Object.fromEntries(prev),
                 from: from.toString(),
                 to: to.toString(),
                 page: "1"
-            });
+            }));
         }
     }
     const handleSortSelect =(sortBy: "price"|"discount"|"title", sortMethod: "1"|"-1") => {
-        setSearchParams({
-            ...Object.fromEntries(searchParams),
+        setSearchParams(prev=>({
+            ...Object.fromEntries(prev),
             sort: sortBy,
             sortMethod,
             page: "1",
-        });
+        }));
     }
     
     return {

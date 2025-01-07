@@ -1,5 +1,5 @@
 
-const UserAddressBookPage = () => {
+export const UserAddressBookPage = () => {
     return (
         <div>
 
@@ -7,4 +7,4 @@ const UserAddressBookPage = () => {
     )
 }
 
-export default UserAddressBookPage
+

@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, forwardRef, ForwardRefRenderFunction } from 'react';
+import { ComponentPropsWithoutRef, forwardRef, ForwardRefRenderFunction, memo } from 'react';
 import {InputVariants, SpecialProps} from './Input.styles';
 
 export interface Props extends Omit<ComponentPropsWithoutRef<"input">, "size">, SpecialProps {}
@@ -15,4 +15,4 @@ const Input: ForwardRefRenderFunction<HTMLInputElement, Props> = (props, ref) =>
         />
 	  );
 }
-export default forwardRef(Input)
+export default memo(forwardRef(Input))

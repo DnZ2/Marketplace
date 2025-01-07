@@ -4,16 +4,39 @@ import cartSlice from "./slices/cartSlice";
 import favouriteSlice from "./slices/favouriteSlice";
 import userSlice from "./slices/userSlice";
 import {baseApi} from './query/endpoints';
+import { persistStore, persistReducer, FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE } from 'redux-persist'
+import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
+ 
+const cartPersistConfig = {
+    key: 'cart',
+    storage,
+}
+
+const favouritePersistConfig = {
+    key: 'favourite',
+    storage,
+}
+
+ 
+const cartReducer = persistReducer(cartPersistConfig, cartSlice)
+const favouriteReducer = persistReducer(favouritePersistConfig, favouriteSlice)
+
 export const store = configureStore({
     reducer: {
         [baseApi.reducerPath]: baseApi.reducer,
-        cart: cartSlice,
-        favourite: favouriteSlice,
+        cart: cartReducer,
+        favourite: favouriteReducer,
         user: userSlice,
     },
     middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(baseApi.middleware),
+        getDefaultMiddleware({
+            serializableCheck: {
+                ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+            },
+        }).concat(baseApi.middleware),
 });
+export const persistor = persistStore(store)
+
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
 

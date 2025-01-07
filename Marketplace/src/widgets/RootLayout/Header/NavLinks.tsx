@@ -1,12 +1,13 @@
-import { NavLink } from "react-router-dom"
+import { memo } from "react"
+import Link from "shared/UI/Link/Link"
 const NavLinks = () => {
     return (
         <nav className="flex justify-between items-center gap-12 [&>a]:underline-offset-4">
-            <NavLink className="hover:underline" to='/'>Home</NavLink>
-            <NavLink className="hover:underline" to='/products'>Products</NavLink>
-            <NavLink className="hover:underline" to='/admin'>Admin</NavLink>
+            <Link className="hover:underline" to='/'>Home</Link>
+            <Link className="hover:underline" to='/products'>Products</Link>
+            <Link className="hover:underline" to='/admin'>Admin</Link>
         </nav>
     )
 }
 
-export default NavLinks
+export default memo(NavLinks)

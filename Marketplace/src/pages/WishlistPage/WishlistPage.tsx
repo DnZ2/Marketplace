@@ -6,7 +6,7 @@ import EmptyCart from "../../assets/empryCart-Photoroom.png"
 import { NavLink } from "react-router-dom"
 import CardsWrapper from "../../shared/UI/CardsWrapper"
 import WishlistProductCard from "./UI/WishlistProductCard"
-const WishlistPage = () => {
+export const WishlistPage = () => {
     const favouriteProducts = useAppSelector(state=>state.favourite.favouriteProducts)
     const dispatch = useAppDispatch()
     const handleAddAllFavouritesToCart = ()=>{
@@ -42,4 +42,3 @@ const WishlistPage = () => {
     )
 }
 
-export default WishlistPage

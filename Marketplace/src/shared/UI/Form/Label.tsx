@@ -1,6 +1,6 @@
-import { FC, ComponentPropsWithoutRef } from "react"
+import { ComponentPropsWithoutRef, memo } from "react"
 
-const Label: FC<ComponentPropsWithoutRef<"label">> = (props) => {
+const Label = (props: ComponentPropsWithoutRef<"label">) => {
     const {children, className, ...otherProps} = props
     return (
         <label className={`${className} pb-2`} {...otherProps}>
@@ -9,4 +9,4 @@ const Label: FC<ComponentPropsWithoutRef<"label">> = (props) => {
     )
 }
 
-export default Label
+export default memo(Label)

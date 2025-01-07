@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { Product } from "../query/endpoints/productsApi";
-import { LocalStorage } from "shared/lib/local-storage";
 export interface CartProduct extends Pick<Product, "title" | "id" | "price" | "maxQuantity"> {
 	quantity: number,
 	subtotal: number,
@@ -18,7 +17,7 @@ export interface CartState {
 }
 
 const initialState:CartState = {
-    cartProducts: LocalStorage.get<CartProduct[]>("cart") || [],
+    cartProducts:[],
     cartTotal: {
         total: 0,
         delivery: 0,

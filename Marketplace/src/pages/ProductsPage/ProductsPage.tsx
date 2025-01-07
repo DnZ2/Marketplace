@@ -2,11 +2,11 @@ import { useGetProductsQuery } from "shared/redux/query/endpoints/productsApi"
 import Loader from "shared/UI/Loader"
 import { Label } from "shared/UI/Form"
 import ProductsList from "./UI/ProductsList"
-import { ProductFilterByCategory,ProductPagination,ProductPriceSelector,ProductSearchForm,ProductSortSelector,ShowMoreButton } from "features/ProductQueryActions/UI"
+import { ProductFilterByCategory,ProductPagination,ProductPriceSelector,ProductSearchForm,ProductSortSelector } from "features/ProductQueryActions/UI"
 import useQueryParams from "features/ProductQueryActions/useQueryParams"
 import { useId } from "react"
 
-const ProductsPage = () => {
+export const ProductsPage = () => {
     const {
         pageParam,
         limitParam,
@@ -25,7 +25,7 @@ const ProductsPage = () => {
         sortMethod,
         categoryParam,
         minPrice,
-        maxPrice
+        maxPrice,
     })
 
     const categorySelectorId = useId()
@@ -56,10 +56,9 @@ const ProductsPage = () => {
                 </div>
             </div>
             <ProductsList products={products}/>
-            <ShowMoreButton hasMore={pageParam<pages}/>
             <ProductPagination totalPages={pages}/>
         </div>
     )
 }
 
-export default ProductsPage
+

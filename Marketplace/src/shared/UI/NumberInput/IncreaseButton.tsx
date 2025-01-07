@@ -1,5 +1,5 @@
 import Plus from "../../../assets/plus.svg?react"
-import { ComponentPropsWithoutRef, FC } from "react"
+import { ComponentPropsWithoutRef, FC, memo } from "react"
 
 const IncreaseButton: FC<ComponentPropsWithoutRef<"button">> = ({...props}) => {
     return (
@@ -9,4 +9,4 @@ const IncreaseButton: FC<ComponentPropsWithoutRef<"button">> = ({...props}) => {
     )
 }
 
-export default IncreaseButton
+export default memo(IncreaseButton)

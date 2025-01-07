@@ -4,6 +4,7 @@ import PlayStation5 from "../../../assets/ps5-slim-goedkope-playstation_large 1.
 import Woman from "../../../assets/attractive-woman-wearing-hat-posing-black-background 1-Photoroom.png"
 import Speakers from "../../../assets/69-694768_amazon-echo-png-clipart-transparent-amazon-echo-png 1.png"
 import Perfume from "../../../assets/652e82cd70aa6522dd785109a455904c.png"
+import { memo } from "react"
 const GridProducts = () => {
     return (
         <CardListLayout title="Featured" subtitle="New Arrival">
@@ -45,4 +46,4 @@ const GridProducts = () => {
     )
 }
 
-export default GridProducts
+export default memo(GridProducts)

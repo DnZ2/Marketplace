@@ -6,7 +6,7 @@ import { useEffect } from "react"
 import { countTotalPrice } from "../../shared/redux/slices/cartSlice"
 import CartTotal from "./UI/CartTotal"
 import CardsWrapper from "../../shared/UI/CardsWrapper"
-const CartPage = () => {
+export const CartPage = () => {
     const cartProducts = useAppSelector(state=>state.cart.cartProducts)
     const dispatch = useAppDispatch()
     useEffect(()=>{
@@ -50,4 +50,3 @@ const CartPage = () => {
     )
 }
 
-export default CartPage

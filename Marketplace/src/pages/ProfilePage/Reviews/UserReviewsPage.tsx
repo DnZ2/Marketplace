@@ -1,7 +1,7 @@
 import UserReview from "./UserReview"
 import Loader from "shared/UI/Loader"
 import { useGetUserReviewQuery } from "shared/redux/query/endpoints/reviewsApi"
-const UserReviewsPage = () => {
+export const UserReviewsPage = () => {
     const {data: reviews, isLoading: isReviewsLoading} = useGetUserReviewQuery()
     if(isReviewsLoading){
         return <Loader />
@@ -18,5 +18,3 @@ const UserReviewsPage = () => {
         </>
     )
 }
-
-export default UserReviewsPage

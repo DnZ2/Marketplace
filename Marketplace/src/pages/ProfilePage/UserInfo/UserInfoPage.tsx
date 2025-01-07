@@ -8,7 +8,7 @@ import { useEffect, useId, useState } from "react"
 import { useEditUserMutation, useGetUserQuery } from "shared/redux/query/endpoints/usersApi"
 import { SerializedError } from "@reduxjs/toolkit"
 import useEvent from "react-use-event-hook"
-const UserInfoPage = () => {
+export const UserInfoPage = () => {
     const {data:user, isLoading} = useGetUserQuery()
     const [editUser, { message: serverError}] = useEditUserMutation<SerializedError>()
 
@@ -126,4 +126,3 @@ const UserInfoPage = () => {
     )
 }
 
-export default UserInfoPage

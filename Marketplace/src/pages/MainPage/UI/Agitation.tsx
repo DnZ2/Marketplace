@@ -1,6 +1,7 @@
 import Delivery from "../../../assets/icon-delivery.svg?react"
 import Headphones from "../../../assets/Icon-Customer service.svg?react"
 import Shield from "../../../assets/shield-tick.svg?react"
+import { memo } from "react"
 const Agitation = () => {
     return (
         <section className="flex items-center justify-center gap-20">
@@ -29,4 +30,4 @@ const Agitation = () => {
     )
 }
 
-export default Agitation
+export default memo(Agitation)

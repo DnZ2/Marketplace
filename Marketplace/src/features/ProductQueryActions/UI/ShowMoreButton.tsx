@@ -1,23 +1,22 @@
 import Button from 'shared/UI/Button/Button'
 import useQueryParams from '../useQueryParams'
-import { ComponentPropsWithoutRef, FC } from 'react'
+import { ComponentPropsWithoutRef,  memo } from 'react'
 
 interface Props extends ComponentPropsWithoutRef<"button">{
     hasMore: boolean
 }
 
-const ShowMoreButton: FC<Props> = (props) => {
+const ShowMoreButton = (props: Props) => {
     const {hasMore, ...otherProps} = props
 
     if(!hasMore) return null
 
-    const {pageParam, handleChangeQueryPage} = useQueryParams()
+    const {pageParam,handleShowMoreProducts} = useQueryParams()
 
-    const addMoreProducts = ()=>handleChangeQueryPage(pageParam+1)
-    
+    const onClick = ()=>handleShowMoreProducts(pageParam)
     return (
-        <Button {...otherProps} onClick={addMoreProducts}>Show More</Button>
+        <Button {...otherProps} onClick={onClick}>Show More</Button>
     )
 }
 
-export default ShowMoreButton
+export default memo(ShowMoreButton)
