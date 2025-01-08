@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import { LocalStorage } from "../../../lib/local-storage";
 import { setAuth, setUnauth } from "../../slices/userSlice";
 import {baseApi} from "./api";
@@ -35,7 +36,8 @@ export const authApi = baseApi.injectEndpoints({
                     dispatch(usersApi.util.updateQueryData("getUser", undefined, (cachedData)=>({ ...cachedData, ...response.data.user })))
                 })
                 queryFulfilled.catch(reject=>{
-                    console.log("Failed postCategories", reject)
+                    console.log("Failed login", reject)
+                    toast.error("Failed login")
                 })
             },
         }),
@@ -52,7 +54,8 @@ export const authApi = baseApi.injectEndpoints({
                     dispatch(usersApi.util.updateQueryData("getUser", undefined, (cachedData)=>({ ...cachedData, ...response.data.user })))
                 })
                 queryFulfilled.catch(reject=>{
-                    console.log("Failed postCategories", reject)
+                    console.log("Failed registration", reject)
+                    toast.error("Failed registration")
                 })
             },
         }),
@@ -69,7 +72,8 @@ export const authApi = baseApi.injectEndpoints({
                     dispatch(authApi.util.resetApiState())
                 })
                 queryFulfilled.catch(reject=>{
-                    console.log("Failed postCategories", reject)
+                    console.log("Failed logout", reject)
+                    toast.error("Failed logout")
                 })
             },
         }),

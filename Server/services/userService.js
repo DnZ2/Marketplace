@@ -29,9 +29,10 @@ const activation = async (activationLink) => {
   }
 };
 
-const buyProducts = async (body) => {
+const buyProducts = async (body, token) => {
   try {
-    const user = await User.findById(body.userId);
+    const tokenData = tokenService.validateAccessToken(token);
+    const user = await User.findById(tokenData.id);
     if (!user) {
       throw ApiError.BadRequest();
     }
@@ -40,14 +41,13 @@ const buyProducts = async (body) => {
       user.email,
       `${process.env.API_URL}/api/return/${returnLink}`
     );
-    await Order.create({
-      userId: body.userId,
-      products: body.products,
-      paymentAmount: body.paymentAmount,
-      address: body.address,
+    const order = await Order.create({
+      ...body,
+      userId: tokenData.id,
       returnLink,
     });
     await Product.bulkWrite(updateQuantity(body.products));
+    return OrderDto.create(order);
   } catch (e) {
     console.log(e);
   }
@@ -70,7 +70,8 @@ const returnItems = async (returnLink) => {
   }
 };
 
-const getOrders = async (userId) => {
+const getOrders = async (token) => {
+  const userId = tokenService.validateAccessToken(token).id;
   const orders = await Order.find({ userId });
   const ordersDto = orders.map((order) => OrderDto.create(order));
   return ordersDto;

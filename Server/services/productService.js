@@ -16,7 +16,7 @@ const getProducts = async (
     const allProducts = await Product.find(
       {
         title: { $regex: search },
-        category: category !== "" ? category : { $regex: category },
+        category: category ? category : { $regex: category },
         price: { $gte: Number(minPrice), $lte: Number(maxPrice) },
       },
       null,
@@ -65,6 +65,7 @@ const postProducts = async (
     description,
     discount,
   });
+  return ProductDto.create(product);
 };
 const patchProducts = async (
   id,
@@ -94,14 +95,18 @@ const patchProducts = async (
     product.category = category;
     product.discount = discount;
     await product.save();
+    return ProductDto.create(product);
   } catch (e) {
     console.log(e);
   }
 };
 const deleteProducts = async (id) => {
   try {
-    const result = await Product.deleteOne({ _id: id });
-    return result;
+    const product = await Product.findByIdAndDelete({ id });
+    if (!product) {
+      throw ApiError.NotFound();
+    }
+    return ProductDto.create(product);
   } catch (e) {
     console.log(e);
   }
@@ -111,8 +116,7 @@ const getProduct = async (id) => {
   if (!product) {
     throw ApiError.NotFound();
   }
-  const productDto = ProductDto.create(product);
-  return productDto;
+  return ProductDto.create(product);
 };
 
 module.exports = {

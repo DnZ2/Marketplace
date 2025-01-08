@@ -1,9 +1,12 @@
-import { ComponentPropsWithoutRef, forwardRef, ForwardRefRenderFunction } from "react"
+import { ComponentPropsWithoutRef, forwardRef, ForwardRefRenderFunction, memo } from "react"
 
-const Textarea: ForwardRefRenderFunction<HTMLTextAreaElement, ComponentPropsWithoutRef<"textarea">> = ({className,...props}, ref) => {
+interface Props extends ComponentPropsWithoutRef<"textarea">{}
+
+const Textarea: ForwardRefRenderFunction<HTMLTextAreaElement, Props> = (props, ref) => {
+    const {className,...otherProps} = props
     return (
-        <textarea ref={ref} className={`p-3 resize-none focus:outline-1 focus:outline -outline-offset-1 border border-[#00000040] rounded-md ${className}`} {...props}/>
+        <textarea ref={ref} className={`p-3 resize-none focus:outline-1 focus:outline -outline-offset-1 border border-[#00000040] rounded-md ${className}`} {...otherProps}/>
     )
 }
 
-export default forwardRef(Textarea)
+export default memo(forwardRef(Textarea))

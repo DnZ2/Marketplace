@@ -124,9 +124,15 @@ const ReactRouterProvider = () => {
             path: '*',
             element: <Navigate to={"/"} />,
         },
-    ]);
+    ], {
+        future: {
+            v7_relativeSplatPath: true,
+        },
+    });
     return (
-        <RouterProvider router={router}/>
+        <RouterProvider router={router} future={{
+            v7_startTransition: true,
+        }}/>
     )
 }
 

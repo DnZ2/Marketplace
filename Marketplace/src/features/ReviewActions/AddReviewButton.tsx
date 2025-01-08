@@ -1,52 +1,68 @@
-import { useState } from "react"
-import {Modal,ModalAcceptButton,ModalCancelButton,ModalContent,ModalControls,ModalTitle } from "../../shared/UI/Modal"
-import Button from "../../shared/UI/Button/Button"
-import StarRatingForm from "../../entities/Review/StarRatingForm"
-import { usePostReviewMutation } from "../../shared/redux/query/endpoints/reviewsApi"
-import PropTypes from "prop-types"
-import { useAppSelector } from "../../shared/redux/store"
+import {Modal,ModalAcceptButton,ModalCancelButton,ModalContent,ModalControls,ModalTitle } from "shared/UI/Modal"
+import Button from "shared/UI/Button/Button"
+import { Props as ButtonProps } from "shared/UI/Button/Button"
+import useToggle from "shared/hooks/useToggle"
+import Form from "shared/UI/Form/Form"
+import RatingInput from "entities/Review/RatingInput"
+import { toast } from "react-toastify"
+import { useForm } from "react-hook-form"
+import { FormValues } from "entities/Review/RatingInput"
+import Textarea from "shared/UI/Textarea"
+import useEvent from "react-use-event-hook"
+import { usePostReviewMutation } from "shared/redux/query/endpoints"
 
-const AddReviewButton = ({children, productId}) => {
-    const userId = useAppSelector(store=>store.user.id)
+interface Props extends ButtonProps{
+    productId: string
+}
+
+const AddReviewButton = (props: Props) => {
+    const {children, productId, ...otherProps} = props
+
+    const {isActive: isModalOpen, on, off} = useToggle(false)
+   
     const [postReview] = usePostReviewMutation()
-    const [isModalOpen, setModalOpen] = useState(false)
-    const handleCloseModal = (e) => {
-        if(e.currentTarget===e.target){
-            setModalOpen(false)
-        }
-    }
-    const handleOpenModal = () => {
-        setModalOpen(true)
-    }
-    const onSubmit = async (e, reviewText, ratingValue)=>{
-        e.preventDefault()
+
+    const { handleSubmit, control, register } = useForm<FormValues>({
+        defaultValues: {
+            rating: 0,
+            reviewText: "",
+        },
+    });
+
+    const onSubmit = handleSubmit(async(data) => {
         try{
-            if(!userId) throw new Error("userID is not found")
-            await postReview({userId, productId, reviewText, ratingValue}).unwrap()
-            setModalOpen(false)
+            await postReview({productId, ...data})
+            off()
+        } catch(e){
+            toast.error("Failed post review")
+            console.log(e)
         }
-        catch(e){
-            console.log(e.message)
+    })
+   
+    const handleCloseModal = useEvent((e) => {
+        if(e.currentTarget===e.target){
+            off()
         }
-    }
+    })
+
     return (
         <>
-            <Button className="mx-auto" onClick={handleOpenModal}>{children}</Button>
+            <Button className="mx-auto" onClick={on} {...otherProps}>{children}</Button>
             <Modal isOpen={isModalOpen} onMouseDown={handleCloseModal}>
                 <ModalTitle>Rate the product</ModalTitle>
                 <ModalContent>
-                    <StarRatingForm onSubmit={onSubmit}/>
+                    <Form id="post-review-form" onSubmit={onSubmit}>
+                        <RatingInput control={control}/>
+                        <Textarea {...register("reviewText")}/>
+                    </Form>
                 </ModalContent>
                 <ModalControls align={"self-end"}>
-                    <ModalAcceptButton form="review-form">Accept</ModalAcceptButton>
-                    <ModalCancelButton onClick={()=>setModalOpen(false)}>Cancel</ModalCancelButton>
+                    <ModalAcceptButton form="post-review-form">Accept</ModalAcceptButton>
+                    <ModalCancelButton onClick={off}>Cancel</ModalCancelButton>
                 </ModalControls>
             </Modal>
         </>
     )
 }
-AddReviewButton.propTypes ={
-    children: PropTypes.node,
-    productId: PropTypes.string,
-}
+
 export default AddReviewButton

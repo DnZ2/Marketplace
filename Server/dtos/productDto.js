@@ -1,3 +1,4 @@
+const { evalRatingValue, convertDate } = require("../utils/helpers");
 const create = (product) => {
   return {
     id: product._id,
@@ -7,9 +8,9 @@ const create = (product) => {
     maxQuantity: product.maxQuantity,
     description: product.description,
     discount: product.discount,
-    rating: product.rating,
+    rating: evalRatingValue(product.rating),
     category: product.category,
-    createdAt: product.createdAt,
+    createdAt: convertDate(product.createdAt),
   };
 };
 const updateQuantity = (array, type) => {

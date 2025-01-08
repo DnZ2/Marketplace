@@ -1,21 +1,23 @@
-import { ComponentPropsWithoutRef, FC, ReactNode, useState } from "react";
+import { ComponentPropsWithoutRef, memo, ReactNode } from "react";
+import useHover from "shared/hooks/useHover";
 
 interface Props extends ComponentPropsWithoutRef<"div">{
 	children: [ReactNode, ReactNode]
 }
 
-const Dropdown: FC<Props> = ({children, className}) => {
-    const [isOpen, setIsOpen] = useState(false)
+const Dropdown = (props: Props) => {
+    const {children, className} = props
+    const {isHover, actions} = useHover()
     const [trigger, content] = children
     return (
-        <div onMouseEnter={()=>{setIsOpen(true)}} onMouseLeave={()=>setIsOpen(false)} className={`relative ${className}`}>
+        <div {...actions} className={`relative ${className}`}>
             {trigger}
-            {isOpen &&
+            {isHover &&
             <div className='absolute right-0 top-full'>
                 {content}
             </div>}
         </div>
     )
 }
-export default Dropdown
+export default memo(Dropdown)
 

@@ -5,11 +5,12 @@ import favouriteSlice from "./slices/favouriteSlice";
 import userSlice from "./slices/userSlice";
 import {baseApi} from './query/endpoints';
 import { persistStore, persistReducer, FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE } from 'redux-persist'
-import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
+import storage from 'redux-persist/lib/storage'
  
 const cartPersistConfig = {
     key: 'cart',
     storage,
+    whitelist: ['cartProducts']
 }
 
 const favouritePersistConfig = {

@@ -34,24 +34,19 @@ const getUserReviews = async (token) => {
     console.log(e);
   }
 };
-const postReview = async (
-  userId,
-  productId,
-  orderId,
-  reviewText,
-  ratingValue
-) => {
+const postReview = async (productId, orderId, reviewText, ratingValue, token) => {
   try {
+    const userId = tokenService.validateAccessToken(token).id;
     const user = await User.findById(userId);
     const product = await Product.findById(productId);
     const order = await Order.findById(orderId);
     if (!user || !product) {
-      throw ApiError.BadRequest();
+      throw ApiError.BadRequest("Product is not defined");
     }
     if (order.isReviewed) {
-      throw ApiError.BadRequest();
+      throw ApiError.BadRequest("Already reviewed. You can patch your review");
     }
-    await Review.create({
+    const review = await Review.create({
       userId,
       productId,
       reviewText,
@@ -61,21 +56,24 @@ const postReview = async (
       ...product.rating,
       [ratingValue]: product.rating[ratingValue] + 1,
     };
+    order.isReviewed = true;
+    await order.save();
     await product.save();
-    return "success";
+    return {
+      product: ReviewDTO.createProductReview(review),
+      user: ReviewDTO.createUserReview(review),
+    };
   } catch (e) {
     console.log(e);
   }
 };
-const patchReview = async (userId, reviewId, reviewText, ratingValue) => {
+const patchReview = async (reviewId, reviewText, ratingValue, token) => {
   try {
+    const userId = tokenService.validateAccessToken(token).id;
     const review = await Review.findById(reviewId);
-    const user = await User.findById(review.userId.toString());
+    const user = await User.findById(userId);
     const product = await Product.findById(review.productId.toString());
     if (!user || !product || !review) {
-      throw ApiError.BadRequest();
-    }
-    if (userId !== review.userId.toString()) {
       throw ApiError.BadRequest();
     }
     product.rating = {
@@ -96,15 +94,13 @@ const patchReview = async (userId, reviewId, reviewText, ratingValue) => {
     console.log(e);
   }
 };
-const deleteReview = async (userId, reviewId) => {
+const deleteReview = async (reviewId, token) => {
   try {
+    const userId = tokenService.validateAccessToken(token).id;
     const review = await Review.findById(reviewId);
     const user = await User.findById(userId);
     const product = await Product.findById(review.productId);
     if (!user || !review || !product) {
-      throw ApiError.BadRequest();
-    }
-    if (userId !== review.userId.toString()) {
       throw ApiError.BadRequest();
     }
     product.rating = {
@@ -112,8 +108,8 @@ const deleteReview = async (userId, reviewId) => {
       [review.rating]: product.rating[review.rating] - 1,
     };
     await product.save();
-    const result = await Review.findByIdAndDelete(reviewId);
-    return result;
+    await Review.findByIdAndDelete(reviewId);
+    return "success";
   } catch (e) {
     console.log(e);
   }
