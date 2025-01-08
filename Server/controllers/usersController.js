@@ -20,9 +20,10 @@ const activation = async (req, res, next) => {
 };
 const buyProducts = async (req, res, next) => {
   try {
+    const token = req.headers.authorization.split(" ")[1];
     const body = req.body;
-    const response = userService.buyProducts(body);
-    return res.json(response);
+    const order = userService.buyProducts(body, token);
+    return res.json(order);
   } catch (e) {
     next(e);
   }
@@ -38,8 +39,8 @@ const returnProduct = async (req, res, next) => {
 };
 const getOrders = async (req, res, next) => {
   try {
-    const userId = req.params.id;
-    const orders = await userService.getOrders(userId);
+    const token = req.headers.authorization.split(" ")[1];
+    const orders = await userService.getOrders(token);
     return res.json(orders);
   } catch (e) {
     next(e);

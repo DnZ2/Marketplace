@@ -21,10 +21,6 @@ userRouter.post(
   usersController.buyProducts
 );
 userRouter.get("/return/:link", usersController.returnProduct);
-userRouter.get(
-  "/orders/:id",
-  authMiddleware(["USER"]),
-  usersController.getOrders
-);
+userRouter.get("/orders", authMiddleware(["USER"]), usersController.getOrders);
 
 module.exports = userRouter;

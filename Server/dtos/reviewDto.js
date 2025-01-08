@@ -1,3 +1,4 @@
+const {  convertDate } = require("../utils/helpers");
 const createProductReview = (review) => {
   return {
     id: review._id,
@@ -9,7 +10,7 @@ const createProductReview = (review) => {
     productId: review.productId,
     reviewText: review.reviewText,
     rating: review.rating,
-    createdAt: review.createdAt,
+    createdAt: convertDate(review.createdAt),
   };
 };
 const createUserReview = (review) => {
@@ -24,7 +25,7 @@ const createUserReview = (review) => {
     },
     reviewText: review.reviewText,
     rating: review.rating,
-    createdAt: review.createdAt,
+    createdAt: convertDate(review.createdAt),
   };
 };
 module.exports = {
