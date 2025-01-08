@@ -1,8 +1,11 @@
-import { ComponentPropsWithoutRef, FC } from "react"
+import { ComponentPropsWithoutRef } from "react"
 
-const SelectTrigger: FC<ComponentPropsWithoutRef<"div">> = ({children, className, ...props}) => {
+interface Props extends ComponentPropsWithoutRef<"div">{}
+
+const SelectTrigger = (props: Props) => {
+    const {children, className, ...otherProps} = props
     return (
-        <div className={`relative flex w-full ${className}`} {...props}>
+        <div className={`relative flex w-full ${className}`} {...otherProps}>
             {children}
         </div>
     )

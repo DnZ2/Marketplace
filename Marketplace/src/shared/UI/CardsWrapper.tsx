@@ -1,14 +1,15 @@
 import CardsVariants from './CardsWrappes.styles';
-import { ComponentPropsWithoutRef, FC } from 'react';
+import { ComponentPropsWithoutRef } from 'react';
 
 interface Props extends ComponentPropsWithoutRef<"div">{
 	layout?: "default" | "cart" | "cart-dropdown" | "search",
 
 }
 
-const CardsWrapper: FC<Props> = ({children, className, layout, ...props}) => {
+const CardsWrapper = (props: Props) => {
+    const {children, className, layout, ...otherProps} = props
     return (
-        <div className={CardsVariants({ layout, className })} {...props}>
+        <div className={CardsVariants({ layout, className })} {...otherProps}>
             {children}
         </div>
     )

@@ -1,5 +1,5 @@
 import nophoto from "../../../../../assets/nophoto.png"
-import DeleteButton from "../../../../../features/Favourite/UI/DeleteButton";
+import DeleteButton from "../../../../../features/Favourite/UI/DeleteFavouriteButton";
 import { useAppDispatch } from "../../../../../shared/redux/store"
 import { removeProductFromCart } from "../../../../../shared/redux/slices/cartSlice";
 import CardsWrapper from "../../../../../shared/UI/CardsWrapper";

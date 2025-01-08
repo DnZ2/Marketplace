@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import {baseApi} from "./api";
 type Category = {
 	value: string,
@@ -26,6 +27,7 @@ export const categoriesApi = baseApi.injectEndpoints({
                 })
                 queryFulfilled.catch(reject=>{
                     console.log("Failed postCategories", reject)
+                    toast.error("Failed postCategories")
                 })
             },
         }),
@@ -46,6 +48,7 @@ export const categoriesApi = baseApi.injectEndpoints({
                 })
                 queryFulfilled.catch(reject=>{
                     console.log("Failed putCategories", reject)
+                    toast.error("Failed putCategories")
                 })
             },
         }),
@@ -59,7 +62,10 @@ export const categoriesApi = baseApi.injectEndpoints({
                     const deletedId = response.data
                     dispatch(categoriesApi.util.updateQueryData("getCategories", undefined, (categories)=>(categories.filter(category=>category.id!==deletedId))))
                 })
-                queryFulfilled.catch(reject=>{console.log("Failed deleteCategories", reject)})
+                queryFulfilled.catch(reject=>{
+                    console.log("Failed deleteCategories", reject)
+                    toast.error("Failed deleteCategories")
+                })
             },
         }),
     }),

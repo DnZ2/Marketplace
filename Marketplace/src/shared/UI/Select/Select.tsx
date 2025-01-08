@@ -1,8 +1,11 @@
 import { ComponentPropsWithoutRef, forwardRef, ForwardRefRenderFunction } from "react"
 
-const Select: ForwardRefRenderFunction<HTMLDivElement, ComponentPropsWithoutRef<"div">> = ({children, className, ...props}, ref) => {
+interface Props extends ComponentPropsWithoutRef<"div">{}
+
+const Select: ForwardRefRenderFunction<HTMLDivElement,Props> = (props, ref) => {
+    const {children, className, ...otherProps} = props
     return (
-        <div ref={ref} className={`relative ${className}`} {...props}>
+        <div ref={ref} className={`relative ${className}`} {...otherProps}>
             {children}
         </div>
     )

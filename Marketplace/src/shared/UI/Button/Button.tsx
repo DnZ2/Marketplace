@@ -1,7 +1,7 @@
 import { ComponentPropsWithoutRef, memo } from 'react';
 import {ButtonVariants} from './Button.styles';
 import { VariantProps } from 'class-variance-authority';
-interface Props extends ComponentPropsWithoutRef<"button">, VariantProps<typeof ButtonVariants>{}
+export interface Props extends ComponentPropsWithoutRef<"button">, VariantProps<typeof ButtonVariants>{}
 
 const Button = memo((props: Props) => {
     const {children, type="button", className, disabled, size, variant, ...other} = props

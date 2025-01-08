@@ -1,4 +1,4 @@
-import ReviewCard from "../../../entities/Review/ReviewCard"
+import ReviewCard from "../../../entities/Review/ProductReviewCard"
 import PropTypes from 'prop-types';
 import { useGetProductReviewQuery } from "../../../shared/redux/query/endpoints/reviewsApi";
 import Loader from "../../../shared/UI/Loader";

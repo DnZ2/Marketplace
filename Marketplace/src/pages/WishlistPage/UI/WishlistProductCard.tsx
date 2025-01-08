@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from "../../../shared/redux/store";
 import { addProductToCart } from '../../../shared/redux/slices/cartSlice';
 import { removeProductFromFavourite } from '../../../shared/redux/slices/favouriteSlice';
 import {BottomSideButton,ProductCard,ProductBadge,ProductFooter,ProductImg,ProductLink,ProductMain,ProductPrice,TopLeftSide,TopRightSide} from "../../../entities/Product/UI";
-import DeleteButton from "../../../features/Favourite/UI/DeleteButton";
+import DeleteButton from "../../../features/Favourite/UI/DeleteFavouriteButton";
 
 const WishlistProductCard = ({image=NoPhoto, data}) => {
     const isProductInCart = useAppSelector(state=>state.cart.cartProducts.find((product)=>product.id===data.id))

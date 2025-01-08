@@ -1,13 +1,11 @@
-import { useAppSelector } from "shared/redux/store"
 import { useGetOrdersQuery } from "shared/redux/query/endpoints/usersApi"
 import Loader from "shared/UI/Loader"
 import UserOrder from "./UserOrder"
 
 export const UserOrdersPage = () => {
-    const userId = useAppSelector(state=>state.user.id)
-    const {data: orders, isOrdersLoading} = useGetOrdersQuery(userId)
+    const {data: orders, isLoading:isOrdersLoading} = useGetOrdersQuery()
 
-    if(isOrdersLoading){
+    if(isOrdersLoading && !orders){
         return <Loader />
     }
     return (

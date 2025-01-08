@@ -6,7 +6,8 @@ import Twitter from "../../assets/Icon-Twitter.svg?react"
 import Instagram from "../../assets/icon-instagram.svg?react"
 import Linkedin from "../../assets/Icon-Linkedin.svg?react"
 import Send from "../../assets/icon-send.svg?react"
-import { NavLink } from "react-router-dom"
+import Link from "shared/UI/Link/Link"
+import { memo } from "react"
 const Footer = () => {
     return (
         <footer className="darkside">
@@ -35,20 +36,20 @@ const Footer = () => {
                 <div className="flex flex-col gap-6">
                     <h2>Account</h2>
                     <ul className="flex flex-col gap-4">
-                        <li><NavLink to="profile">My Account</NavLink></li>
-                        <li><NavLink to="/login">Login</NavLink> / <NavLink to="/register">Register</NavLink></li>
-                        <li><NavLink to="/cart">Cart</NavLink></li>
-                        <li><NavLink to="/wishlist">Wishlist</NavLink></li>
-                        <li><NavLink to="/products">Shop</NavLink></li>
+                        <li><Link to="profile">My Account</Link></li>
+                        <li><Link to="/login">Login</Link> / <Link to="/register">Register</Link></li>
+                        <li><Link to="/cart">Cart</Link></li>
+                        <li><Link to="/wishlist">Wishlist</Link></li>
+                        <li><Link to="/products">Shop</Link></li>
                     </ul>
                 </div>
                 <div className="flex flex-col gap-6">
                     <h2>Quick Link</h2>
                     <ul className="flex flex-col gap-4">
-                        <li><NavLink to="/">Privacy Policy</NavLink></li>
-                        <li><NavLink to="/">Terms Of Use</NavLink></li>
-                        <li><NavLink to="/about">FAQ</NavLink></li>
-                        <li><NavLink to="/contact">Contact</NavLink></li>
+                        <li><Link to="/">Privacy Policy</Link></li>
+                        <li><Link to="/">Terms Of Use</Link></li>
+                        <li><Link to="/about">FAQ</Link></li>
+                        <li><Link to="/contact">Contact</Link></li>
                     </ul>
                 </div>
                 <div className="flex flex-col gap-6">
@@ -78,4 +79,4 @@ const Footer = () => {
     )
 }
 
-export default Footer
+export default memo(Footer)

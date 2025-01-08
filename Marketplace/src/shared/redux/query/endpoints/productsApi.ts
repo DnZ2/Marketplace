@@ -1,11 +1,13 @@
+import { toast } from "react-toastify";
 import { providesList } from "../utils";
 import {baseApi} from "./api";
 export type Rating = {
-  1: number;
-  2: number;
-  3: number;
-  4: number;
-  5: number;
+  width: number
+  count: number
+}
+export type CreatedAt={
+    date: string
+    timestamp: number
 }
 export type Product = {
 	id: string
@@ -15,7 +17,7 @@ export type Product = {
     maxQuantity: number;
     category: string;
     rating: Rating
-    createdAt: number;
+    createdAt: CreatedAt;
     description: string
     discount: number
 }
@@ -37,30 +39,32 @@ export type QueryParams = Partial<{
 	categoryParam: string,
 	minPrice: string,
 	maxPrice: string,
-    showMore: boolean
 }>
 export const productsApi = baseApi.enhanceEndpoints({addTagTypes: ["Product"]}).injectEndpoints({
     endpoints: (build) => ({
         getProducts: build.query<ProductsQueryResult, QueryParams>({
-            query: ({
-                pageParam = "1",
-                limitParam = "10",
-                searchParam = "",
-                sortParam = "price",
-                sortMethod = "1",
-                categoryParam = "",
-                minPrice = "",
-                maxPrice = "",
-            }) =>
-                `products?page=${pageParam}
-				&limit=${limitParam}
-				&search=${searchParam}
-				&category=${categoryParam}
-				&sort=${sortParam}
-				&sortMethod=${sortMethod}
-				&minPrice=${minPrice}
-				&maxPrice=${maxPrice}`,
+            query: (params) =>({
+                url: "products",
+                params: {
+                    page: params.pageParam ?? 1,
+                    limit: params.limitParam ?? 10,
+                    search: params.searchParam ?? "",
+                    sort: params.sortParam ?? "price",
+                    sortMethod: params.sortMethod ?? "1",
+                    category: params.categoryParam ?? "",
+                    minPrice: params.minPrice ?? "",
+                    maxPrice: params.maxPrice ?? "",
+                }
+            }),
             providesTags: (result) => providesList(result?.products, 'Product'),
+            onQueryStarted(_, {queryFulfilled}) {
+                queryFulfilled.then(()=>{
+                    toast.success("test toast Product loaded")
+                })
+                queryFulfilled.catch(()=>{
+                    toast.error("test toast Product loaded error")
+                })
+            }
         }),
         getProduct: build.query<Product, string>({
             query: (id) => `products/${id}`,
@@ -71,13 +75,15 @@ export const productsApi = baseApi.enhanceEndpoints({addTagTypes: ["Product"]}).
                 method: "PUT",
                 body: product,
             }),
-            invalidatesTags: ['Product'],
             onQueryStarted(_, {dispatch, queryFulfilled}) {
                 queryFulfilled.then(response=>{
                     const product = response.data
                     dispatch(productsApi.util.updateQueryData("getProduct", product.id, ()=>product))
                 })
-                queryFulfilled.catch(reject=>{console.log("Failed patchProduct", reject)})
+                queryFulfilled.catch(reject=>{
+                    console.log("Failed patchProduct", reject)
+                    toast.error("Failed patchProduct")
+                })
             },
         }),
         postProduct: build.mutation<Product, Product>({
@@ -86,13 +92,15 @@ export const productsApi = baseApi.enhanceEndpoints({addTagTypes: ["Product"]}).
                 method: "POST",
                 body,
             }),
-            invalidatesTags: ['Product'],
             onQueryStarted(_, {dispatch, queryFulfilled}) {
                 queryFulfilled.then(response=>{
                     const product = response.data
                     dispatch(productsApi.util.updateQueryData("getProduct", product.id, ()=>product))
                 })
-                queryFulfilled.catch(reject=>{console.log("Failed patchProduct", reject)})
+                queryFulfilled.catch(reject=>{
+                    console.log("Failed postProduct", reject)
+                    toast.error("Failed postProduct")
+                })
             },
         }),
         deleteProduct: build.mutation<string, string>({
