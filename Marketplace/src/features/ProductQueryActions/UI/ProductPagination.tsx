@@ -1,28 +1,27 @@
-import useQueryParams from 'features/ProductQueryActions/useQueryParams'
-import { memo } from 'react'
+import { ComponentPropsWithoutRef, memo } from 'react'
 
-interface Props {
-    totalPages?: number
+interface Props extends ComponentPropsWithoutRef<"button">{
+    totalPages: number
+    pageParam: number 
 }
 
-const ProductPagination = memo((props: Props) => {
+const ProductPagination = (props: Props) => {
 
-    const {totalPages} = props
+    const {totalPages, pageParam, ...otherProps} = props
 
     if(!totalPages) return null
 
-    const {pageParam, handleChangeQueryPage} = useQueryParams()
     const pages = Array.from({ length: totalPages }, (_, i) => i + 1)
     
     return (
         <div className="flex justify-center gap-4">
             {pages?.map((pageNumber)=>
-                <button onClick={()=>handleChangeQueryPage(pageNumber)} disabled={pageParam==pageNumber} className={`${pageParam==pageNumber ?"bg-gray-300" : "bg-gray-200"} rounded-md size-8 flex justify-center items-center`} key={pageNumber}>
+                <button key={pageNumber} disabled={pageParam==pageNumber} className={`${pageParam==pageNumber ?"bg-gray-300" : "bg-gray-200"} rounded-md size-8 flex justify-center items-center`} {...otherProps}>
                     {pageNumber}
                 </button>
             )}
         </div>
     )
-})
+}
 
-export default ProductPagination
+export default memo(ProductPagination)

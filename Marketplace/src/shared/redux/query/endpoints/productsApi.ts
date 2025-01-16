@@ -31,12 +31,12 @@ export type ProductsQueryResult = {
 	pages: number
 }
 export type QueryParams = Partial<{
-	pageParam: number,
-	limitParam: string,
-	searchParam: string,
-	sortParam: "price" | "discount" | "title",
+	page: number,
+	limit: string,
+	search: string,
+	sort: "price" | "discount" | "title",
 	sortMethod: "1" | "-1",
-	categoryParam: string,
+	category: string,
 	minPrice: string,
 	maxPrice: string,
 }>
@@ -46,12 +46,12 @@ export const productsApi = baseApi.enhanceEndpoints({addTagTypes: ["Product"]}).
             query: (params) =>({
                 url: "products",
                 params: {
-                    page: params.pageParam ?? 1,
-                    limit: params.limitParam ?? 10,
-                    search: params.searchParam ?? "",
-                    sort: params.sortParam ?? "price",
+                    page: params.page ?? 1,
+                    limit: params.limit ?? 10,
+                    search: params.search ?? "",
+                    sort: params.sort ?? "price",
                     sortMethod: params.sortMethod ?? "1",
-                    category: params.categoryParam ?? "",
+                    category: params.category ?? "",
                     minPrice: params.minPrice ?? "",
                     maxPrice: params.maxPrice ?? "",
                 }

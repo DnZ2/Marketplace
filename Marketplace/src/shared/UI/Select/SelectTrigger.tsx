@@ -1,14 +1,16 @@
-import { ComponentPropsWithoutRef } from "react"
+import { ComponentPropsWithoutRef, memo } from "react"
+import { useSelect } from "./useSelect"
 
-interface Props extends ComponentPropsWithoutRef<"div">{}
+export interface Props extends ComponentPropsWithoutRef<"div">{}
 
 const SelectTrigger = (props: Props) => {
     const {children, className, ...otherProps} = props
+    const {onOpen} = useSelect()
     return (
-        <div className={`relative flex w-full ${className}`} {...otherProps}>
+        <div onClick={onOpen} className={`relative flex w-full ${className}`} {...otherProps}>
             {children}
         </div>
     )
 }
 
-export default SelectTrigger
+export default memo(SelectTrigger)

@@ -1,4 +1,6 @@
+import DeleteReviewButton from "features/ReviewActions/DeleteReviewButton"
 import UpdateReviewButton from "features/ReviewActions/UpdateReviewButton"
+import { memo } from "react"
 import { UserReview } from "shared/redux/query/endpoints"
 
 interface Props {
@@ -18,7 +20,8 @@ const UserReviewCard = (props: Props) => {
             </div>
             <p>{review.reviewText}</p>
             <UpdateReviewButton review={review}/>
+            <DeleteReviewButton reviewId={review.id}/>
         </div>
     )
 }
-export default UserReviewCard
+export default memo(UserReviewCard)

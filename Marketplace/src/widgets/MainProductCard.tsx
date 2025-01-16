@@ -5,7 +5,7 @@ import { useAppDispatch,useAppSelector } from "shared/redux/store";
 import { addProductToCart } from 'shared/redux/slices/cartSlice';
 import {BottomSideButton,ProductCard,ProductBadge,ProductFooter,ProductImg,ProductLink,ProductMain,ProductPrice,TopLeftSide,TopRightSide} from "entities/Product/UI";
 import { Product } from "shared/redux/query/endpoints/productsApi";
-import { FC, useMemo } from "react";
+import { FC, memo, useMemo } from "react";
 
 interface Props {
 	data: Product
@@ -38,4 +38,4 @@ const MainProductCard: FC<Props> = ({data}) => {
     )
 }
 
-export default MainProductCard
+export default memo(MainProductCard)

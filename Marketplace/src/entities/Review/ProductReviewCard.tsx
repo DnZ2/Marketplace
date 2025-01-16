@@ -1,5 +1,6 @@
 import { ProductReview } from "shared/redux/query/endpoints"
 import UserProfile from "../../assets/profile-user.svg?react"
+import { memo } from "react"
 
 interface Props {
     review: ProductReview
@@ -18,4 +19,4 @@ const ProductReviewCard = (props: Props) => {
         </div>
     )
 }
-export default ProductReviewCard
+export default memo(ProductReviewCard)

@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import Arrow from "assets/fa-angle-down.svg?react"
 import AddReviewButton from 'features/ReviewActions/AddReviewButton';
 import { Order } from 'shared/redux/query/endpoints';

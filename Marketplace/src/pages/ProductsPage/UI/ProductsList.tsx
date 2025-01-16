@@ -1,3 +1,4 @@
+import { memo } from "react"
 import { Product } from "shared/redux/query/endpoints"
 import CardsWrapper from "shared/UI/CardsWrapper"
 import MainProductCard from "widgets/MainProductCard"
@@ -20,4 +21,4 @@ const ProductsList = (props: Props) => {
     )
 }
 
-export default ProductsList
+export default memo(ProductsList)
