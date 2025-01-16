@@ -5,21 +5,18 @@ import { Form } from 'shared/UI/Form';
 import { useForm } from "react-hook-form";
 import Input from "shared/UI/Input/Input";
 import Button from "shared/UI/Button/Button";
-import useQueryParams from "features/ProductQueryActions/useQueryParams";
 import validationSchema from "../priceSelectorValidation";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 
 interface Props extends ComponentPropsWithoutRef<"form">{
+    onFilterByPrice: (min:number,max:number)=>void
 	diapason: Diapason
 	id?: string
 }
 
-const PriceSelector = memo((props: Props) => {
-    
-    const {className, diapason, id} = props
-
-    const {handleFilterByPrice} = useQueryParams()
+const PriceSelector = (props: Props) => {
+    const {onFilterByPrice, className, diapason, id} = props
 
     const {
         register,
@@ -41,7 +38,7 @@ const PriceSelector = memo((props: Props) => {
         if (errors.max) {
             setValue("max", diapason.to);
         }
-        handleFilterByPrice(data?.min, data?.max);
+        onFilterByPrice(data?.min, data?.max);
     })
 
     return (
@@ -54,6 +51,6 @@ const PriceSelector = memo((props: Props) => {
             </Button>
         </Form>
     )
-})
+}
 
-export default PriceSelector
+export default memo(PriceSelector)

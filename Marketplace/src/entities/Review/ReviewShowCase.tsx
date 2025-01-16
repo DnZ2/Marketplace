@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef } from 'react';
+import { ComponentPropsWithoutRef, memo } from 'react';
 import { Rating } from 'shared/redux/query/endpoints';
 
 interface Props extends ComponentPropsWithoutRef<"div">{
@@ -17,4 +17,4 @@ const ReviewShowCase = (props: Props) => {
     )
 }
 
-export default ReviewShowCase
+export default memo(ReviewShowCase)

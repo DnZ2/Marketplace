@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useMemo, useState } from "react";
 import useEvent from "react-use-event-hook";
 
 export const useNumberInput = (savedValue: number, maxQuantity: number) => {
@@ -23,10 +23,10 @@ export const useNumberInput = (savedValue: number, maxQuantity: number) => {
             setValue((value) => value - 1);
         }
     })
-    return {
+    return useMemo(()=>({
         value,
         handleChangeValue,
         handleIncreaseValue,
         handleDecreaseValue,
-    };
+    }),[value, handleChangeValue, handleIncreaseValue, handleDecreaseValue]);
 };

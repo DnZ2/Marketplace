@@ -18,10 +18,9 @@ interface Props extends ButtonProps{
 const AddReviewButton = (props: Props) => {
     const {children, productId, ...otherProps} = props
 
-    const {isActive: isModalOpen, on, off} = useToggle(false)
-   
     const [postReview] = usePostReviewMutation()
 
+    const {isActive: isModalOpen, on, off} = useToggle(false)
     const { handleSubmit, control, register } = useForm<FormValues>({
         defaultValues: {
             rating: 0,
@@ -33,6 +32,7 @@ const AddReviewButton = (props: Props) => {
         try{
             await postReview({productId, ...data})
             off()
+            toast.success("Your review is posted")
         } catch(e){
             toast.error("Failed post review")
             console.log(e)

@@ -2,116 +2,121 @@ import { SyntheticEvent, } from "react";
 import { useSearchParams } from "react-router-dom";
 import { QueryParams } from "../../shared/redux/query/endpoints/productsApi";
 import useEvent from "react-use-event-hook";
-type SortParam = Required<Pick<QueryParams,"sortParam">>["sortParam"]
+import { variants } from "./sortVariants";
+type SortParam = Required<Pick<QueryParams,"sort">>["sort"]
 type SortMethod = Required<Pick<QueryParams,"sortMethod">>["sortMethod"]
 const useQueryParams = () => {
     const [searchParams, setSearchParams] = useSearchParams({
         page: "1",
         limit: "4",
     });
-    const pageParam = Number(searchParams.get("page")) || 1;
-    const limitParam = searchParams.get("limit") || "4";
-    const searchParam = searchParams.get("search") || "";
-    const sortParam = searchParams.get("sort") as SortParam || "price";
+    const page = Number(searchParams.get("page")) || 1;
+    const limit = searchParams.get("limit") || "4";
+    const search = searchParams.get("search") || "";
+    const sort = searchParams.get("sort") as SortParam || "price";
     const sortMethod = searchParams.get("sortMethod") as SortMethod || "1";
-    const categoryParam = searchParams.get("category") || "" ;
+    const category = searchParams.get("category") || "" ;
     const minPrice = searchParams.get("from") || "";
     const maxPrice = searchParams.get("to") || "";
 
-    const handleChangeQueryPage = useEvent((page: number) => {
+    const onChangePage = useEvent(({target}) => {
         window.scrollTo(0, 0);
-        setSearchParams(prev=>({
-            ...Object.fromEntries(prev),
-            page: page.toString(),
-        }));
+        setSearchParams(prev=>{
+            prev.set("page",target.innerText)
+            return prev
+        });
     })
 
-    const handleSearchQuery = useEvent((e: SyntheticEvent) => {
+    const onSearch = useEvent((e: SyntheticEvent) => {
         e.preventDefault();
         const target = e.target as EventTarget & {
 			search: { value: string };
 		  };
         if (target.search.value) {
-            setSearchParams(prev=>({
-                ...Object.fromEntries(prev),
-                search: target.search.value,
-                page: "1",
-            }));
+            setSearchParams(prev=>{
+                prev.set("search", target.search.value)
+                prev.set("page", "1")
+                return prev
+            });
         } else {
             searchParams.delete("search");
-            setSearchParams(prev=>({
-                ...Object.fromEntries(prev),
-                page: "1"
-            }));
+            setSearchParams(prev=>{
+                prev.set("page", "1")
+                return prev
+            });
         }
     })
-    const handleFilterByCategory = (value: string) => {
-        setSearchParams(prev=>({
-            ...Object.fromEntries(prev),
-            category: value,
-            page: "1",
-        }));
-    }
-    const handleResetCategoryParam = () => {
+    const onFilterByCategory = useEvent((value: string) => {
+        setSearchParams(prev=>{
+            prev.set("category", value)
+            prev.set("page", "1")
+            return prev
+        });
+    })
+    const onResetCategory = useEvent(() => {
         searchParams.delete("category");
-        setSearchParams(prev=>({
-            ...Object.fromEntries(prev),
-            page: "1"
-        }));
-    }
-    const handleFilterByPrice = (from?:number, to?:number) => {
+        setSearchParams(prev=>{
+            prev.set("page", "1")
+            return prev
+        });
+    })
+    const onFilterByPrice = useEvent((from?:number, to?:number) => {
         if (!from && !to) {
             searchParams.delete("from");
             searchParams.delete("to");
-            setSearchParams(prev=>({ ...Object.fromEntries(prev) }));
         } else if (!from && to) {
             searchParams.delete("from");
-            setSearchParams(prev=>({
-                ...Object.fromEntries(prev),
-                to: to.toString(),
-                page: "1"
-            }));
+            setSearchParams(prev=>{
+                prev.set("to", to.toString())
+                prev.set("page", "1")
+                return prev
+            });
         } else if (!to && from) {
             searchParams.delete("to");
-            setSearchParams(prev=>({
-                ...Object.fromEntries(prev),
-                from: from.toString(),
-                page: "1"
-            }));
+            setSearchParams(prev=>{
+                prev.set("from", from.toString())
+                prev.set("page", "1")
+                return prev
+            });
         } else if(from && to) {
-            setSearchParams(prev=>({
-                ...Object.fromEntries(prev),
-                from: from.toString(),
-                to: to.toString(),
-                page: "1"
-            }));
+            setSearchParams(prev=>{
+                prev.set("from", from.toString())
+                prev.set("to", to.toString())
+                prev.set("page", "1")
+                return prev
+            });
+        }
+    })
+    const onSort = useEvent((value) => {
+        const variant = variants.find((item)=>item.value === value)
+        if(variant)
+            setSearchParams(prev=>{
+                prev.set("sort", variant?.sortBy)
+                prev.set("sortMethod", variant?.sortMethod)
+                prev.set("page", "1")
+                return prev
+            });
+    })
+    return {
+        params: {
+            page,
+            limit,
+            search,
+            sort,
+            sortMethod,
+            category,
+            minPrice,
+            maxPrice,
+        },
+        actions: {
+            onChangePage,
+            onSearch,
+            onFilterByCategory,
+            onFilterByPrice,
+            onSort,
+            onResetCategory,
         }
     }
-    const handleSortSelect =(sortBy: "price"|"discount"|"title", sortMethod: "1"|"-1") => {
-        setSearchParams(prev=>({
-            ...Object.fromEntries(prev),
-            sort: sortBy,
-            sortMethod,
-            page: "1",
-        }));
-    }
-    
-    return {
-        pageParam,
-        limitParam,
-        searchParam,
-        sortParam,
-        sortMethod,
-        categoryParam,
-        minPrice,
-        maxPrice,
-        handleChangeQueryPage,
-        handleSearchQuery,
-        handleFilterByCategory,
-        handleFilterByPrice,
-        handleSortSelect,
-        handleResetCategoryParam,
-    };
 };
 
 export default useQueryParams;

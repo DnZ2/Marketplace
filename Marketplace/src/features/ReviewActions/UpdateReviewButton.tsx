@@ -17,10 +17,9 @@ interface Props extends ButtonProps{
 const UpdateReviewButton = (props: Props) => {
     const {children, review, ...otherProps} = props
 
-    const {isActive: isModalOpen, on, off} = useToggle(false)
-   
     const [patchReview] = usePatchReviewMutation()
 
+    const {isActive: isModalOpen, on, off} = useToggle(false)
     const { handleSubmit, control, register } = useForm<FormValues>({
         defaultValues: {
             rating: review.rating,
@@ -32,8 +31,9 @@ const UpdateReviewButton = (props: Props) => {
         try{
             await patchReview({id: review.id, ...data})
             off()
+            toast.success("Your review is patched")
         } catch(e){
-            toast.error("Failed post review")
+            toast.error("Failed patch review")
             console.log(e)
         }
     })

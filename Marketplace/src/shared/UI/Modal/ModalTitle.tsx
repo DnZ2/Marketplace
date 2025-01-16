@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef } from "react"
+import { ComponentPropsWithoutRef, memo } from "react"
 
 interface Props extends ComponentPropsWithoutRef<"h1">{}
 
@@ -9,4 +9,4 @@ const ModalTitle = (props: Props) => {
     )
 }
 
-export default ModalTitle
+export default memo(ModalTitle)

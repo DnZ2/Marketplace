@@ -1,4 +1,4 @@
-import { FC, ComponentPropsWithoutRef } from "react"
+import { FC, ComponentPropsWithoutRef, memo } from "react"
 
 const Form: FC<ComponentPropsWithoutRef<"form">> = ({children, ...props}) => {
     return (
@@ -8,4 +8,4 @@ const Form: FC<ComponentPropsWithoutRef<"form">> = ({children, ...props}) => {
     )
 }
 
-export default Form
+export default memo(Form)

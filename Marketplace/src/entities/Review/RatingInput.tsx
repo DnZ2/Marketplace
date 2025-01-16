@@ -1,4 +1,5 @@
 import { Star } from 'lucide-react';
+import { memo } from 'react';
 import { Control, Controller } from 'react-hook-form'
 
 export interface FormValues{
@@ -40,4 +41,4 @@ const RatingInput = ({control}: Props) => {
     )
 }
 
-export default RatingInput
+export default memo(RatingInput)

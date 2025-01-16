@@ -4,6 +4,7 @@ import { useDeleteReviewMutation } from 'shared/redux/query/endpoints/reviewsApi
 import useToggle from 'shared/hooks/useToggle'
 import useEvent from "react-use-event-hook"
 import { Props as ButtonProps } from "shared/UI/Button/Button"
+import { toast } from "react-toastify"
 interface Props extends ButtonProps{
     reviewId: string
 }
@@ -21,8 +22,10 @@ const DeleteReviewButton = (props: Props) => {
         try{
             await removeReview(reviewId).unwrap()
             off()
+            toast.error("Your review is deleted")
         }
         catch(e){
+            toast.error("Failed post review")
             console.log(e)
         }
     }
