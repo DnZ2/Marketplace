@@ -1,5 +1,5 @@
 import {  memo, MouseEventHandler } from "react"
-import Arrow from "../../../assets/fa-angle-down.svg?react"
+import { ChevronDown } from "lucide-react"
 
 
 
@@ -13,10 +13,10 @@ const NumberInputControlls = (props: Props) => {
     return (
         <div className="bg-white absolute top-1/2 -translate-y-1/2 right-0 flex flex-col">
             <button type="button" className="px-2 py-[5px]" onClick={increase}>
-                <Arrow className="fill-black rotate-180"/>
+                <ChevronDown className="rotate-180"/>
             </button>
             <button type="button" className="px-2 py-[5px]" onClick={decrease}>
-                <Arrow className="fill-black"/>
+                <ChevronDown/>
             </button>
         </div>
     )

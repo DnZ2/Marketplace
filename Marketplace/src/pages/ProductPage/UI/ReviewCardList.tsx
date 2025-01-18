@@ -1,7 +1,7 @@
-import ReviewCard from "../../../entities/Review/ProductReviewCard"
+import ReviewCard from "entities/Review/ProductReviewCard"
 import PropTypes from 'prop-types';
-import { useGetProductReviewQuery } from "../../../shared/redux/query/endpoints/reviewsApi";
-import Loader from "../../../shared/UI/Loader";
+import { useGetProductReviewQuery } from "shared/redux/query/endpoints/reviewsApi";
+import Loader from "shared/UI/Loader";
 const ReviewCardList = ({product}) => {
     const {data: reviews, isLoading} = useGetProductReviewQuery(product?.id)
     if(isLoading){

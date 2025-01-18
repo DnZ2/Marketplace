@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, FC,  } from "react"
+import { ComponentPropsWithoutRef, FC, memo,  } from "react"
 
 const ProductMain: FC<ComponentPropsWithoutRef<"div">> = ({className, children}) => {
     return (
@@ -8,4 +8,4 @@ const ProductMain: FC<ComponentPropsWithoutRef<"div">> = ({className, children})
     )
 }
 
-export default ProductMain
+export default memo(ProductMain)

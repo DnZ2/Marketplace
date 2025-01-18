@@ -1,10 +1,10 @@
 import nophoto from "../../../../../assets/nophoto.png"
-import DeleteButton from "../../../../../features/Favourite/UI/DeleteFavouriteButton";
+import DeleteButton from "../../../../../features/Wishlist/UI/DeleteFavouriteButton";
 import { useAppDispatch } from "../../../../../shared/redux/store"
 import { removeProductFromCart } from "../../../../../shared/redux/slices/cartSlice";
 import CardsWrapper from "../../../../../shared/UI/CardsWrapper";
 import {ProductImg} from "../../../../../entities/Product/UI";
-import { FC } from "react";
+import { FC, memo } from "react";
 import { CartProduct } from "../../../../../shared/redux/slices/cartSlice";
 
 interface Props {
@@ -27,4 +27,4 @@ const CartDropdownProductCard: FC<Props> = ({image=nophoto, data}) => {
     )
 }
 
-export default CartDropdownProductCard
+export default memo(CartDropdownProductCard)

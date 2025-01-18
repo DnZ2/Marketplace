@@ -1,5 +1,4 @@
-import Back from "../../../assets/prev.svg?react"
-import Forward from "../../../assets/next.svg?react"
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 import PropTypes from 'prop-types';
 
 const Navigation = ({prev, next})=>{
@@ -7,10 +6,10 @@ const Navigation = ({prev, next})=>{
     return (
         <div className="flex gap-2">
             <button onClick={prev} className="rounded-full p-[11px] bg-[#f0f0f0]">
-                <Back />
+                <ArrowLeft />
             </button>
             <button onClick={next} className="rounded-full p-[11px] bg-[#f0f0f0]">
-                <Forward/>
+                <ArrowRight />
             </button>
         </div>
     )

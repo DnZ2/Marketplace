@@ -2,7 +2,7 @@ import { cva, VariantProps } from "class-variance-authority";
 export const InputVariants = cva("input", {
     variants: {
         variant: {
-            primary: "bg-[#F5F5F5] outline-1 focus:outline",
+            primary: "bg-[#F5F5F5]",
             skeleton: "bg-slate-200 animate-pulse"
         },
         size: {

@@ -1,9 +1,9 @@
 import { ComponentPropsWithoutRef, memo } from "react";
-import AddToFavourite from  "assets/wishlist2.svg?react"
 import Button from 'shared/UI/Button/Button';
 import { addProductToFavourite, FavouriteProduct, removeProductFromFavourite } from "shared/redux/slices/favouriteSlice";
 import { useAppDispatch, useAppSelector } from "shared/redux/store";
 import useEvent from "react-use-event-hook";
+import { Heart } from "lucide-react";
 
 interface Props extends ComponentPropsWithoutRef<"button">{
 	variant: "circle" | "primary" | "secondary" | "icon"
@@ -30,7 +30,7 @@ const FavouriteButton = (props: Props) => {
             :"[&>svg]:hover:stroke-white [&>svg]:hover:fill-[#db4444]"}
 		${variant==="icon" && "border border-[#7D8184] hover:border-none"}`
         } {...otherProps} onClick={handleToggleFavouriteProduct}>
-            <AddToFavourite className={`${variant==="icon"? "size-7" : "size-5"}`}/>
+            <Heart/>
         </Button>
     )
 }

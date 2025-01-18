@@ -1,4 +1,3 @@
-import Checked from "assets/checked-svgrepo-com.svg?react"
 import { ComponentPropsWithoutRef, memo } from 'react';
 import { Diapason } from 'shared/redux/query/endpoints/productsApi';
 import { Form } from 'shared/UI/Form';
@@ -7,6 +6,7 @@ import Input from "shared/UI/Input/Input";
 import Button from "shared/UI/Button/Button";
 import validationSchema from "../priceSelectorValidation";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { Check } from "lucide-react";
 
 
 interface Props extends ComponentPropsWithoutRef<"form">{
@@ -47,7 +47,7 @@ const PriceSelector = (props: Props) => {
             -
             <Input {...register("max")} placeholder={`to ${diapason?.to}`}/>
             <Button type='submit' className='rounded-full'>
-                <Checked />
+                <Check />
             </Button>
         </Form>
     )

@@ -13,7 +13,7 @@ createRoot(document.getElementById('root') as HTMLElement).render(
         <Provider store={store}>
             <PersistGate loading={null} persistor={persistor}>
                 <ReactRouterProvider />
-                <ToastContainer/>
+                <ToastContainer stacked/>
             </PersistGate>
         </Provider>
     </StrictMode>

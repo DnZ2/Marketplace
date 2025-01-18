@@ -10,7 +10,7 @@ interface Props {
 }
 
 const RelatedProductsByCategory: FC<Props> = ({product}) => {
-    const {data, isLoading} = useGetProductsQuery({categoryParam: product?.category, limitParam: "4"}, {skip: !product})
+    const {data, isLoading} = useGetProductsQuery({category: product?.category, limit: "4"}, {skip: !product})
     if(isLoading){
         return <Loader />
     }

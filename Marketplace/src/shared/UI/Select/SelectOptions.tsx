@@ -1,10 +1,11 @@
-import { ComponentPropsWithoutRef, memo } from "react"
+import { ComponentPropsWithoutRef, memo, ReactNode } from "react"
 import { useSelect } from "./useSelect"
 import SelectOption from "./SelectOption"
 
 export interface Props extends ComponentPropsWithoutRef<"div">{
     options: string[]
     filtered?: boolean
+    customOption?: ReactNode | ReactNode[]
 }
 
 const SelectOptions = (props: Props) => {

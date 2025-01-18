@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, FC,  } from "react"
+import { ComponentPropsWithoutRef, FC, memo,  } from "react"
 
 const TopLeftSide: FC<ComponentPropsWithoutRef<"div">> = ({children, className}) => {
     return (
@@ -8,4 +8,4 @@ const TopLeftSide: FC<ComponentPropsWithoutRef<"div">> = ({children, className})
     )
 }
 
-export default TopLeftSide
+export default memo(TopLeftSide)

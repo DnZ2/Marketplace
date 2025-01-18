@@ -3,7 +3,7 @@ import Button from "../../../../shared/UI/Button/Button"
 import ReviewShowCase from "../../../../entities/Review/ReviewShowCase"
 import {ProductPrice} from "../../../../entities/Product/UI"
 import usePageProductCardActions from "../usePageProductCardActions"
-import FavouriteButton from "../../../../features/Favourite/UI/ToggleFavouriteButton"
+import FavouriteButton from "../../../../features/Wishlist/UI/ToggleFavouriteButton"
 import ProductNumberInput from "./ProductNumberInput"
 import { Product } from "shared/redux/query/endpoints"
 

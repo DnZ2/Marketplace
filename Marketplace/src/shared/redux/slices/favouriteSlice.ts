@@ -26,7 +26,7 @@ export const favouriteSlice = createSlice({
         },
         removeProductFromFavourite(state, action) {
             state.favouriteProducts = state.favouriteProducts.filter(
-                (product) => product.id !== action.payload.id
+                (product) => product.id !== action.payload
             );
         },
     },

@@ -1,6 +1,6 @@
-import Search from "../../../../../assets/search.svg?react"
 import { FC, FocusEventHandler } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { Search } from "lucide-react";
 
 interface Props {
 	isInputOpen: boolean
@@ -11,7 +11,7 @@ const HeaderSearchTrigger: FC<Props> = ({isInputOpen, handleOpenInput, ...props}
     return (
         <AnimatePresence initial={false}>
             <button onFocus={handleOpenInput} className="absolute rounded-full bg-[#F5F5F5] size-10 cursor-pointer flex items-center justify-center">
-                <Search/>
+                <Search />
             </button>
             {isInputOpen &&
                 <motion.input key="search" name="search" {...props}

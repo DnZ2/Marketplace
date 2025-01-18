@@ -1,4 +1,4 @@
-import Plus from "../../../assets/plus.svg?react"
+import { Plus } from "lucide-react"
 import { ComponentPropsWithoutRef, FC, memo } from "react"
 
 const IncreaseButton: FC<ComponentPropsWithoutRef<"button">> = ({...props}) => {

@@ -1,5 +1,5 @@
 
-import { ChangeEventHandler, createContext, useContext, useMemo, useRef, useState, MouseEvent, ReactNode, FC, RefObject, useLayoutEffect } from 'react'
+import { ChangeEventHandler, createContext, useContext, useMemo, useRef, useState, ReactNode, FC, RefObject, useLayoutEffect, MouseEventHandler } from 'react'
 import useEvent from 'react-use-event-hook';
 import useToggle from 'shared/hooks/useToggle';
 
@@ -10,8 +10,8 @@ interface SelectContextProps{
     searchRef: RefObject<HTMLInputElement>
     triggerRef: RefObject<HTMLDivElement>
     onChange: ChangeEventHandler<HTMLInputElement>;
-    onToggle: (e: MouseEvent<HTMLButtonElement>) => void;
-    onPickOption: (e: MouseEvent<HTMLButtonElement>) => void;
+    onToggle: MouseEventHandler<HTMLButtonElement>
+    onPickOption: MouseEventHandler<HTMLButtonElement>
     onResetValue: () => void;
     onOpen: () => void;
 }

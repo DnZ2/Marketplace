@@ -10,7 +10,7 @@ categoriesRouter.post(
   body("value")
     .isString()
     .matches(/^[\p{Lu}][\p{L}]{0,31}$/g),
-  authMiddleware(["USER"]),
+  authMiddleware(["ADMIN"]),
   categoriesController.postCategory
 );
 categoriesRouter.put(
@@ -18,12 +18,12 @@ categoriesRouter.put(
   body("value")
     .isString()
     .matches(/^[\p{Lu}][\p{L}]{0,31}$/g),
-  authMiddleware(["USER"]),
+  authMiddleware(["ADMIN"]),
   categoriesController.putCategory
 );
 categoriesRouter.delete(
   "/categories/:id",
-  authMiddleware(["USER"]),
+  authMiddleware(["ADMIN"]),
   categoriesController.deleteCategory
 );
 
