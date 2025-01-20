@@ -10,6 +10,7 @@
 		"lint:fix": "eslint \"**/*.{ts,tsx}\" --fix"
 	},
 	"dependencies": {
+		"@custom-react-hooks/use-update-effect": "^1.5.1",
 		"@hookform/resolvers": "^3.9.0",
 		"@reduxjs/toolkit": "^2.2.7",
 		"class-variance-authority": "^0.7.0",

@@ -1,17 +1,14 @@
-import { SyntheticEvent, } from "react";
+import { SyntheticEvent, useMemo, } from "react";
 import { useSearchParams } from "react-router-dom";
 import { QueryParams } from "../../shared/redux/query/endpoints/productsApi";
 import useEvent from "react-use-event-hook";
 import { variants } from "./sortVariants";
 type SortParam = Required<Pick<QueryParams,"sort">>["sort"]
 type SortMethod = Required<Pick<QueryParams,"sortMethod">>["sortMethod"]
-const useQueryParams = () => {
-    const [searchParams, setSearchParams] = useSearchParams({
-        page: "1",
-        limit: "4",
-    });
+const useQueryParams = (initialLimit: string) => {
+    const [searchParams, setSearchParams] = useSearchParams();
     const page = Number(searchParams.get("page")) || 1;
-    const limit = searchParams.get("limit") || "4";
+    const limit = searchParams.get("limit") || initialLimit;
     const search = searchParams.get("search") || "";
     const sort = searchParams.get("sort") as SortParam || "price";
     const sortMethod = searchParams.get("sortMethod") as SortMethod || "1";
@@ -19,10 +16,9 @@ const useQueryParams = () => {
     const minPrice = searchParams.get("from") || "";
     const maxPrice = searchParams.get("to") || "";
 
-    const onChangePage = useEvent(({target}) => {
-        window.scrollTo(0, 0);
+    const onChangePage = useEvent((value: string) => {
         setSearchParams(prev=>{
-            prev.set("page",target.innerText)
+            prev.set("page",value)
             return prev
         });
     })
@@ -103,7 +99,8 @@ const useQueryParams = () => {
                 return prev
             });
     })
-    return {
+
+    const queryParams = useMemo(()=>({
         params: {
             page,
             limit,
@@ -123,7 +120,27 @@ const useQueryParams = () => {
             onSort,
             onResetCategory,
         }
-    }
-};
+    }), [
+        page,
+        limit,
+        search,
+        sort,
+        sortMethod,
+        category,
+        minPrice,
+        maxPrice,
+
+        onChangePage,
+        onShowMore,
+        onSearch,
+        onFilterByCategory,
+        onFilterByPrice,
+        onSort,
+        onResetCategory,
+        
+    ])
+
+    return queryParams
+}
 
 export default useQueryParams;
