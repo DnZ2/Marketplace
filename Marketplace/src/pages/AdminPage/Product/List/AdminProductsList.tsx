@@ -1,12 +1,15 @@
 import { FixedSizeList as List } from "react-window";
 import InfiniteLoader from "react-window-infinite-loader";
-import AdminProductCard from "pages/AdminPage/Product/Card/AdminProductCard"
-import { Product, useLazyGetProductsQuery } from "shared/redux/query/endpoints";
-import { CSSProperties, useEffect, useRef, useState } from "react";
-import useQueryParams from "features/ProductQueryActions/useQueryParams";
+import AdminProductCard from "../Card/AdminProductCard"
+import { CSSProperties, memo, useEffect, useRef, useState } from "react"
+import { Product, QueryParams, useLazyGetProductsQuery } from "shared/redux/query/endpoints";
 
-export const Test = () => {
-    const {params} = useQueryParams("10")
+interface Props {
+    params: Required<QueryParams>
+}
+
+const AdminProductsList = (props: Props) => {
+    const {params} = props
     const [trigger, { isFetching }] = useLazyGetProductsQuery();
 
     const [page, setPage] = useState(1)
@@ -30,9 +33,11 @@ export const Test = () => {
     const isItemLoaded = (index: number) => index < products.length;
 
     useEffect(() => {
-        if (infiniteLoaderRef.current && hasMountedRef.current) {
+        if(hasMountedRef.current&&infiniteLoaderRef.current) {
             infiniteLoaderRef.current.resetloadMoreItemsCache();
+            setProducts([])
             setPage(1)
+            setHasNextPage(true)
         }
         hasMountedRef.current = true;
     }, [params.category, params.maxPrice, params.minPrice, params.search, params.sort, params.sortMethod]);
@@ -73,3 +78,5 @@ export const Test = () => {
         </div>
     )
 }
+
+export default memo(AdminProductsList)
