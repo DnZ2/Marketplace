@@ -1,4 +1,3 @@
-import PropTypes from "prop-types"
 import { useNumberInput } from "../../../../features/NumberInput/useNumberInput"
 import { NumberInputWrapper,NumberInput,NumberInputControlls } from "../../../../shared/UI/NumberInput"
 import { forwardRef } from "react"
@@ -12,8 +11,5 @@ const AdminFormNumberInput = forwardRef(function AdminFormNumberInput({initial, 
         </NumberInputWrapper>
     )
 })
-AdminFormNumberInput.propTypes={
-    initial: PropTypes.number,
-    maxValue: PropTypes.number,
-}
+
 export default AdminFormNumberInput

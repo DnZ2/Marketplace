@@ -1,5 +1,5 @@
-import { ComponentPropsWithoutRef, FC } from 'react'
-import { NavLink } from 'react-router-dom'
+import { ComponentPropsWithoutRef, FC, memo } from 'react'
+import Link from 'shared/UI/Link/Link'
 
 interface Props extends ComponentPropsWithoutRef<"a">{
 	id: string
@@ -7,10 +7,10 @@ interface Props extends ComponentPropsWithoutRef<"a">{
 
 const ProductLink: FC<Props> = ({children, className, id}) => {
     return (
-        <NavLink to={`/products/${id}`} className={`text-base ${className}`}>
+        <Link to={`/products/${id}`} className={`text-base ${className}`}>
             {children}
-        </NavLink>
+        </Link>
     )
 }
 
-export default ProductLink
+export default memo(ProductLink)

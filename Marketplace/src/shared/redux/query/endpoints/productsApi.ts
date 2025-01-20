@@ -47,7 +47,7 @@ export const productsApi = baseApi.enhanceEndpoints({addTagTypes: ["Product"]}).
                 url: "products",
                 params: {
                     page: params.page ?? 1,
-                    limit: params.limit ?? 10,
+                    limit: params.limit ?? "10",
                     search: params.search ?? "",
                     sort: params.sort ?? "price",
                     sortMethod: params.sortMethod ?? "1",

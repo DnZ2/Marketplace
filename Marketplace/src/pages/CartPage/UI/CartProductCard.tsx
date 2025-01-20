@@ -1,6 +1,6 @@
 import image from "assets/nophoto.png"
 import CartNumberInput from "./CartNumberInput";
-import DeleteButton from "features/Favourite/UI/DeleteFavouriteButton";
+import DeleteButton from "features/Wishlist/UI/DeleteFavouriteButton";
 import { CartProduct, removeProductFromCart } from "shared/redux/slices/cartSlice";
 import { useAppDispatch } from "shared/redux/store";
 import CardsWrapper from "shared/UI/CardsWrapper";

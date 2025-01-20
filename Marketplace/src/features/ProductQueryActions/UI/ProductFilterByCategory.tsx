@@ -5,21 +5,21 @@ import { memo, useMemo } from "react"
 import SelectResetButton from "shared/UI/Select/SelectResetButton"
 import SelectToggleButton from "shared/UI/Select/SelectToggleButton"
 
-interface Props extends InputProps{
+interface Props extends Omit<InputProps, "onSelect">{
     category: string
-    onFilterByCategory: (value: string)=>void
-    onResetCategory: ()=>void
+    onSelect: (value: string)=>void
+    onReset: ()=>void
 }
 
 const ProductFilterByCategory = (props: Props) => {
-    const {category, onFilterByCategory,onResetCategory,className, ...otherProps} = props
+    const {category, onSelect,onReset,className, ...otherProps} = props
     const {data, isLoading} = useGetCategoriesQuery()
 
     const options = useMemo(()=>data?.map(item=>item.value), [data])
-    if(isLoading || !data || !options) return <div className="flex w-[220px]"><input disabled className="p-2 rounded-md bg-[#f5f5f5] animate-pulse" /></div>
+    if(isLoading || !options) return <div className="flex w-[220px]"><input disabled className="p-2 rounded-md bg-[#f5f5f5] animate-pulse" /></div>
     
     return (
-        <Select initial={category} onSelect={onFilterByCategory} onReset={onResetCategory} className="bg-white w-[220px] rounded-md">
+        <Select initial={category} onSelect={onSelect} onReset={onReset} className="bg-white w-[220px] rounded-md">
             <SelectTrigger>
                 <SelectValue className={className} {...otherProps}/>
                 <SelectResetButton className="absolute cursor-pointer right-6 top-1/2 -translate-y-1/2"/>

@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, FC } from "react"
+import { ComponentPropsWithoutRef, FC, memo } from "react"
 
 interface Props extends ComponentPropsWithoutRef<"div">{
 	price: number
@@ -19,4 +19,4 @@ const ProductPrice: FC<Props> = ({price, currentPrice, className}) => {
     )
 }
 
-export default ProductPrice
+export default memo(ProductPrice)

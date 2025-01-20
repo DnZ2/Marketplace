@@ -26,6 +26,12 @@ const useQueryParams = () => {
             return prev
         });
     })
+    const onShowMore = useEvent(() => {
+        setSearchParams(prev=>{
+            prev.set("page", (page+1).toString())
+            return prev
+        });
+    })
 
     const onSearch = useEvent((e: SyntheticEvent) => {
         e.preventDefault();
@@ -110,6 +116,7 @@ const useQueryParams = () => {
         },
         actions: {
             onChangePage,
+            onShowMore,
             onSearch,
             onFilterByCategory,
             onFilterByPrice,

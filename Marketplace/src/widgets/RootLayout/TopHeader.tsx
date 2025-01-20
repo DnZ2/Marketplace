@@ -1,4 +1,5 @@
-import Dropdowm from '../../assets/fa-angle-down.svg?react'
+import { ChevronDown } from 'lucide-react'
+import { memo } from 'react'
 
 const TopHeader = () => {
     return (
@@ -6,7 +7,7 @@ const TopHeader = () => {
             <div className="flex justify-end container">
                 <div className="cursor-pointer gap-1 flex items-center">
                     <p>Language</p>
-                    <Dropdowm />
+                    <ChevronDown className='size-8'/>
                 </div>
             </div>
             <p className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center">
@@ -17,4 +18,4 @@ const TopHeader = () => {
     )
 }
 
-export default TopHeader
+export default memo(TopHeader)

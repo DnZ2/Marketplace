@@ -14,7 +14,7 @@ productsRouter.post(
   body("category").isString(),
   body("description").isString().isLength({ min: 0, max: 1000 }),
   body("discount").isNumeric().isInt({ min: 0, max: 90 }),
-  authMiddleware(["USER"]),
+  authMiddleware(["ADMIN"]),
   productsController.postProducts
 );
 productsRouter.put(
@@ -24,12 +24,12 @@ productsRouter.put(
   body("maxQuantity").isNumeric(),
   body("category").isString(),
   body("discount").isNumeric().isInt({ min: 0, max: 90 }),
-  authMiddleware(["USER"]),
+  authMiddleware(["ADMIN"]),
   productsController.patchProducts
 );
 productsRouter.delete(
   "/products/:id",
-  authMiddleware(["USER"]),
+  authMiddleware(["ADMIN"]),
   productsController.deleteProducts
 );
 

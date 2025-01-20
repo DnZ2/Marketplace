@@ -1,4 +1,3 @@
-import { NavLink, useNavigate } from "react-router-dom"
 import { useRegistrationMutation } from 'shared/redux/query/endpoints/authApi'
 import Input from "shared/UI/Input/Input"
 import registrationValidationSchema from "../validation/registrationValidationSchema"
@@ -7,6 +6,8 @@ import { useForm } from "react-hook-form"
 import { ErrorMessage, Form, FormField } from "shared/UI/Form"
 import { SerializedError } from "@reduxjs/toolkit"
 import Button from "shared/UI/Button/Button"
+import Link from "shared/UI/Link/Link"
+import { useNavigate } from 'react-router-dom'
 
 export const RegisterForm = () => {
     const [registration, {message: serverError}] = useRegistrationMutation<SerializedError>()
@@ -33,7 +34,7 @@ export const RegisterForm = () => {
                 {serverError && <ErrorMessage className="h-3">{serverError}</ErrorMessage>}
                 <FormField row className="items-center gap-6">
                     <Button variant="primary" type="submit">Create Account</Button>
-                    <p className="flex gap-3">Already have account?<NavLink className="border-b-[1px] border-black" to="/login">Log in</NavLink></p>
+                    <p className="flex gap-3">Already have account?<Link className="border-b-[1px] border-black" to="/login">Log in</Link></p>
                 </FormField>
             </FormField>
         </Form>

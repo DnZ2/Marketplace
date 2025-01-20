@@ -1,13 +1,8 @@
-import QR from "../../assets/Qrcode 1.png"
 import GoogleApp from "../../assets/png-transparent-google-play-store-logo-google-play-app-store-android-wallets-text-label-logo.png"
 import AppStore from "../../assets/download-appstore.png"
-import Facebook from "../../assets/Icon-Facebook.svg?react"
-import Twitter from "../../assets/Icon-Twitter.svg?react"
-import Instagram from "../../assets/icon-instagram.svg?react"
-import Linkedin from "../../assets/Icon-Linkedin.svg?react"
-import Send from "../../assets/icon-send.svg?react"
 import Link from "shared/UI/Link/Link"
 import { memo } from "react"
+import { Facebook, Twitter, Instagram, Linkedin, SendHorizontal } from "lucide-react"
 const Footer = () => {
     return (
         <footer className="darkside">
@@ -21,7 +16,7 @@ const Footer = () => {
                     <form className="text-base border border-white flex justify-between p-2 rounded" onSubmit={(e)=>e.preventDefault}>
                         <input className="pl-1 bg-inherit" type="text" placeholder="Enter your email"/>
                         <button type="submit">
-                            <Send/>
+                            <SendHorizontal />
                         </button>
                     </form>
                 </div>
@@ -57,7 +52,6 @@ const Footer = () => {
                     <div className="flex flex-col gap-2">
                         <p>Save $3 with App New User Only</p>
                         <div className="flex gap-3">
-                            <img src={QR} alt="QR" />
                             <div className="flex flex-col gap-3 [&>img]:cursor-pointer">
                                 <img src={GoogleApp} alt="googleapp" />
                                 <img src={AppStore} alt="appstore" />

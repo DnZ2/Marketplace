@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, FC } from "react"
+import { ComponentPropsWithoutRef, FC, memo } from "react"
 
 interface Props extends ComponentPropsWithoutRef<"div">{
 	isDiscount?: boolean,
@@ -14,4 +14,4 @@ const ProductBadge: FC<Props> = ({isDiscount, isNew, children}) => {
     )
 }
 
-export default ProductBadge
+export default memo(ProductBadge)
