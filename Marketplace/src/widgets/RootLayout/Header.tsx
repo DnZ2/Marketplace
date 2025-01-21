@@ -3,9 +3,7 @@ import HeaderSearch from "./Header/Search/HeaderSearch"
 import NavLinks from "./Header/NavLinks"
 import Favourites from "./Header/Favourites/Favourites"
 import CartDropdown from "./Header/Cart/CartDropdown"
-import { ComponentPropsWithoutRef, memo } from "react"
-
-const FlexList = memo(({children}: ComponentPropsWithoutRef<"div">)=> <div className="flex">{children}</div>)
+import { memo } from "react"
 
 const Header = () => {
     return (
@@ -17,11 +15,11 @@ const Header = () => {
                 </div>
                 <div className="flex items-center gap-3">
                     <HeaderSearch />
-                    <FlexList>
+                    <div className="flex">
                         <Favourites/>
                         <CartDropdown />
                         <AccountMenuDropdown />
-                    </FlexList>
+                    </div>
                 </div>
             </div>
         </header>

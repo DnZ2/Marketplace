@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react-swc';
 import {
     createHtmlPlugin
 }  from 'vite-plugin-html';
+import path from 'path';
 export default defineConfig({
     plugins: [react(), createHtmlPlugin({
         minify: true
@@ -16,6 +17,7 @@ export default defineConfig({
             entities: "/src/entities",
             shared: "/src/shared",
             pages: "/src/pages",
+            "@shadcn": path.resolve(__dirname, "./src/shared/shadcn"),
         },
     },
 });

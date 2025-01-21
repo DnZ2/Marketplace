@@ -1,6 +1,6 @@
 import { ProductSearchForm, ProductSortSelector, ProductFilterByCategory, ProductPriceSelector } from "features/ProductQueryActions/UI"
-import { memo, SyntheticEvent, useId } from "react"
-import { QueryParams, useGetProductsQuery } from "shared/redux/query/endpoints"
+import { memo, SyntheticEvent, useId, useMemo } from "react"
+import { QueryParams } from "shared/redux/query/endpoints"
 import { Label } from "shared/UI/Form"
 
 interface Actions{
@@ -18,14 +18,12 @@ interface Props{
 
 const ProductQueryActions = (props: Props) => {
     const {params, actions} = props
-    const {data, isLoading} = useGetProductsQuery({...params})
 
     const categorySelectId = useId()
     const priceSelectId = useId()
     const sortSelectId = useId()
 
-    if(isLoading || !data) return <span>Loading</span>
-
+    const diapason = useMemo(()=>({minPrice: params.minPrice, maxPrice: params.maxPrice}), [params.minPrice,params.maxPrice])
     return (
         <div className="w-full flex flex-col gap-4">
             <ProductSearchForm onSubmit={actions.onSearch}/>
@@ -40,7 +38,7 @@ const ProductQueryActions = (props: Props) => {
                 </div>
                 <div>
                     <Label htmlFor={priceSelectId} className="pl-1 text-xs text-gray-400">Price selector</Label>
-                    <ProductPriceSelector id={priceSelectId} diapason={data.diapason} onFilterByPrice={actions.onFilterByPrice} />
+                    <ProductPriceSelector params={diapason} id={priceSelectId} onFilterByPrice={actions.onFilterByPrice} />
                 </div>
             </div>
         </div>

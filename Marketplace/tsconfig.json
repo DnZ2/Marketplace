@@ -21,7 +21,10 @@
 	  // imports
 	  "baseUrl": ".",
 	  "paths": {
-		"*": ["./src/*"]
+		"*": ["./src/*"],
+		"@shadcn/*": [
+        "./src/shared/shadcn/*"
+      ]
 	  },
 	  /* Linting */
 	  "strict": true,

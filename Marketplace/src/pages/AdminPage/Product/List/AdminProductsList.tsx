@@ -66,6 +66,7 @@ const AdminProductsList = (props: Props) => {
                         itemCount={itemCount}
                         itemSize={90}
                         onItemsRendered={onItemsRendered}
+                        className="scrollbar scrollbar-thumb-[#db4444] scrollbar-track-transparent scrollbar-thumb-rounded-lg"
                         ref={ref}
                     >
                         {({ index, style }: {index: number, style: CSSProperties}) => {

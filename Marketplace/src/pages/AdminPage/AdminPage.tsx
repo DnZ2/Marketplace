@@ -5,7 +5,7 @@ import ProductQueryActions from "widgets/ProductQueryActions"
 export const AdminPage=()=> {
     const {
         params, actions
-    } = useQueryParams("10")
+    } = useQueryParams({initialLimit: "10", isVirtualized: true})
 
     return (
         <div className='relative my-11'>

@@ -1,5 +1,5 @@
 import { memo } from "react"
-import Dropdown from "../../../../features/Dropdown"
+import Dropdown from "../../../../shared/UI/Dropdown"
 import { useLogoutMutation } from "../../../../shared/redux/query/endpoints/authApi"
 import AccountDropdownContent from "./UI/AccountDropdownContent"
 import AccountDropdownTrigger from "./UI/AccountDropdownTrigger"

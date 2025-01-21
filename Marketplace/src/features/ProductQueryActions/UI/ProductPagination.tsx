@@ -2,7 +2,7 @@ import { ComponentPropsWithoutRef, memo } from 'react'
 
 interface Props extends ComponentPropsWithoutRef<"button">{
     totalPages: number
-    pageParam: number 
+    pageParam: number
 }
 
 const ProductPagination = (props: Props) => {
@@ -16,7 +16,7 @@ const ProductPagination = (props: Props) => {
     return (
         <div className="flex justify-center gap-4">
             {pages?.map((pageNumber)=>
-                <button key={pageNumber} disabled={pageParam==pageNumber} className={`${pageParam==pageNumber ?"bg-gray-300" : "bg-gray-200"} rounded-md size-8 flex justify-center items-center`} {...otherProps}>
+                <button key={pageNumber} disabled={pageParam==pageNumber} className={"disabled:bg-gray-300 bg-gray-200 rounded-md size-8 flex justify-center items-center"} {...otherProps}>
                     {pageNumber}
                 </button>
             )}

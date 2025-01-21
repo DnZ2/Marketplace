@@ -1,6 +1,6 @@
 import CartDropdownList from "./UI/CartDropdownList"
 import { useAppSelector } from "../../../../shared/redux/store"
-import Dropdown from "../../../../features/Dropdown"
+import Dropdown from "../../../../shared/UI/Dropdown"
 import { useLocation } from "react-router-dom"
 import CartDropdownTrigger from "./UI/CartDropdownTrigger"
 import { memo } from "react"

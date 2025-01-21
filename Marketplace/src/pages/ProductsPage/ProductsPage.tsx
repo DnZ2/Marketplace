@@ -21,7 +21,7 @@ export const ProductsPage = () => {
     const { pages, products} = data
     return (
         <div className="container my-11 flex flex-col gap-8">
-            <ProductQueryActions params={{...params, diapason: data.diapason}} actions={actions}/>
+            <ProductQueryActions params={params} actions={actions}/>
             <ProductsList products={products}/>
             <ProductPagination totalPages={pages} pageParam={params.page} onClick={actions.onChangePage}/>
         </div>
