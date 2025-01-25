@@ -5,9 +5,9 @@ import MinValueInput from "./MinValueInput"
 const NumberRangeInputs = () => {
     return (
         <div className="flex items-center">
-            <MinValueInput type="number" />
+            <MinValueInput  />
             <span className="p-2"> - </span>
-            <MaxValueInput type="number"/>
+            <MaxValueInput />
         </div>
     )
 }

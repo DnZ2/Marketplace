@@ -40,7 +40,7 @@ export const RangeContextProvider: FC<Props> = (props) => {
     const [max, setMax] = useState(initialMax)
     const onMinChange = useEvent((value: number)=>setMin(value))
     const onMaxChange = useEvent((value: number)=>setMax(value))
-    const onSubmit = useEvent(()=>onSelect(min, max))
+    const onSubmit = useEvent((min, max)=>onSelect(min, max))
     const contextValue = useMemo(()=>({min,max,diapason,initial: {initialMax, initialMin}, onMinChange, onMaxChange, onSubmit}), [min,max,onMinChange, onMaxChange, onSubmit, diapason, initialMax, initialMin])
     return (
         <RangeContext.Provider value={contextValue}>{children}</RangeContext.Provider>
