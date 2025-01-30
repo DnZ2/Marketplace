@@ -8,7 +8,7 @@ interface Props extends ComponentPropsWithoutRef<"form">{
 	id?: string
 }
 
-const PriceSelector = (props: Props) => {
+const ProductPriceSelect = (props: Props) => {
     const {onFilterByPrice, params} = props
     const {data} = useGetProductsQuery({...params})
 
@@ -21,4 +21,4 @@ const PriceSelector = (props: Props) => {
     )
 }
 
-export default memo(PriceSelector)
+export default memo(ProductPriceSelect)

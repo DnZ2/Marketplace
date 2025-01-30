@@ -3,6 +3,7 @@ import * as yup from "yup";
 const adminFormSchema = yup
     .object({
         title: yup.string().required("Title is required"),
+        category: yup.string().required("Category is required"),
         price: yup.number().required("Price is required"),
         maxQuantity: yup.number().required("Quantity is required"),
         discount: yup.number().min(0).max(90),

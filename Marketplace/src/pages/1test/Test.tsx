@@ -1,6 +1,6 @@
 import { FixedSizeList as List } from "react-window";
 import InfiniteLoader from "react-window-infinite-loader";
-import AdminProductCard from "pages/AdminPage/Product/Card/AdminProductCard"
+import AdminProductCard from "pages/AdminPage/ProductsManager/Product/Card/AdminProductCard"
 import { Product, useLazyGetProductsQuery } from "shared/redux/query/endpoints";
 import { CSSProperties, useEffect, useRef, useState } from "react";
 import useQueryParams from "features/ProductQueryActions/useQueryParams";

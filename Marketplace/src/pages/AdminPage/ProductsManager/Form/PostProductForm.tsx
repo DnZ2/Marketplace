@@ -1,27 +1,28 @@
-import Button from "../../../shared/UI/Button/Button"
+import Button from "../../../../shared/UI/Button/Button"
 import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
 import adminFormSchema from "./validationSchema"
-import { Form } from "../../../shared/UI/Form"
-import Input from "../../../shared/UI/Input/Input"
-import Textarea from "../../../shared/UI/Textarea"
-import { useGetCategoriesQuery } from "shared/redux/query/endpoints"
+import { Form } from "../../../../shared/UI/Form"
+import Input from "../../../../shared/UI/Input/Input"
+import Textarea from "../../../../shared/UI/Textarea"
 import { memo } from "react"
+import CategoryInput from "./UI/CategoryInput"
 
 const PostProductForm = () => {
-    const {data, isLoading} = useGetCategoriesQuery()
     const {
         register,
         handleSubmit,
+        control,
         formState: { errors },
     } = useForm({
         criteriaMode: 'all',
         resolver: yupResolver(adminFormSchema),
     })
-    const onSubmit = handleSubmit((data, {target}) => console.log(data, target.category.value))
+    const onSubmit = handleSubmit((data) => console.log(data))
     return (
-        <Form className='flex flex-col gap-3 max-w-60' action="submit" onSubmit={onSubmit}>
+        <Form className='flex flex-col gap-3 max-w-60' onSubmit={onSubmit}>
             <Input className="bg-white" invalid={!!errors.title} {...register("title")} placeholder='Title' />
+            <CategoryInput control={control}/>
             <Input invalid={!!errors.price} {...register("price")} placeholder='Price' />
             <Input invalid={!!errors.maxQuantity} {...register("maxQuantity")} placeholder='Max Quantity'/>
             <Input invalid={!!errors.discount} {...register("discount")} placeholder='Discount'/>

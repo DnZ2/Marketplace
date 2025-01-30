@@ -7,7 +7,7 @@ const SelectValue = (props: Props)=> {
     const {className, ...otherProps} = props
     const {searchRef, option, onChange} = useSelect()
     return (
-        <Input ref={searchRef} value={option} onChange={onChange} className={`rounded-md ${className}`} {...otherProps}/>
+        <Input {...otherProps} ref={searchRef} value={option} onInput={onChange} className={`rounded-md w-full ${className}`}/>
     )
 }
 

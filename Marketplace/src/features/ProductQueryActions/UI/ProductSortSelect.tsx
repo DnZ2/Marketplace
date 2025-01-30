@@ -8,7 +8,7 @@ interface Props extends InputProps{
     onSort: (value: string) => void
 }
 
-const ProductSortSelector = (props: Props) => {
+const ProductSortSelect = (props: Props) => {
     const { onSort, ...otherProps} = props
     const options = useMemo(()=>variants.map(item=>item.value), [variants])
     return (
@@ -23,4 +23,4 @@ const ProductSortSelector = (props: Props) => {
     )
 }
 
-export default memo(ProductSortSelector)
+export default memo(ProductSortSelect)

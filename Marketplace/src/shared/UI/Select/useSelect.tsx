@@ -17,8 +17,9 @@ interface SelectContextProps{
 }
 interface Props{
     initial: string
-    onSelect: (...args: any)=>void
+    onSelect?: (value: string)=>void
     onReset?: ()=>void
+    onClose?: (value: string)=>void
     children: ReactNode
 }
 
@@ -33,32 +34,36 @@ export const useSelect = () => {
 };
 
 export const SelectContextProvider: FC<Props> = (props) => {
-    const {initial, onSelect, onReset, children} = props
+    const {initial, onSelect, onReset, onClose, children} = props
     const [option, setOption] = useState(initial)
+    const [stable, setStable] = useState(initial)
     const searchRef = useRef<HTMLInputElement>(null)
     const triggerRef = useRef<HTMLDivElement>(null)
     const {isActive, on, off, toggle} = useToggle(false)
     const onChange = useEvent(({target}) => setOption(target.value))
     const onPickOption = useEvent(({target}) => {
         setOption(target.innerText);
+        setStable(target.innerText)
         off()
-        onSelect(target.innerText)
+        onSelect?.(target.innerText)
     })
     const onResetValue = useEvent(() => {
         setOption("");
+        setStable("")
         on()
         onReset?.()
         searchRef.current?.focus();
     })
-    const onClose = useEvent((e: globalThis.MouseEvent)=>{
+    const onSelectClose = useEvent((e: globalThis.MouseEvent)=>{
         if(!triggerRef?.current?.contains(e.target as Node)){
             off()
-            setOption(initial)
+            setOption(stable)
+            onClose?.(stable)
         }
     })
     useLayoutEffect(()=>{
-        isActive && window.addEventListener("mousedown", onClose)
-        return ()=> window.removeEventListener("mousedown", onClose)
+        isActive && window.addEventListener("mousedown", onSelectClose)
+        return ()=> window.removeEventListener("mousedown", onSelectClose)
     },[isActive])
     const onToggle = useEvent((e)=>{
         e.stopPropagation()

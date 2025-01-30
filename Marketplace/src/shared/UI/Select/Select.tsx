@@ -1,10 +1,11 @@
 import { ComponentPropsWithoutRef, memo} from "react"
 import { SelectContextProvider, useSelect } from "./useSelect"
 interface WrapperProps extends ComponentPropsWithoutRef<"div">{}
-interface SelectProps extends ComponentPropsWithoutRef<"div">{
+interface SelectProps extends Omit<ComponentPropsWithoutRef<"div">, "onSelect">{
     initial: string
-    onSelect: (...args: any)=>void
+    onSelect?: (value: string)=>void
     onReset?: ()=>void
+    onClose?: (value: string)=>void
 }
 const SelectWrapper = memo((props: WrapperProps) => {
     const {children, className,...otherProps} = props
@@ -17,9 +18,9 @@ const SelectWrapper = memo((props: WrapperProps) => {
 })
 
 const Select = (props: SelectProps) => {
-    const {initial,onSelect, onReset, children, className,...otherProps} = props
+    const {initial,onSelect, onReset, onClose, children, className,...otherProps} = props
     return (
-        <SelectContextProvider initial={initial} onSelect={onSelect} onReset={onReset}>
+        <SelectContextProvider initial={initial} onSelect={onSelect} onReset={onReset} onClose={onClose}>
             <SelectWrapper className={className} {...otherProps}>{children}</SelectWrapper>
         </SelectContextProvider>
     )

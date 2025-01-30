@@ -13,13 +13,22 @@ const ReactRouterProvider = () => {
                 Component: RootLayout,
                 children: [{
                     Component: RoutesWithAdminRole,
-                    children: [{
-                        path: "/admin",
-                        lazy: async () => {
-                            const {AdminPage} = await import('pages/AdminPage/AdminPage');
-                            return { Component: AdminPage };
+                    children: [
+                        {
+                            path: "/product-manager",
+                            lazy: async () => {
+                                const {ProductsManager} = await import('pages/AdminPage/ProductsManager/ProductsManager');
+                                return { Component: ProductsManager };
+                            }
+                        },
+                        {
+                            path: "/categories-manager",
+                            lazy: async () => {
+                                const {CategoriesManager} = await import('pages/AdminPage/CategoriesManager/CategoriesManager');
+                                return { Component: CategoriesManager };
+                            }
                         }
-                    }]
+                    ]
 
                 },
                 {

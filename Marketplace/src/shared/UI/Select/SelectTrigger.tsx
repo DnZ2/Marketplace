@@ -7,7 +7,7 @@ const SelectTrigger = (props: Props) => {
     const {children, className, ...otherProps} = props
     const {onOpen} = useSelect()
     return (
-        <div onClick={onOpen} className={`relative flex w-full ${className}`} {...otherProps}>
+        <div onMouseDown={onOpen} className={`relative flex w-full ${className}`} {...otherProps}>
             {children}
         </div>
     )

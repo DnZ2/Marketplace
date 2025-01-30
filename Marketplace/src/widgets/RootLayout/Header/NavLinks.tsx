@@ -5,7 +5,7 @@ const NavLinks = () => {
         <nav className="flex justify-between items-center gap-12 [&>a]:underline-offset-4">
             <Link className="hover:underline" to='/'>Home</Link>
             <Link className="hover:underline" to='/products'>Products</Link>
-            <Link className="hover:underline" to='/admin'>Admin</Link>
+            <Link className="hover:underline" to="/product-manager">Admin</Link>
         </nav>
     )
 }

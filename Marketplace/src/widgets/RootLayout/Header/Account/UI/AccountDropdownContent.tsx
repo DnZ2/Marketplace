@@ -1,12 +1,17 @@
-import { ComponentPropsWithoutRef, memo, MouseEventHandler } from "react"
+import { ComponentPropsWithoutRef, memo } from "react"
 import Link from "shared/UI/Link/Link"
 import { LogOut, ShoppingBag, Star, UserPen } from "lucide-react"
+import { useLogoutMutation } from "shared/redux/query/endpoints"
+import useEvent from "react-use-event-hook"
+import Button from "shared/UI/Button/Button"
 
-interface Props extends ComponentPropsWithoutRef<"li"> {
-	logout: MouseEventHandler<HTMLLIElement>
-}
+interface Props extends ComponentPropsWithoutRef<"li"> {}
 
-const AccountDropdownContent = ({logout}: Props)=> {
+const AccountDropdownContent = (props: Props)=> {
+    const [logout] = useLogoutMutation()
+    const handleLogout = useEvent(async()=>{
+        await logout().unwrap()
+    })
     return (
         <ul className="flex flex-col items-start gap-4 bg-black bg-opacity-30 backdrop-blur-md w-[220px]">
             <li className="w-full">
@@ -27,9 +32,11 @@ const AccountDropdownContent = ({logout}: Props)=> {
                     <span className="text-white text-sm">My Reviews</span>
                 </Link>
             </li>
-            <li className="flex items-center justify-between gap-4 w-full" onClick={logout}>
-                <LogOut />
-                <span className="text-white text-sm">Logout</span>
+            <li className="w-full">
+                <Button onClick={handleLogout} variant="empty" size="empty" className="flex items-center justify-between gap-4">
+                    <LogOut />
+                    <span className="text-white text-sm">Logout</span>
+                </Button>
             </li>
         </ul>
     )

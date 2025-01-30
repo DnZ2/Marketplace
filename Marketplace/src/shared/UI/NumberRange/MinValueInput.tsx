@@ -6,6 +6,7 @@ import useEvent from 'react-use-event-hook'
 const MinValueInput = (props: Props) => {
     const {min, max, onSubmit, onMaxChange, onMinChange, diapason} = useRange()
     const onBlur = useEvent(()=>{
+        if(!min) onMinChange(diapason.from)
         if(min>diapason.to){
             onMinChange(diapason.to)
             onMaxChange(diapason.to)

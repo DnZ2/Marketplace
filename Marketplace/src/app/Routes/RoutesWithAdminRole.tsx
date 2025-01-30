@@ -1,4 +1,5 @@
-import { Navigate, Outlet } from "react-router-dom"
+import AdminPageLayout from "pages/AdminPage/AdminPageLayout"
+import { Navigate } from "react-router-dom"
 import { useGetUserQuery } from "shared/redux/query/endpoints/usersApi"
 import Loader from "shared/UI/Loader"
 
@@ -10,7 +11,7 @@ const RoutesWithAdminRole = () => {
 
     if(!user.roles.includes("ADMIN")) return <Navigate to={"/"} replace/>
     
-    return <Outlet />
+    return <AdminPageLayout />
 }
 
 export default RoutesWithAdminRole
