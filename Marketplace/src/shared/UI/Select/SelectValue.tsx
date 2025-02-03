@@ -5,9 +5,9 @@ import { useSelect } from "./useSelect"
 
 const SelectValue = (props: Props)=> {
     const {className, ...otherProps} = props
-    const {searchRef, option, onChange} = useSelect()
+    const {searchRef, option, onChange, onBlur} = useSelect()
     return (
-        <Input {...otherProps} ref={searchRef} value={option} onInput={onChange} className={`rounded-md w-full ${className}`}/>
+        <Input {...otherProps} ref={searchRef} value={option} onChange={onChange} onBlur={onBlur} className={`rounded-md w-full ${className}`}/>
     )
 }
 

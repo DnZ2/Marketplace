@@ -1,8 +1,8 @@
-import useQueryParams from "../../../features/ProductQueryActions/useQueryParams"
+import useQueryParams from "features/ProductQueryActions/useQueryParams"
 import PostProductForm from "./Form/PostProductForm"
 import AdminProductsList from "./Product/List/AdminProductsList"
 import ProductQueryActions from "widgets/ProductQueryActions"
-export const ProductsManager=()=> {
+export const ProductsManager= ()=> {
     const {
         params, actions
     } = useQueryParams({initialLimit: "10", isVirtualized: true})

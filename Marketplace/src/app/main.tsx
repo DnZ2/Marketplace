@@ -5,17 +5,17 @@ import { persistor, store } from 'shared/redux/store.js'
 import ReactRouterProvider from './Routes/ReactRouterProvider'
 import { PersistGate } from 'redux-persist/integration/react'
 import { ToastContainer } from 'react-toastify'
-import { StrictMode } from 'react'
+// import { StrictMode } from 'react'
 
 
 createRoot(document.getElementById('root') as HTMLElement).render(
-    <StrictMode>
-        <Provider store={store}>
-            <PersistGate loading={null} persistor={persistor}>
-                <ReactRouterProvider />
-                <ToastContainer stacked/>
-            </PersistGate>
-        </Provider>
-    </StrictMode>
+    // <StrictMode>
+    <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+            <ReactRouterProvider />
+            <ToastContainer stacked/>
+        </PersistGate>
+    </Provider>
+    // </StrictMode>
 
 )

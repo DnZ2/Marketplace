@@ -111,13 +111,6 @@ const ReactRouterProvider = () => {
                 }
             },
             {
-                path: "/test",
-                lazy: async () => {
-                    const {Test} = await import('pages/1test/Test');
-                    return { Component: Test };
-                }
-            },
-            {
                 Component: AuthLayout,
                 children: [{
                     path: "/login",

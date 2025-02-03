@@ -3,9 +3,9 @@ import { SelectContextProvider, useSelect } from "./useSelect"
 interface WrapperProps extends ComponentPropsWithoutRef<"div">{}
 interface SelectProps extends Omit<ComponentPropsWithoutRef<"div">, "onSelect">{
     initial: string
-    onSelect?: (value: string)=>void
+    options: string[]
+    onSelect: (value: string)=>void
     onReset?: ()=>void
-    onClose?: (value: string)=>void
 }
 const SelectWrapper = memo((props: WrapperProps) => {
     const {children, className,...otherProps} = props
@@ -18,9 +18,9 @@ const SelectWrapper = memo((props: WrapperProps) => {
 })
 
 const Select = (props: SelectProps) => {
-    const {initial,onSelect, onReset, onClose, children, className,...otherProps} = props
+    const {initial,options, onSelect, onReset,children, className,...otherProps} = props
     return (
-        <SelectContextProvider initial={initial} onSelect={onSelect} onReset={onReset} onClose={onClose}>
+        <SelectContextProvider initial={initial} options={options} onSelect={onSelect} onReset={onReset}>
             <SelectWrapper className={className} {...otherProps}>{children}</SelectWrapper>
         </SelectContextProvider>
     )

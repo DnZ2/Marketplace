@@ -1,16 +1,14 @@
-import { ComponentPropsWithoutRef, memo, ReactNode } from "react"
+import { ComponentPropsWithoutRef, memo } from "react"
 import { useSelect } from "./useSelect"
 import SelectOption from "./SelectOption"
 
 export interface Props extends ComponentPropsWithoutRef<"div">{
-    options: string[]
     filtered?: boolean
-    customOption?: ReactNode | ReactNode[]
 }
 
 const SelectOptions = (props: Props) => {
-    const {options, filtered, className, ...otherProps} = props
-    const {option, isOpen} = useSelect()
+    const {filtered, className, ...otherProps} = props
+    const {option, options, isOpen} = useSelect()
     if(!isOpen) return null
     const isMatch = (value: string)=> new RegExp(option.toLowerCase()).test(value.toLowerCase())
     const filteredOptions = options.filter((option)=>isMatch(option))

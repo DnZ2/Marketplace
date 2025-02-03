@@ -7,7 +7,7 @@ interface Actions{
     onSearch: (e: SyntheticEvent)=>void
     onSort: (value: string)=>void
     onFilterByCategory: (value: string)=>void
-    onFilterByPrice: ()=>void
+    onFilterByPrice: (min: number, max: number)=>void
     onResetCategory: ()=>void
 }
 
@@ -22,7 +22,7 @@ const ProductQueryActions = (props: Props) => {
     const categorySelectId = useId()
     const priceSelectId = useId()
     const sortSelectId = useId()
-
+    
     const diapason = useMemo(()=>({minPrice: params.minPrice, maxPrice: params.maxPrice}), [params.minPrice,params.maxPrice])
     return (
         <div className="w-full flex flex-col gap-4">
@@ -30,7 +30,7 @@ const ProductQueryActions = (props: Props) => {
             <div className="w-full flex gap-4 items-center">
                 <div>
                     <Label htmlFor={sortSelectId} className="pl-1 text-xs text-gray-400">Sorted by</Label>
-                    <ProductSortSelect id={sortSelectId} onSort={actions.onSort}/>
+                    <ProductSortSelect id={sortSelectId} onSelect={actions.onSort}/>
                 </div>
                 <div>
                     <Label htmlFor={categorySelectId} className="pl-1 text-xs text-gray-400">Category</Label>
@@ -38,7 +38,7 @@ const ProductQueryActions = (props: Props) => {
                 </div>
                 <div>
                     <Label htmlFor={priceSelectId} className="pl-1 text-xs text-gray-400">Price selector</Label>
-                    <ProductPriceSelect params={diapason} id={priceSelectId} onFilterByPrice={actions.onFilterByPrice} />
+                    <ProductPriceSelect params={diapason} id={priceSelectId} onSelect={actions.onFilterByPrice} />
                 </div>
             </div>
         </div>

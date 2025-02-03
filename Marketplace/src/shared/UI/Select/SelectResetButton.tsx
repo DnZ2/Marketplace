@@ -7,7 +7,7 @@ const SelectResetButton = ({...props}: ComponentPropsWithoutRef<"button">) => {
     const {option, onResetValue} = useSelect()
     if(!option) return null
     return (
-        <Button variant="empty" size="empty" onClick={onResetValue} {...props}>
+        <Button variant="empty" size="empty" onMouseDown={onResetValue} {...props}>
             <X className='size-4 hover:bg-gray-200 rounded-full' />
         </Button>
     )

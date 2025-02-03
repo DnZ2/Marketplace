@@ -26,9 +26,8 @@ const CategoryInput = ({ control }: Props)=> {
 
     const onSelect = useEvent((value)=>field.onChange(value))
     const onReset = useEvent(()=>field.onChange(""))
-    const onClose = useEvent((value)=>field.onChange(value))
     return (
-        <ProductCategorySelect category="" onSelect={onSelect} onReset={onReset} onClose={onClose} />
+        <ProductCategorySelect category="" onSelect={onSelect} onReset={onReset} />
     )
 }
 

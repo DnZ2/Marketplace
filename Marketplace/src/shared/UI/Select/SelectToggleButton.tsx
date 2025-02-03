@@ -6,7 +6,7 @@ import { ChevronDown } from 'lucide-react'
 const SelectToggleButton = ({...props}: ComponentPropsWithoutRef<"button">) => {
     const {isOpen, onToggle} = useSelect()
     return (
-        <Button variant="empty" size="empty" onClick={onToggle} {...props}>
+        <Button variant="empty" size="empty" onMouseDown={onToggle} {...props}>
             <ChevronDown className={`size-4 hover:bg-gray-200 rounded-full transition-transform ${isOpen && "rotate-180"}`}/>
         </Button>
     )

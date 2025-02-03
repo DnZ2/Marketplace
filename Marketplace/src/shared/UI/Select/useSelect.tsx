@@ -7,6 +7,7 @@ import useToggle from 'shared/hooks/useToggle';
 interface SelectContextProps{ 
     isOpen: boolean;
     option: string;
+    options: string[]
     searchRef: RefObject<HTMLInputElement>
     triggerRef: RefObject<HTMLDivElement>
     onChange: ChangeEventHandler<HTMLInputElement>;
@@ -14,12 +15,13 @@ interface SelectContextProps{
     onPickOption: MouseEventHandler<HTMLButtonElement>
     onResetValue: () => void;
     onOpen: () => void;
+    onBlur: () => void
 }
 interface Props{
     initial: string
+    options: string[]
     onSelect?: (value: string)=>void
     onReset?: ()=>void
-    onClose?: (value: string)=>void
     children: ReactNode
 }
 
@@ -34,22 +36,36 @@ export const useSelect = () => {
 };
 
 export const SelectContextProvider: FC<Props> = (props) => {
-    const {initial, onSelect, onReset, onClose, children} = props
+    const {initial, options, onSelect, onReset, children} = props
     const [option, setOption] = useState(initial)
-    const [stable, setStable] = useState(initial)
+    const [prevOption, setPrevOption] = useState(initial)
     const searchRef = useRef<HTMLInputElement>(null)
     const triggerRef = useRef<HTMLDivElement>(null)
     const {isActive, on, off, toggle} = useToggle(false)
     const onChange = useEvent(({target}) => setOption(target.value))
+    const onBlur = useEvent(()=>{
+        if(options.includes(option)){
+            onSelect?.(option)
+            setPrevOption(option)
+        }
+        else if(!option){
+            onSelect?.("")
+            setPrevOption("")
+        }
+        else{
+            onSelect?.(prevOption)
+            setOption(prevOption)
+        }
+    })
     const onPickOption = useEvent(({target}) => {
         setOption(target.innerText);
-        setStable(target.innerText)
+        setPrevOption(target.innerText)
         off()
         onSelect?.(target.innerText)
     })
     const onResetValue = useEvent(() => {
         setOption("");
-        setStable("")
+        setPrevOption("")
         on()
         onReset?.()
         searchRef.current?.focus();
@@ -57,8 +73,6 @@ export const SelectContextProvider: FC<Props> = (props) => {
     const onSelectClose = useEvent((e: globalThis.MouseEvent)=>{
         if(!triggerRef?.current?.contains(e.target as Node)){
             off()
-            setOption(stable)
-            onClose?.(stable)
         }
     })
     useLayoutEffect(()=>{
@@ -70,8 +84,8 @@ export const SelectContextProvider: FC<Props> = (props) => {
         toggle()
     })
     const contextValue = useMemo(()=>({
-        isOpen: isActive, onToggle, option, onChange, onOpen: on, onPickOption, onResetValue, searchRef, triggerRef
-    }), [isActive, on, onToggle, option, onChange, onResetValue, onResetValue, searchRef, triggerRef])
+        isOpen: isActive, option, options, onChange, onBlur, onToggle, onOpen: on, onPickOption, onResetValue, searchRef, triggerRef
+    }), [isActive, on, onToggle, option, options, onChange, onBlur, onResetValue, onResetValue, searchRef, triggerRef])
 
     return (
         <SelectContext.Provider value={contextValue}>{children}</SelectContext.Provider>

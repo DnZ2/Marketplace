@@ -1,5 +1,5 @@
 import image from "assets/nophoto.png"
-import {ComponentPropsWithoutRef} from "react"
+import {ComponentPropsWithoutRef, memo} from "react"
 import { ProductImg } from "entities/Product/UI"
 import { Ban, Check, Copy, Pencil, Trash2 } from "lucide-react"
 import { Product } from "shared/redux/query/endpoints"
@@ -50,4 +50,4 @@ const AdminProductCard = ({data, style}: Props) => {
     )
 }
 
-export default AdminProductCard
+export default memo(AdminProductCard)

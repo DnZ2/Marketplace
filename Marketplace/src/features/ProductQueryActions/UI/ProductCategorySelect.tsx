@@ -7,26 +7,24 @@ import SelectToggleButton from "shared/UI/Select/SelectToggleButton"
 
 interface Props extends Omit<InputProps, "onSelect">{
     category: string
-    onSelect?: (value: string)=>void
-    onReset?: ()=>void
-    onClose?: (value: string)=>void
+    onSelect: (value: string)=>void
+    onReset: ()=>void
 }
 
 const ProductCategorySelect = (props: Props) => {
-    const {category, onSelect,onReset,onClose, ...otherProps} = props
+    const {category, onSelect,onReset, ...otherProps} = props
     const {data, isLoading} = useGetCategoriesQuery()
 
     const options = useMemo(()=>data?.map(item=>item.value), [data])
     if(isLoading || !options) return <div className="flex w-[220px]"><input disabled className="p-2 rounded-md bg-[#f5f5f5] animate-pulse" /></div>
-    
     return (
-        <Select initial={category} onSelect={onSelect} onReset={onReset} onClose={onClose} className="bg-white w-[220px] rounded-md">
+        <Select options={options} initial={category} onSelect={onSelect} onReset={onReset} className="bg-white w-[220px] rounded-md">
             <SelectTrigger>
                 <SelectValue {...otherProps}/>
                 <SelectResetButton className="absolute cursor-pointer right-8 top-1/2 -translate-y-1/2"/>
                 <SelectToggleButton className="absolute cursor-pointer right-2 top-1/2 -translate-y-1/2"/>
             </SelectTrigger>
-            <SelectOptions filtered options={options} className="bg-white flex flex-col divide-y divide-gray-300 divide-solid"/>
+            <SelectOptions filtered className="bg-white flex flex-col divide-y divide-gray-300 divide-solid"/>
         </Select>
     )
 }

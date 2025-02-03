@@ -15,34 +15,37 @@ const AdminProductsList = (props: Props) => {
     const [page, setPage] = useState(1)
     const [products, setProducts] = useState<Product[]>([]);
     const [hasNextPage, setHasNextPage] = useState(true);
-
+    
     const infiniteLoaderRef = useRef<InfiniteLoader>(null);
     const hasMountedRef = useRef(false);
-  
+
+    const itemCount = hasNextPage ? products.length + 1 : products.length;
+    const isItemLoaded = (index: number) => { 
+        return index < products.length
+    };
     const loadMoreItems = async () => {
         if (isFetching || !hasNextPage) return;
-        const { data } = await trigger({ ...params, page });
+        const { data } = await trigger({ ...params, page }, true);
         if (data) {
             setProducts((prev) => [...prev, ...data.products]);
             setHasNextPage(data.pages > page);
             setPage(prev=>prev+1)
         }
     }
-  
-    const itemCount = hasNextPage ? products.length + 1 : products.length;
-    const isItemLoaded = (index: number) => index < products.length;
-
+    
     useEffect(() => {
         if(hasMountedRef.current&&infiniteLoaderRef.current) {
             infiniteLoaderRef.current.resetloadMoreItemsCache();
-            setProducts([])
             setPage(1)
             setHasNextPage(true)
+            trigger({ ...params, page: 1 }, true).then(({ data }) => {
+                if(data && !data.products.length) setHasNextPage(false)
+                setProducts([])
+            });
         }
         hasMountedRef.current = true;
     }, [params.category, params.maxPrice, params.minPrice, params.search, params.sort, params.sortMethod]);
-
-
+    
     return (
         <div className="flex flex-col border-2 rounded-md  divide-y-2">
             <div className='[&>span]:p-2 grid grid-cols-[2fr_1fr_1fr_1fr_1fr] divide-x-2'>
@@ -70,8 +73,8 @@ const AdminProductsList = (props: Props) => {
                         ref={ref}
                     >
                         {({ index, style }: {index: number, style: CSSProperties}) => {
-                            if (!isItemLoaded(index)) return <div>Loading...</div>;
-                            return <AdminProductCard style={style} data={products[index]} />;
+                            if (!isItemLoaded(index)) return <div>Loading... {index}</div>;
+                            return <AdminProductCard key={products[index].id} style={style} data={products[index]} />;
                         }}
                     </List>
                 )}

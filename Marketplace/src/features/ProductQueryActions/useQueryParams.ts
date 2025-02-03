@@ -1,4 +1,4 @@
-import { SyntheticEvent, useMemo, MouseEvent} from "react";
+import { SyntheticEvent,  MouseEvent} from "react";
 import { useSearchParams } from "react-router-dom";
 import { QueryParams } from "../../shared/redux/query/endpoints/productsApi";
 import useEvent from "react-use-event-hook";
@@ -56,7 +56,7 @@ const useQueryParams = (props?: Props) => {
     })
     const onFilterByCategory = useEvent((value: string) => {
         setSearchParams(prev=>{
-            prev.set("category", value)
+            if(value) prev.set("category", value)
             !props?.isVirtualized && prev.set("page", "1")
             return prev
         });
@@ -68,32 +68,13 @@ const useQueryParams = (props?: Props) => {
             return prev
         });
     })
-    const onFilterByPrice = useEvent((from?:number, to?:number) => {
-        if (!from && !to) {
-            searchParams.delete("from");
-            searchParams.delete("to");
-        } else if (!from && to) {
-            searchParams.delete("from");
-            setSearchParams(prev=>{
-                prev.set("to", to.toString())
-                !props?.isVirtualized && prev.set("page", "1")
-                return prev
-            });
-        } else if (!to && from) {
-            searchParams.delete("to");
-            setSearchParams(prev=>{
-                prev.set("from", from.toString())
-                !props?.isVirtualized && prev.set("page", "1")
-                return prev
-            });
-        } else if(from && to) {
-            setSearchParams(prev=>{
-                prev.set("from", from.toString())
-                prev.set("to", to.toString())
-                !props?.isVirtualized && prev.set("page", "1")
-                return prev
-            });
-        }
+    const onFilterByPrice = useEvent((from:number, to:number) => {
+        setSearchParams(prev=>{
+            prev.set("from", from.toString())
+            prev.set("to", to.toString())
+            !props?.isVirtualized && prev.set("page", "1")
+            return prev
+        });
     })
     const onSort = useEvent((value) => {
         const variant = variants.find((item)=>item.value === value)
@@ -106,7 +87,7 @@ const useQueryParams = (props?: Props) => {
             });
     })
 
-    const queryParams = useMemo(()=>({
+    return {
         params: {
             page,
             limit,
@@ -126,27 +107,7 @@ const useQueryParams = (props?: Props) => {
             onSort,
             onResetCategory,
         }
-    }), [
-        page,
-        limit,
-        search,
-        sort,
-        sortMethod,
-        category,
-        minPrice,
-        maxPrice,
-
-        onChangePage,
-        onShowMore,
-        onSearch,
-        onFilterByCategory,
-        onFilterByPrice,
-        onSort,
-        onResetCategory,
-        
-    ])
-
-    return queryParams
+    }
 }
 
 export default useQueryParams;
