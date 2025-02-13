@@ -13,8 +13,8 @@ const getProductReviews = async (req, res, next) => {
 };
 const getUserReviews = async (req, res, next) => {
   try {
-    const id = req.params.id;
-    const reviews = await reviewService.getUserReviews(id);
+    const token = req.headers.authorization.split(" ")[1];
+    const reviews = await reviewService.getUserReviews(token);
     return res.json(reviews);
   } catch (e) {
     next(e);
@@ -26,12 +26,13 @@ const postReview = async (req, res, next) => {
     if (!errors.isEmpty()) {
       return next(ApiError.BadRequest("Validation error", errors.array()));
     }
-    const { userId, productId, reviewText = "", ratingValue } = req.body;
+    const token = req.headers.authorization.split(" ")[1];
+    const { productId, reviewText = "", ratingValue } = req.body;
     const review = await reviewService.postReview(
-      userId,
       productId,
       reviewText,
-      ratingValue
+      ratingValue,
+      token
     );
     return res.json(review);
   } catch (e) {
@@ -44,14 +45,14 @@ const patchReview = async (req, res, next) => {
     if (!errors.isEmpty()) {
       return next(ApiError.BadRequest("Validation error", errors.array()));
     }
+    const token = req.headers.authorization.split(" ")[1];
     const reviewId = req.params.id;
-    const { userId, text = "", rating } = req.body;
+    const { text = "", rating } = req.body;
     const review = await reviewService.patchReview(
-      userId,
-      productId,
       reviewId,
       text,
-      rating
+      rating,
+      token
     );
     return res.json(review);
   } catch (e) {
@@ -61,8 +62,7 @@ const patchReview = async (req, res, next) => {
 const deleteReview = async (req, res, next) => {
   try {
     const id = req.params.id;
-    const { userId } = req.body;
-    const review = await reviewService.deleteReview(userId, id);
+    const review = await reviewService.deleteReview(id, token);
     return res.json(review);
   } catch (e) {
     next(e);

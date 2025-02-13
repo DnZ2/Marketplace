@@ -1,3 +1,4 @@
+const { evalRatingValue, convertDate } = require("../utils/helpers");
 const create = (product) => {
   return {
     id: product._id,
@@ -7,9 +8,9 @@ const create = (product) => {
     maxQuantity: product.maxQuantity,
     description: product.description,
     discount: product.discount,
-    rating: product.rating,
+    rating: evalRatingValue(product.rating),
     category: product.category,
-    settings: product.settings,
+    createdAt: convertDate(product.createdAt),
   };
 };
 const updateQuantity = (array, type) => {
@@ -23,7 +24,16 @@ const updateQuantity = (array, type) => {
   }));
   return updates;
 };
+const updateCategories = (array, value) => {
+  const updates = array.map(() => ({
+    updateMany: {
+      update: { value },
+    },
+  }));
+  return updates;
+};
 module.exports = {
   create,
   updateQuantity,
+  updateCategories,
 };
